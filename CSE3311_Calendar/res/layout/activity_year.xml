@@ -1,0 +1,212 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".YearViewActivity"
+    android:background="#00000F" >
+
+    <LinearLayout
+        android:id="@+id/viewSelectorLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true" >
+        
+    
+        <Button
+            android:id="@+id/year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/year"
+            android:enabled="false" />
+        <Button
+            android:id="@+id/month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/month" />
+        <Button
+            android:id="@+id/week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/week" />
+        <Button
+            android:id="@+id/day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/day" />
+        
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/viewSelectorLayout"
+        android:layout_below="@+id/viewSelectorLayout"
+        android:layout_marginTop="11dp" >
+
+        
+
+        <Button
+            android:id="@+id/prev_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/prev_year" />
+
+        <TextView
+            android:id="@+id/current_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.80"
+            android:gravity="center"
+            android:text="@string/current_year"
+            android:textColor="#FFFFFF"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <Button
+            android:id="@+id/next_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/next_year" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/january"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/linearLayout1"
+        android:layout_below="@+id/linearLayout1"
+        android:paddingRight="8dip"
+        android:paddingBottom="8dip"
+        android:tag="0"
+        android:onClick="monthClick"
+        android:src="@drawable/january" />
+
+    <ImageView
+        android:id="@+id/february"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/january"
+        android:layout_toRightOf="@+id/january"
+        android:paddingBottom="8dip"
+        android:tag="1"
+        android:onClick="monthClick"
+        android:src="@drawable/february" />
+    <ImageView
+        android:id="@+id/march"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/january"
+        android:layout_below="@+id/january"
+        android:paddingRight="8dip"
+        android:paddingBottom="8dip"
+        android:tag="2"
+        android:onClick="monthClick"
+        android:src="@drawable/march" />
+
+    <ImageView
+        android:id="@+id/april"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/march"
+        android:layout_toRightOf="@+id/march"
+        android:paddingBottom="8dip"
+        android:tag="3"
+        android:onClick="monthClick"
+        android:src="@drawable/april" />
+    <ImageView
+        android:id="@+id/may"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/march"
+        android:layout_below="@+id/march"
+        android:paddingRight="8dip"
+        android:paddingBottom="8dip"
+        android:tag="4"
+        android:onClick="monthClick"
+        android:src="@drawable/may" />
+
+    <ImageView
+        android:id="@+id/june"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/may"
+        android:layout_toRightOf="@+id/may"
+        android:paddingBottom="8dip"
+        android:tag="5"
+        android:onClick="monthClick"
+        android:src="@drawable/june" />
+    <ImageView
+        android:id="@+id/july"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/may"
+        android:layout_below="@+id/may"
+        android:paddingRight="8dip"
+        android:paddingBottom="8dip"
+        android:tag="6"
+        android:onClick="monthClick"
+        android:src="@drawable/july" />
+
+    <ImageView
+        android:id="@+id/august"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/july"
+        android:layout_toRightOf="@+id/july"
+        android:paddingBottom="8dip"
+        android:tag="7"
+        android:onClick="monthClick"
+        android:src="@drawable/august" />
+    <ImageView
+        android:id="@+id/september"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/may"
+        android:layout_below="@+id/may"
+        android:paddingRight="8dip"
+        android:paddingBottom="8dip"
+        android:tag="8"
+        android:onClick="monthClick"
+        android:src="@drawable/september" />
+
+    <ImageView
+        android:id="@+id/october"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/september"
+        android:layout_toRightOf="@+id/september"
+        android:paddingBottom="8dip"
+        android:tag="9"
+        android:onClick="monthClick"
+        android:src="@drawable/october" />
+    <ImageView
+        android:id="@+id/november"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/september"
+        android:layout_below="@+id/september"
+        android:paddingRight="8dip"
+        android:paddingBottom="8dip"
+        android:tag="10"
+        android:onClick="monthClick"
+        android:src="@drawable/november" />
+
+    <ImageView
+        android:id="@+id/december"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/november"
+        android:layout_toRightOf="@+id/november"
+        android:paddingBottom="8dip"
+        android:tag="11"
+        android:onClick="monthClick"
+        android:src="@drawable/december" />
+
+</RelativeLayout>
