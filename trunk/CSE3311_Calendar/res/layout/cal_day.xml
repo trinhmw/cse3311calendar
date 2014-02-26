@@ -1,0 +1,59 @@
+<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    
+     >
+
+    
+    
+
+    
+        <ImageView
+        android:id="@+id/event1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/blank_event"
+        android:adjustViewBounds="true"  
+        android:paddingBottom="2dip"
+        android:paddingLeft="1dip"/>
+
+    <ImageView
+        android:id="@+id/event2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/event1"
+        android:adjustViewBounds="true"
+        android:src="@drawable/blank_event" />
+
+    <ImageView
+        android:id="@+id/event3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/event2"
+        android:adjustViewBounds="true"
+        android:src="@drawable/blank_event" />
+
+    <ImageView
+        android:id="@+id/event4"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/event3"
+        android:adjustViewBounds="true"
+        android:src="@drawable/blank_event" />
+
+    <ImageView
+        android:id="@+id/day_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:adjustViewBounds="true"
+        android:src="@drawable/blank_glass" />
+    
+    </RelativeLayout>
