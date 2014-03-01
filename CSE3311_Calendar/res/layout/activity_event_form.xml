@@ -160,7 +160,7 @@
         android:layout_height="wrap_content"
         android:text="@string/all_day" />
     <Spinner 
-        android:id="@+id/fA"
+        android:id="@+id/fAll_day"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         />
