@@ -27,6 +27,10 @@
             android:name="com.example.cse3311_calendar.YearViewActivity"
             android:label="@string/title_activity_year" >
         </activity>
+        <activity
+            android:name="com.example.cse3311_calendar.EventFormActivity"
+            android:label="@string/title_activity_event_form" >
+        </activity>
     </application>
 
 </manifest>

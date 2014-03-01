@@ -45,6 +45,9 @@ public class MonthViewActivity extends Activity {
 	private final String[] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 	private final int[] daysOfMonth = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 	
+	
+	private Button mAddEvent;
+	
     /* Basic creation code
      * 
      */
@@ -117,6 +120,18 @@ public class MonthViewActivity extends Activity {
         		startActivity(changeIntent);
         	}
         });
+        
+        mAddEvent = (Button) this.findViewById(R.id.add_event);
+        mAddEvent.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+//				Toast.makeText(MonthViewActivity.this, R.string.add_event, Toast.LENGTH_LONG).show();
+				Intent changeIntent = new Intent(MonthViewActivity.this, EventFormActivity.class);
+				startActivity(changeIntent);
+				
+			}
+		});
         
     }
 
