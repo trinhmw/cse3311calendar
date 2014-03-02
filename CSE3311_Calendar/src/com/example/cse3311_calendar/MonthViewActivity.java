@@ -286,7 +286,7 @@ public class MonthViewActivity extends Activity {
 				String thisYear = date[2];
 				
 				dayImage.setImageResource(days[thisDayInt-1]);
-				dayImage.setAlpha(170);
+				dayImage.setAlpha(200);
 				dayImage.setTag(thisMonth + "-" + thisDay + "-" + thisYear);
 				dayImage.setOnClickListener(new OnClickListener(){
 		        	public void onClick(View v)
