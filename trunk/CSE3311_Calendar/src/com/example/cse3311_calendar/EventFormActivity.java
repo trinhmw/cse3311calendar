@@ -7,9 +7,10 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
+import android.widget.TimePicker;
 
 public class EventFormActivity extends Activity {
 
@@ -34,6 +35,12 @@ public class EventFormActivity extends Activity {
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		mAllDaySpinner.setAdapter(adapter);
 		
+		final DatePicker mStartDate = (DatePicker) findViewById(R.id.fStart_date);
+		final DatePicker mEndDate = (DatePicker) findViewById(R.id.fEnd_date);
+		
+		final TimePicker mStartTime = (TimePicker) findViewById(R.id.fStart_time);
+		final TimePicker mEndTime = (TimePicker) findViewById(R.id.fEnd_time);
+		
 		mConfirm = (Button) this.findViewById(R.id.confirm);
 		mConfirm.setOnClickListener(new View.OnClickListener() {
 			
@@ -52,22 +59,20 @@ public class EventFormActivity extends Activity {
 				text = et.getText().toString();
 				bundle.putString("location", text);
 				
-				et = (EditText) findViewById(R.id.fStart_date);
-				text = et.getText().toString();
-				bundle.putString("start_date", text);
+				bundle.putInt("start_date_month", mStartDate.getMonth());
+				bundle.putInt("start_date_day", mStartDate.getDayOfMonth());
+				bundle.putInt("start_date_year", mStartDate.getYear());
 				
-				et = (EditText) findViewById(R.id.fEnd_date);
-				text = et.getText().toString();
-				bundle.putString("end_date", text);
+				bundle.putInt("end_date_month", mEndDate.getMonth());
+				bundle.putInt("end_date_day", mEndDate.getDayOfMonth());
+				bundle.putInt("end_date_year", mEndDate.getYear());
 				
-				et = (EditText) findViewById(R.id.fStart_time);
-				text = et.getText().toString();
-				bundle.putString("start_time", text);
+				bundle.putInt("start_time_hour", mStartTime.getCurrentHour().intValue());
+				bundle.putInt("start_time_min", mStartTime.getCurrentMinute().intValue());
 				
-				et = (EditText) findViewById(R.id.fEnd_time);
-				text = et.getText().toString();
-				bundle.putString("end_time", text);
-				
+				bundle.putInt("end_time_hour", mEndTime.getCurrentHour().intValue());
+				bundle.putInt("end_time_min", mEndTime.getCurrentMinute().intValue());
+
 				et = (EditText) findViewById(R.id.fDescription);
 				text = et.getText().toString();
 				bundle.putString("description", text);
@@ -83,7 +88,9 @@ public class EventFormActivity extends Activity {
 				
 				Intent changeIntent = new Intent(EventFormActivity.this, MonthViewActivity.class);
 				changeIntent.putExtras(bundle);
-				//Toast.makeText(EventFormActivity.this, changeIntent.getExtras().getString("description"), Toast.LENGTH_LONG).show();
+				//Toast.makeText(EventFormActivity.this, changeIntent.getExtras().getInt("start_time_hour"), Toast.LENGTH_LONG).show();
+				//String tmp = "" + changeIntent.getExtras().getInt("start_time_hour");
+				//Toast.makeText(EventFormActivity.this, tmp, Toast.LENGTH_LONG).show();
 				startActivity(changeIntent);
 				
 				
