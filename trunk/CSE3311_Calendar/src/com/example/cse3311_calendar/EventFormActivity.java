@@ -17,6 +17,7 @@ public class EventFormActivity extends Activity {
 	Spinner mCategorySpinner;
 	Spinner mAllDaySpinner;
 	EditText et;
+
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
