@@ -1,9 +1,14 @@
 package com.example.cse3311_calendar;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Event {
+public class Event implements Comparable<Event>, Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// initialize the variables
 	private int id;
 	private String name;
@@ -119,6 +124,16 @@ public class Event {
 	}
 	public void setAllDayOption(boolean allDayOption) {
 		this.allDayOption = allDayOption;
+	}
+	
+	@Override
+	public int compareTo(Event another) {
+		Event toCompare = another;
+		int compare = this.getStartDate().compareTo(toCompare.getStartDate());
+		if (compare == 0){
+			return  toCompare.getStartTime() - this.getStartTime();
+		}
+		return compare;
 	}
 
     
