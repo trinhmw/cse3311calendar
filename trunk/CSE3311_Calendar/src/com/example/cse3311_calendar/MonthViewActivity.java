@@ -302,8 +302,10 @@ public class MonthViewActivity extends Activity {
 						
 						//Here handle going to day view
 						
-						Toast.makeText(getApplicationContext(), "Month: " + (thisMonthInt+1) + " Day: " +
-						thisDayInt + " Year: " + thisYearInt,Toast.LENGTH_LONG).show();	
+						//Toast.makeText(getApplicationContext(), "Month: " + (thisMonthInt+1) + " Day: " +
+						//thisDayInt + " Year: " + thisYearInt,Toast.LENGTH_LONG).show();	
+						Intent dayIntent = new Intent(MonthViewActivity.this, DayViewActivity.class);
+						startActivity(dayIntent);
 		        	}
 		        });
 				
