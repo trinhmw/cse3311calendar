@@ -37,4 +37,7 @@
         <item>Yes</item>
     </string-array>
 
+    <string name="title_activity_day_view">DayViewActivity</string>
+    <string name="hello_world">Hello world!</string>
+
 </resources>
