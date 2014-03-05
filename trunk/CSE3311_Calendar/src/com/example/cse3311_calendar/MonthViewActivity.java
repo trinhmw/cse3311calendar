@@ -122,6 +122,19 @@ public class MonthViewActivity extends Activity {
         	}
         });
         
+        dayViewChanger = (Button) this.findViewById(R.id.day);
+        dayViewChanger.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent changeIntent = new Intent(MonthViewActivity.this, DayViewActivity.class);
+				startActivity(changeIntent);
+			}
+		});
+        
+        
+        
         mAddEvent = (Button) this.findViewById(R.id.add_event);
         mAddEvent.setOnClickListener(new View.OnClickListener() {
 			
