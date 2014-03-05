@@ -8,7 +8,7 @@ public class Event implements Comparable<Event>, Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 0L;
 	// initialize the variables
 	private int id;
 	private String name;
@@ -49,7 +49,8 @@ public class Event implements Comparable<Event>, Serializable{
 	public boolean setendDateTime(Date endDate, int endTime) {
 		boolean bool = true;
 		
-		if((endDate.after(getStartDate())&& endDate.equals(getStartDate()))) {
+		//if((endDate.after(getStartDate())&& endDate.equals(getStartDate()))) {
+		if((endDate.equals(getStartDate()))&&(endTime > getStartTime())){
 			this.endDate = endDate;
 			this.endTime = endTime; 
 			
@@ -70,8 +71,15 @@ public class Event implements Comparable<Event>, Serializable{
 	public String getName() {
 		return name;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public boolean setName(String name) {
+		boolean result;
+		if (name.equals("")){
+			result = false;
+		}else{
+			this.name = name;
+			result = true;
+		}
+		return result;
 	}
 	public String getLocation() {
 		return location;
@@ -124,6 +132,7 @@ public class Event implements Comparable<Event>, Serializable{
 	}
 	public void setAllDayOption(boolean allDayOption) {
 		this.allDayOption = allDayOption;
+		
 	}
 	
 	@Override
@@ -131,7 +140,7 @@ public class Event implements Comparable<Event>, Serializable{
 		Event toCompare = another;
 		int compare = this.getStartDate().compareTo(toCompare.getStartDate());
 		if (compare == 0){
-			return  toCompare.getStartTime() - this.getStartTime();
+			return   this.getStartTime() - toCompare.getStartTime() ;
 		}
 		return compare;
 	}

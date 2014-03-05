@@ -2,6 +2,7 @@ package com.example.cse3311_calendar;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
@@ -265,6 +266,8 @@ public class MonthViewActivity extends Activity {
 					R.drawable.day26, R.drawable.day27, R.drawable.day28, R.drawable.day29, R.drawable.day30,
 					R.drawable.day31};
 			
+			int colors[] = {R.drawable.red_event, R.drawable.blue_event, R.drawable.green_event};
+			
 			View row = convertView;
 			if (row == null){
 				LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -286,7 +289,7 @@ public class MonthViewActivity extends Activity {
 				String thisYear = date[2];
 				
 				dayImage.setImageResource(days[thisDayInt-1]);
-				dayImage.setAlpha(200);
+				dayImage.setAlpha(160);
 				dayImage.setTag(thisMonth + "-" + thisDay + "-" + thisYear);
 				dayImage.setOnClickListener(new OnClickListener(){
 		        	public void onClick(View v)
@@ -305,12 +308,46 @@ public class MonthViewActivity extends Activity {
 						//Toast.makeText(getApplicationContext(), "Month: " + (thisMonthInt+1) + " Day: " +
 						//thisDayInt + " Year: " + thisYearInt,Toast.LENGTH_LONG).show();	
 						Intent dayIntent = new Intent(MonthViewActivity.this, DayViewActivity.class);
+						Bundle bundle = new Bundle();
+						bundle.putInt("day", thisDayInt);
+						bundle.putInt("month", thisMonthInt);
+						bundle.putInt("year", thisYearInt);
+						dayIntent.putExtras(bundle);
 						startActivity(dayIntent);
 		        	}
 		        });
 				
-				//Handle getting events and setting event colors here
 				
+        		int thisMonthInt = Integer.parseInt(thisMonth);
+				int thisYearInt = Integer.parseInt(thisYear);
+				EventListManager manager = EventListManager.getInstance();
+				Date thisDate = new Date (thisYearInt, thisMonthInt, thisDayInt);
+				ArrayList <Event> eventList = manager.getEvents(thisDate.toString());
+				
+				if(eventList != null){
+					int length = eventList.size();
+					
+					if(length == 1){
+						event4.setImageResource(colors[eventList.get(0).getCategory()]);
+					}
+					else if (length == 2){
+						event3.setImageResource(colors[eventList.get(0).getCategory()]);
+						event4.setImageResource(colors[eventList.get(1).getCategory()]);
+					}
+					else if (length == 3){
+						event2.setImageResource(colors[eventList.get(0).getCategory()]);
+						event3.setImageResource(colors[eventList.get(1).getCategory()]);
+						event4.setImageResource(colors[eventList.get(2).getCategory()]);
+					}
+					else{
+						event1.setImageResource(colors[eventList.get(0).getCategory()]);
+						event2.setImageResource(colors[eventList.get(1).getCategory()]);
+						event3.setImageResource(colors[eventList.get(2).getCategory()]);
+						event4.setImageResource(colors[eventList.get(3).getCategory()]);
+					}
+				}
+				//Handle getting events and setting event colors here
+				/*
 				if(thisDayInt == 4){
 					event4.setImageResource(R.drawable.blue_event);
 				}
@@ -326,6 +363,7 @@ public class MonthViewActivity extends Activity {
 					event4.setImageResource(R.drawable.green_event);
 					event3.setImageResource(R.drawable.red_event);
 				}	
+				*/
 			}
 			return row;
 		}

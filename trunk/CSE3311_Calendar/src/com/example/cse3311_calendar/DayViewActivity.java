@@ -43,11 +43,16 @@ public class DayViewActivity extends Activity {
 			// Get the message from the intent
 	        Intent intent = getIntent();
 	        
+	        Bundle inputBundle = intent.getExtras();
+	        int day = inputBundle.getInt("day");
+	        int month = inputBundle.getInt("month");
+	        int year = inputBundle.getInt("year");
+	        String myDate = "" + (month + 1) + "/" + day + "/" + year;
 	        //set extra message to to myDate
 	        //@+id/dayTextView
 	        
-	        //TextView dayText = (TextView)findViewById(R.id.dayTextView);
-			//dayText.setText(myDate);
+	        TextView dayText = (TextView)findViewById(R.id.dayTextView);
+			dayText.setText(myDate);
 			
 			
 			
