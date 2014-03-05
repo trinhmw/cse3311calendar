@@ -30,11 +30,11 @@ public class EventListManager {
 			myself = new EventListManager();
 			
 			try{
-				String state = Environment.getExternalStorageState();
-				String file = Environment.getExternalStorageDirectory().toString();
-				File newFile = new File(Environment.getExternalStorageDirectory(), "/data.dat");
-				newFile.createNewFile();
-				ObjectInputStream inStream = new ObjectInputStream(new FileInputStream(newFile));
+				//String state = Environment.getExternalStorageState();
+				//String file = Environment.getExternalStorageDirectory().toString();
+				saveFile = new File(Environment.getExternalStorageDirectory(), "/data.dat");
+				saveFile.createNewFile();
+				ObjectInputStream inStream = new ObjectInputStream(new FileInputStream(saveFile));
 				eventTable = (Hashtable<String, ArrayList<Event>>) inStream.readObject();
 				inStream.close();
 			}
