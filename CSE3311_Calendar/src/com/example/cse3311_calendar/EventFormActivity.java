@@ -1,5 +1,7 @@
 package com.example.cse3311_calendar;
 
+import java.util.Date;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +13,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 public class EventFormActivity extends Activity {
 
@@ -46,19 +49,32 @@ public class EventFormActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
+				
+				
 				String tag = (String) v.getTag();
-				Bundle bundle = new Bundle();
+				//Bundle bundle = new Bundle();
 				
 				et = (EditText) findViewById(R.id.fName);
-				String text = et.getText().toString();
+				//String text = et.getText().toString();
+				String name = et.getText().toString();
 				//Toast.makeText(EventFormActivity.this, text, Toast.LENGTH_LONG).show();
 				
-				bundle.putString("name", text);
+				//bundle.putString("name", text);
 				
 				et = (EditText) findViewById(R.id.fLocation);
-				text = et.getText().toString();
-				bundle.putString("location", text);
+				//text = et.getText().toString();
+				String location = et.getText().toString();
+				//bundle.putString("location", text);
 				
+				Date startDate = new Date(mStartDate.getYear(), mStartDate.getMonth(), mStartDate.getDayOfMonth());
+				Date endDate = new Date(mEndDate.getYear(), mEndDate.getMonth(), mEndDate.getDayOfMonth());
+				int startTime = mStartTime.getCurrentHour().intValue();
+				startTime = startTime * 60;
+				startTime = startTime + mStartTime.getCurrentMinute().intValue();
+				int endTime = mEndTime.getCurrentHour().intValue();
+				endTime = endTime * 60;
+				endTime = endTime + mEndTime.getCurrentMinute().intValue();
+				/*
 				bundle.putInt("start_date_month", mStartDate.getMonth());
 				bundle.putInt("start_date_day", mStartDate.getDayOfMonth());
 				bundle.putInt("start_date_year", mStartDate.getYear());
@@ -72,26 +88,47 @@ public class EventFormActivity extends Activity {
 				
 				bundle.putInt("end_time_hour", mEndTime.getCurrentHour().intValue());
 				bundle.putInt("end_time_min", mEndTime.getCurrentMinute().intValue());
-
+				*/
+				
 				et = (EditText) findViewById(R.id.fDescription);
-				text = et.getText().toString();
-				bundle.putString("description", text);
+				String description = et.getText().toString();
+				//text = et.getText().toString();
+				//bundle.putString("description", text);
 				
 				
-				text = mCategorySpinner.getSelectedItem().toString();
-				bundle.putString("category", text);
+				int category = mCategorySpinner.getSelectedItemPosition();
+				//bundle.putString("category", text);
+				
+				boolean allDay;
+				String allDayString = mAllDaySpinner.getSelectedItem().toString();
+				if(allDayString.equals("Yes")){
+					allDay = true;
+				}else{
+					allDay = false;
+				}
+				//bundle.putString("all_day", text);
+				
+				boolean result = AddEventController.addEvent(name, location, startDate, endDate, startTime, endTime, 
+						description, category, allDay);
+				
+				if(result == false){
+					Toast.makeText(EventFormActivity.this, "There was an error adding the Event", Toast.LENGTH_LONG).show();
+				}
+				else{
+					Intent changeIntent = new Intent(EventFormActivity.this, DayViewActivity.class);
+					Bundle bundle = new Bundle();
+					bundle.putInt("day", mStartDate.getDayOfMonth());
+					bundle.putInt("month", mStartDate.getMonth());
+					bundle.putInt("year", mStartDate.getYear());
+					changeIntent.putExtras(bundle);
+					startActivity(changeIntent);
+				}
 				
 				
-				text = mAllDaySpinner.getSelectedItem().toString();
-				bundle.putString("all_day", text);
-				
-				
-				Intent changeIntent = new Intent(EventFormActivity.this, MonthViewActivity.class);
-				changeIntent.putExtras(bundle);
 				//Toast.makeText(EventFormActivity.this, changeIntent.getExtras().getInt("start_time_hour"), Toast.LENGTH_LONG).show();
 				//String tmp = "" + changeIntent.getExtras().getInt("start_time_hour");
 				//Toast.makeText(EventFormActivity.this, tmp, Toast.LENGTH_LONG).show();
-				startActivity(changeIntent);
+				
 				
 				
 			}

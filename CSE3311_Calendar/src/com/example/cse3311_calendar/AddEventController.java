@@ -1,6 +1,7 @@
 package com.example.cse3311_calendar;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /*------------------------------------------------------------
 *       AddEventController
@@ -13,23 +14,45 @@ import java.util.ArrayList;
 *	     call the Day View to show user the event
 -------------------------------------------------------------*/
 
-/*
+
 public class AddEventController 
 {
 
-	private Event newEvent;
+	private static Event newEvent;
 	private EventListManager listManager;
 
-	public boolean addEvent( int id, String name, String location, Date startDate, Date endDate, int startTime, 
+	public static boolean addEvent( String name, String location, Date startDate, Date endDate, int startTime, 
 				int endTime, String description, int category, boolean allDayOption )
 	{
 		ArrayList<Event> tempEventList = new ArrayList<Event>();
 
 	     //create new Event
-		newEvent = new Event( id, name, location, startDate, endDate, startTime, endTime, 
-					description, category, allDayOption );
+		newEvent = new Event();
 		
-
+		boolean result = newEvent.setName(name);
+		if(result == true){
+			newEvent.setLocation(location);
+			newEvent.setDescription(description);
+			newEvent.setCategory(category);
+			newEvent.setAllDayOption(allDayOption);
+			if(allDayOption == true){
+				newEvent.setStartDate(startDate);
+				newEvent.setEndDate(startDate);
+			}
+			else{
+				newEvent.setstartDateTime(startDate, startTime);
+				result = newEvent.setendDateTime(endDate, endTime);
+			}
+			
+		}
+		if(result == false){
+			return result;
+		}
+		
+		
+		EventListManager manager = EventListManager.getInstance();
+		return manager.addEvent(newEvent);
+		/*
 	     //Get event list from eventTable				
 		tempEventList = listManager.getEvents( startDate ); //may have to => toString(startDate)		
 
@@ -41,10 +64,10 @@ public class AddEventController
 		else  
 		     listManager.addEvent( newEvent ); //still not a 100% if this is the way we talked about adding it			
 				
+				*/
 	     //Show new event in day View
-		GUIManager.launchNewView(DayView); //or whatever the enum value for Day View is
 		
-		return true;
+		
 	}
+
 }
-*/
