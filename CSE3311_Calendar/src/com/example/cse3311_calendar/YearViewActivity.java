@@ -70,6 +70,15 @@ public class YearViewActivity extends Activity {
         	}
         });
         
+        dayViewChanger = (Button) this.findViewById(R.id.day);
+        dayViewChanger.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent changeIntent = new Intent(YearViewActivity.this, DayViewActivity.class);
+				startActivity(changeIntent);
+			}
+		});
         
         
         

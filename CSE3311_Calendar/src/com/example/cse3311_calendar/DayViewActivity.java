@@ -1,5 +1,7 @@
 package com.example.cse3311_calendar;
 
+import java.util.Calendar;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -14,6 +16,11 @@ public class DayViewActivity extends Activity {
 		String myDate;
 		Button mAddEvent;
 		Button mMonth;
+		
+		int day;
+		int month;
+		int year;
+		
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
@@ -22,9 +29,19 @@ public class DayViewActivity extends Activity {
 	        Intent intent = getIntent();
 	        
 	        Bundle inputBundle = intent.getExtras();
-	        int day = inputBundle.getInt("day");
-	        int month = inputBundle.getInt("month");
-	        int year = inputBundle.getInt("year");
+	        
+	        if(inputBundle != null){
+		        day = inputBundle.getInt("day");
+		        month = inputBundle.getInt("month");
+		        year = inputBundle.getInt("year");
+	        }
+	        else
+	        {
+	        	Calendar cal = Calendar.getInstance();
+	        	day = cal.get(Calendar.DAY_OF_MONTH);
+	        	month = cal.get(Calendar.MONTH);
+	        	year = cal.get(Calendar.YEAR);	        	
+	        }
 	        String myDate = "" + (month + 1) + "/" + day + "/" + year;
 	        //set extra message to to myDate
 	        //@+id/dayTextView
