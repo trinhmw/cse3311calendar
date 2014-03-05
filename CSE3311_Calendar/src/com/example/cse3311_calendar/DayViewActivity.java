@@ -1,41 +1,19 @@
 package com.example.cse3311_calendar;
 
-import android.os.Bundle;
-import android.app.Activity;
-import android.view.Menu;
-
-import android.app.Activity;
-import java.util.ArrayList;
-import java.util.List;
-
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Color;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.GridView;
-import android.widget.ListView;
-import android.widget.TableRow;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.support.v4.app.NavUtils;
+import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AbsListView.OnScrollListener;
-import android.widget.LinearLayout;
-import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 
 public class DayViewActivity extends Activity {
 
 		String myDate;
-			 
+		Button mAddEvent;
+		Button mMonth;
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
@@ -72,7 +50,26 @@ public class DayViewActivity extends Activity {
 			nTv2.setBackgroundColor(Color.BLUE);
 			
 			
+			mAddEvent = (Button) findViewById(R.id.add_event);
+			mAddEvent.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					Intent changeIntent = new Intent(DayViewActivity.this, EventFormActivity.class);
+					startActivity(changeIntent);
+				}
+			});
 			
+			mMonth = (Button) findViewById(R.id.month);
+			mMonth.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					Intent changeIntent = new Intent(DayViewActivity.this, MonthViewActivity.class);
+					startActivity(changeIntent);
+				}
+			});
 			
 			
 			
