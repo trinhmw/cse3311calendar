@@ -28,9 +28,9 @@
     <string name="confirm">Confirm</string>
 
     <string-array name="category_array">
-        <item>Category 1</item>
-        <item>Category 2</item>
-        <item>Category 3</item>
+        <item>Wrok</item>
+        <item>School</item>
+        <item>Personal</item>
     </string-array>
     <string-array name="all_day_array">
         <item>No</item>

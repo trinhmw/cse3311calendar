@@ -74,7 +74,7 @@ public class DayViewActivity extends Activity {
 					
 				}
 				else
-					timeAssignment(events, 0, 0);
+					timeAssignment(events, 0);
 				
 			}
 			/*
@@ -194,13 +194,17 @@ public class DayViewActivity extends Activity {
 		 * @param colorIndex
 		 * @return
 		 */
-		public Boolean timeAssignment(ArrayList<Event> events, int index, int colorIndex)
+		public Boolean timeAssignment(ArrayList<Event> events, int index)
 		
 		{
-			int cIndex = colorIndex;
+			int cIndex;
 			int sTime;
 			int eTime;
 			String time;
+			
+			for(int i = 0; i < events.size(); i++){
+			
+				index = i;
 			sTime = events.get(index).getStartTime()/60;
 			eTime = events.get(index).getEndTime()/60;
 			
@@ -217,28 +221,22 @@ public class DayViewActivity extends Activity {
 			int resID = getResources().getIdentifier(time, "id", "com.example.cse3311_calendar");
 			TextView nTv =(TextView)findViewById(resID);
 			nTv.setText(events.get(index).getName());
-			nTv.setBackgroundColor(colors[colorIndex]);
+			cIndex = events.get(index).getCategory();
+			nTv.setBackgroundColor(colors[cIndex]);
 			}
 			sTime = sTime + 1; //add an hour to the sTime
 			}
-
-			
-			//if there's still more event
-			if((events.size()-1)>=0)
-			{
-				//determine the next color
-				if(colorIndex==2)
-				{
-					cIndex = 0;
-				}
-				else
-				{
-					cIndex++;
-				}			
-				//proceed to next event
-				timeAssignment(events,index+1, cIndex);
 			}
-			
+
+			/*
+			//if there's still more event
+			if((events.size()-1)>0)
+			{
+						
+				//proceed to next event
+				timeAssignment(events,index+1);
+			}
+			*/
 			return true;
 			
 		}
