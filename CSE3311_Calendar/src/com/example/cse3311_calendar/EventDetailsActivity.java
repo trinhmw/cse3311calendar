@@ -1,0 +1,58 @@
+package com.example.cse3311_calendar;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
+import android.os.Bundle;
+import android.app.Activity;
+import android.content.Intent;
+import android.view.Menu;
+
+public class EventDetailsActivity extends Activity {
+	
+	EventListManager elm;
+
+	int day;
+	int month;
+	int year;
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_event_details);
+		
+		Intent intent = getIntent();
+        
+        Bundle inputBundle = intent.getExtras();
+        
+        if(inputBundle != null){
+	        day = inputBundle.getInt("day");
+	        month = inputBundle.getInt("month");
+	        year = inputBundle.getInt("year");
+        }
+        else
+        {
+        	Calendar cal = Calendar.getInstance();
+        	day = cal.get(Calendar.DAY_OF_MONTH);
+        	month = cal.get(Calendar.MONTH);
+        	year = cal.get(Calendar.YEAR);	        	
+        }
+		
+        //Get key
+        Date startDate = new Date(year,month,day);
+		elm = EventListManager.getInstance();
+		
+		//get event
+		ArrayList<Event> events= elm.getEvents(startDate.toString());
+		
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.event_details, menu);
+		return true;
+	}
+
+}

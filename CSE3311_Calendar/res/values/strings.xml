@@ -28,7 +28,7 @@
     <string name="confirm">Confirm</string>
 
     <string-array name="category_array">
-        <item>Wrok</item>
+        <item>Work</item>
         <item>School</item>
         <item>Personal</item>
     </string-array>
@@ -39,5 +39,6 @@
 
     <string name="title_activity_day_view">DayViewActivity</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_event_details">EventDetailsActivity</string>
 
 </resources>

@@ -201,6 +201,7 @@ public class DayViewActivity extends Activity {
 			int sTime;
 			int eTime;
 			String time;
+			int id;
 			
 			for(int i = 0; i < events.size(); i++){
 			
@@ -209,34 +210,41 @@ public class DayViewActivity extends Activity {
 			eTime = events.get(index).getEndTime()/60;
 			
 			while(sTime!=eTime) //while this event has not filled all their time slots
-			{
-			//determine time slot
-			time = time(sTime);
-			if(time.equals("none"))
-			{
-				//if there's no matching time slot, don't make textview
-			}
-			else
-			{//otherwise set the text view
-			int resID = getResources().getIdentifier(time, "id", "com.example.cse3311_calendar");
-			TextView nTv =(TextView)findViewById(resID);
-			nTv.setText(events.get(index).getName());
-			cIndex = events.get(index).getCategory();
-			nTv.setBackgroundColor(colors[cIndex]);
-			}
-			sTime = sTime + 1; //add an hour to the sTime
-			}
+				{
+					//determine time slot
+					time = time(sTime);
+					if(time.equals("none"))
+						{
+							//if there's no matching time slot, don't make textview
+						}
+					else
+					{//otherwise set the text view
+					int resID = getResources().getIdentifier(time, "id", "com.example.cse3311_calendar");
+					TextView nTv =(TextView)findViewById(resID);
+					nTv.setText(events.get(index).getName());
+					cIndex = events.get(index).getCategory();
+					nTv.setBackgroundColor(colors[cIndex]);
+					
+					
+					//ResourceID identified in R file
+					id = events.get(index).getId();
+					
+					nTv.setOnClickListener(new View.OnClickListener() {
+						
+						@Override
+						public void onClick(View v) {
+							Bundle info = new Bundle();
+							//Trying to put information of the id on the click so when it passes info to EventDetailActivity
+							Intent eventDetailsIntent = new Intent(DayViewActivity.this, EventDetailsActivity.class);
+							startActivity(eventDetailsIntent);
+						}
+					});				
+					
+					}
+					sTime = sTime + 1; //add an hour to the sTime
+				}
 			}
 
-			/*
-			//if there's still more event
-			if((events.size()-1)>0)
-			{
-						
-				//proceed to next event
-				timeAssignment(events,index+1);
-			}
-			*/
 			return true;
 			
 		}
