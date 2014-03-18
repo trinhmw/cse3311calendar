@@ -49,101 +49,126 @@ public class EditEventActivity extends Activity {
 		final TimePicker mStartTime = (TimePicker) findViewById(R.id.fStart_time);
 		final TimePicker mEndTime = (TimePicker) findViewById(R.id.fEnd_time);
 		
+		
+		Intent intent = getIntent();
+		
+		Bundle inputBundle = intent.getExtras();
+		
+		if(inputBundle != null){
+			day = inputBundle.getInt("day");
+			month = inputBundle.getInt("month");
+			year = inputBundle.getInt("year");
+		}
+		else
+		{
+			Calendar cal = Calendar.getInstance();
+			day = cal.get(Calendar.DAY_OF_MONTH);
+			month = cal.get(Calendar.MONTH);
+			year = cal.get(Calendar.YEAR);
+		}
+		
+		
+		Date startDate = new Date(year, month, day);
+		elm  = EventListManager.getInstance();
+		ArrayList<Event> events = elm.getEvents(startDate.toString());
+		if(events == null)
+		{
+			Log.d(TAG, "null");
+		}
+		else
+		{
+			if(events.isEmpty()){
+				
+			}
+			else{
+				
+			}
+		}
+		
+		et = (EditText) findViewById(R.id.fName);
+		et.setText(events.get(index).getName());
+		
+		et = (EditText) findViewById(R.id.fLocation);
+		et.setText(events.get(index).getLocation());
+		
+		
+		Date endDate = events.get(index).getEndDate();
+		int startTime = events.get(index).getStartTime();
+		int endTime = events.get(index).getEndTime();
+		
+		mEndDate.updateDate(endDate.getYear(), endDate.getMonth(), endDate.getDay());
+		mStartDate.updateDate(year, month, day);
+		mStartTime.setCurrentHour(startTime/60);
+		mStartTime.setCurrentMinute(startTime%60);
+		
+		mEndTime.setCurrentHour(endTime/60);
+		mEndTime.setCurrentMinute(endTime%60);
+		
+		
+		et = (EditText) findViewById(R.id.fDescription);
+		et.setText(events.get(index).getDescription());
+		
+		mCategorySpinner.setSelection(events.get(index).getCategory());
+		
+		
 		mConfirm = (Button) this.findViewById(R.id.confirm);
 		mConfirm.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				
-				
-				Intent intent = getIntent();
-				
-				Bundle inputBundle = intent.getExtras();
-				
-				if(inputBundle != null){
-					day = inputBundle.getInt("day");
-					month = inputBundle.getInt("month");
-					year = inputBundle.getInt("year");
-				}
-				else
-				{
-					Calendar cal = Calendar.getInstance();
-					day = cal.get(Calendar.DAY_OF_MONTH);
-					month = cal.get(Calendar.MONTH);
-					year = cal.get(Calendar.YEAR);
-				}
-				
-				
 				String tag = (String) v.getTag();
-
-				
-				Date startDate = new Date(year, month, day);
-				elm  = EventListManager.getInstance();
-				ArrayList<Event> events = elm.getEvents(startDate.toString());
-				if(events == null)
-				{
-					Log.d(TAG, "null");
-				}
-				else
-				{
-					if(events.isEmpty()){
-						
-					}
-					else{
-						
-					}
-				}
 				
 				et = (EditText) findViewById(R.id.fName);
-				et.setText(events.get(index).getName());
+				String name = et.getText().toString();
+				
 				
 				et = (EditText) findViewById(R.id.fLocation);
-				et.setText(events.get(index).getLocation());
+
+				String location = et.getText().toString();
 				
-				
-				Date endDate = events.get(index).getEndDate();
-				int startTime = events.get(index).getStartTime();
-				int endTime = events.get(index).getEndTime();
-				
-				mEndDate.updateDate(endDate.getYear(), endDate.getMonth(), endDate.getDay());
-				mStartDate.updateDate(year, month, day);
-				mStartTime.setCurrentHour(startTime/60);
-				mStartTime.setCurrentMinute(startTime%60);
-				
-				mEndTime.setCurrentHour(endTime/60);
-				mEndTime.setCurrentMinute(endTime%60);
-				
+				Date startDate = new Date(mStartDate.getYear(), mStartDate.getMonth(), mStartDate.getDayOfMonth());
+				Date endDate = new Date(mEndDate.getYear(), mEndDate.getMonth(), mEndDate.getDayOfMonth());
+				int startTime = mStartTime.getCurrentHour().intValue();
+				startTime = startTime * 60;
+				startTime = startTime + mStartTime.getCurrentMinute().intValue();
+				int endTime = mEndTime.getCurrentHour().intValue();
+				endTime = endTime * 60;
+				endTime = endTime + mEndTime.getCurrentMinute().intValue();
 				
 				et = (EditText) findViewById(R.id.fDescription);
-				et.setText(events.get(index).getDescription());
+				String description = et.getText().toString();
 				
-				mCategorySpinner.setSelection(events.get(index).getCategory());
 				
-				//mAllDaySpinner.setSelection(events.get(index).getAllDay);
+				int category = mCategorySpinner.getSelectedItemPosition();
 				
-				//bundle.putString("all_day", text);
+				boolean allDay;
+				String allDayString = mAllDaySpinner.getSelectedItem().toString();
+				if(allDayString.equals("Yes")){
+					allDay = true;
+				}else{
+					allDay = false;
+				}
 				
-				/*boolean result = AddEventController.addEvent(name, location, startDate, endDate, startTime, endTime, 
-						description, category, allDay);
-				
+				elm.getEvents(startDate.toString()).get(index).setName(name);
+				elm.getEvents(startDate.toString()).get(index).setLocation(location);
+				elm.getEvents(startDate.toString()).get(index).setEndDate(endDate);
+				elm.getEvents(startDate.toString()).get(index).setStartDate(startDate);
+				elm.getEvents(startDate.toString()).get(index).setStartTime(startTime);
+				elm.getEvents(startDate.toString()).get(index).setEndTime(endTime);
+				elm.getEvents(startDate.toString()).get(index).setDescription(description);
+				elm.getEvents(startDate.toString()).get(index).setCategory(category);
+				elm.getEvents(startDate.toString()).get(index).setAllDayOption(allDay);
+			
 
-				if(result == false){
-					Toast.makeText(EditEventActivity.this, "There was an error editing the Event", Toast.LENGTH_LONG).show();
-				}
-				else{
-					Intent changeIntent = new Intent(EditEventActivity.this, DayViewActivity.class);
-					Bundle bundle = new Bundle();
-					bundle.putInt("day", mStartDate.getDayOfMonth());
-					bundle.putInt("month", mStartDate.getMonth());
-					bundle.putInt("year", mStartDate.getYear());
-					changeIntent.putExtras(bundle);
-					startActivity(changeIntent);
-				}
-				*/
+				Intent changeIntent = new Intent(EditEventActivity.this, EventDetailsActivity.class);
+				Bundle bundle = new Bundle();
+				bundle.putInt("day", mStartDate.getDayOfMonth());
+				bundle.putInt("month", mStartDate.getMonth());
+				bundle.putInt("year", mStartDate.getYear());
+				bundle.putInt("index", index);
+				changeIntent.putExtras(bundle);
+				startActivity(changeIntent);
 				
-				//Toast.makeText(EventFormActivity.this, changeIntent.getExtras().getInt("start_time_hour"), Toast.LENGTH_LONG).show();
-				//String tmp = "" + changeIntent.getExtras().getInt("start_time_hour");
-				//Toast.makeText(EventFormActivity.this, tmp, Toast.LENGTH_LONG).show();
 				
 				
 				
