@@ -40,5 +40,6 @@
     <string name="title_activity_day_view">DayViewActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_event_details">EventDetailsActivity</string>
+    <string name="title_activity_edit_event">EditEventActivity</string>
 
 </resources>
