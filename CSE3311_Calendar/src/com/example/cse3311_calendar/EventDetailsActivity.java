@@ -18,6 +18,7 @@ public class EventDetailsActivity extends Activity {
 	int month;
 	int year;
 	int id;
+	int index;
 	
 	TextView mTemp;
 	
