@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
+import android.widget.TextView;
 
 public class EventDetailsActivity extends Activity {
 	
@@ -16,6 +17,9 @@ public class EventDetailsActivity extends Activity {
 	int day;
 	int month;
 	int year;
+	int id;
+	
+	TextView mTemp;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -23,9 +27,19 @@ public class EventDetailsActivity extends Activity {
 		setContentView(R.layout.activity_event_details);
 		
 		Intent intent = getIntent();
+		if(intent != null)
+		{
+        mTemp.setText("Not empty");
+		}
+		else
+		{
+			mTemp.setText("Empty");
+		}
         
-        Bundle inputBundle = intent.getExtras();
+        //mTemp =(TextView)findViewById(R.id.temp);
+        //mTemp.setText(id);
         
+        /*
         if(inputBundle != null){
 	        day = inputBundle.getInt("day");
 	        month = inputBundle.getInt("month");
@@ -38,13 +52,13 @@ public class EventDetailsActivity extends Activity {
         	month = cal.get(Calendar.MONTH);
         	year = cal.get(Calendar.YEAR);	        	
         }
-		
+		*/
         //Get key
-        Date startDate = new Date(year,month,day);
-		elm = EventListManager.getInstance();
+        //Date startDate = new Date(year,month,day);
+		//elm = EventListManager.getInstance();
 		
 		//get event
-		ArrayList<Event> events= elm.getEvents(startDate.toString());
+		//ArrayList<Event> events= elm.getEvents(startDate.toString());
 		
 	}
 

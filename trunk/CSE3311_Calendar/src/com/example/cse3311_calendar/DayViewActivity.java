@@ -26,6 +26,7 @@ public class DayViewActivity extends Activity {
 		int day;
 		int month;
 		int year;
+		int id;
 		
 		int colors[] = {Color.RED, Color.BLUE, Color.GREEN};
 		private final String TAG = "DayViewActivity";
@@ -201,7 +202,7 @@ public class DayViewActivity extends Activity {
 			int sTime;
 			int eTime;
 			String time;
-			int id;
+
 			
 			for(int i = 0; i < events.size(); i++){
 			
@@ -236,6 +237,7 @@ public class DayViewActivity extends Activity {
 							Bundle info = new Bundle();
 							//Trying to put information of the id on the click so when it passes info to EventDetailActivity
 							Intent eventDetailsIntent = new Intent(DayViewActivity.this, EventDetailsActivity.class);
+							eventDetailsIntent.putExtra("key", id);
 							startActivity(eventDetailsIntent);
 						}
 					});				
