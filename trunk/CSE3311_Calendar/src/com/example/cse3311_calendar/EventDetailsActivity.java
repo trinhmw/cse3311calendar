@@ -47,6 +47,7 @@ public class EventDetailsActivity extends Activity {
 	        day = inputBundle.getInt("day");
 	        month = inputBundle.getInt("month");
 	        year = inputBundle.getInt("year");
+	        id = inputBundle.getInt("id");
         }
         else
         {

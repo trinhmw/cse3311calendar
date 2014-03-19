@@ -223,7 +223,7 @@ public class DayViewActivity extends Activity {
 						public void onClick(View v) {
 							Bundle info = new Bundle();
 							info.putInt("id", id);//?
-							info.putInt("index", index);
+							//info.putInt("index", index);
 							info.putInt("day", day);
 							info.putInt("month", month);
 							info.putInt("year", year);
