@@ -27,6 +27,8 @@ public class EventDetailsActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_event_details);
 		
+		mTemp = (TextView) findViewById(R.id.temp);
+		
 		Intent intent = getIntent();
 		if(intent != null)
 		{
