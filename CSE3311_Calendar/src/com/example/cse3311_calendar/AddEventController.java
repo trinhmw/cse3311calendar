@@ -24,7 +24,6 @@ public class AddEventController
 	public static boolean addEvent( String name, String location, Date startDate, Date endDate, int startTime, 
 				int endTime, String description, int category, boolean allDayOption )
 	{
-		ArrayList<Event> tempEventList = new ArrayList<Event>();
 
 	     //create new Event
 		newEvent = new Event();

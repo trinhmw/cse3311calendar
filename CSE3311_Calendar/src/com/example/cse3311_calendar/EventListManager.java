@@ -124,5 +124,38 @@ public class EventListManager {
 		return toReturn;
 	}
 	
+	public Event getEventsById(String key, int id)
+	{
+		int i;
+		ArrayList<Event> dayList;
+		Event toReturn = null;
+		dayList = eventTable.get(key);
+		
+		for (i = 0; i < dayList.size(); i++){
+			if(dayList.get(i).getId() == id){
+				toReturn = dayList.get(i);
+			}
+		}
+		return toReturn;
+	}
+	
+	public boolean deleteEvent(String key, int id)
+	{
+		int i;
+		boolean result = false;
+		ArrayList<Event> dayList;
+		
+		dayList = eventTable.get(key);
+		
+		for (i = 0; (i < dayList.size())&&(!result); i++){
+			if(dayList.get(i).getId() == id){
+				dayList.remove(i);
+				result = true;
+			}
+		}
+		return result;
+		
+	}
+	
 
 }
