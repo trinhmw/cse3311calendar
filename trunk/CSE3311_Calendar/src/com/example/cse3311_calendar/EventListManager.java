@@ -16,7 +16,7 @@ public class EventListManager {
 	
 	private static EventListManager myself = null;
 	private static Hashtable<String, ArrayList<Event>> eventTable;
-	private int nextID;
+	private static int nextID;
 	private static final String saveLocation = "save.bin";
 	private static File saveFile;
 	
@@ -41,6 +41,12 @@ public class EventListManager {
 			catch(Exception e){
 				e.printStackTrace();
 				eventTable = new Hashtable<String, ArrayList<Event>> ();
+				ArrayList<Event> nextIDList = new ArrayList<Event>();
+				Event nextIDEvent = new Event();
+				nextIDEvent.setId(0);
+				nextIDList.add(nextIDEvent);
+				eventTable.put("next ID", nextIDList);
+				nextID = 0;
 			}
 			/*
 			catch (Exception e){
@@ -57,6 +63,8 @@ public class EventListManager {
 		
 		boolean added = false;
 		
+		nextID = eventTable.get("next ID").get(0).getId();
+		
 		newEvent.setId(nextID);
 		
 		String key = newEvent.getStartDate().toString();
@@ -67,6 +75,8 @@ public class EventListManager {
 			daysEvents = new ArrayList<Event>();
 			daysEvents.add(newEvent);
 			eventTable.put(key, daysEvents);
+			nextID++;
+			eventTable.get("next ID").get(0).setId(nextID);
 			added = true;
 		}
 		else{
@@ -87,6 +97,8 @@ public class EventListManager {
 			daysEvents.add(newEvent);
 			Collections.sort(daysEvents);
 			eventTable.put(key, daysEvents);
+			nextID++;
+			eventTable.get("next ID").get(0).setId(nextID);
 			added = true;	
 		}
 		
