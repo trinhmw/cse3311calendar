@@ -12,6 +12,9 @@ import java.util.Hashtable;
 
 import android.os.Environment;
 
+/**
+ * Manager of lists of events
+ */
 public class EventListManager {
 	
 	private static EventListManager myself = null;
@@ -20,10 +23,18 @@ public class EventListManager {
 	private static final String saveLocation = "save.bin";
 	private static File saveFile;
 	
+	/**
+	 * Instantiates a new event list manager, protected to avoid use
+	 */
 	protected EventListManager (){
 		
 	}
 	
+	/**
+	 * Gets the single instance of EventListManager.
+	 *
+	 * @return single instance of EventListManager
+	 */
 	public static EventListManager  getInstance(){
 		
 		if (myself == null){
@@ -59,6 +70,12 @@ public class EventListManager {
 		return myself;
 	}
 	
+	/**
+	 * Adds a new event to the list.
+	 *
+	 * @param newEvent the new event to be added
+	 * @return true, if successful
+	 */
 	public boolean addEvent(Event newEvent){
 		
 		boolean added = false;
@@ -117,6 +134,12 @@ public class EventListManager {
 		return added;
 	}
 	
+	/**
+	 * Gets the list of all events to be pulled
+	 *
+	 * @param key the key for the day to be pulled
+	 * @return the list of that day's events
+	 */
 	public ArrayList<Event> getEvents(String key)
 	{
 		ArrayList<Event> toReturn;
@@ -124,6 +147,13 @@ public class EventListManager {
 		return toReturn;
 	}
 	
+	/**
+	 * Gets a single event using key and id
+	 *
+	 * @param key the key of the event's day
+	 * @param id the id event to be pulled
+	 * @return the event corresponding to that day, or null if no event found
+	 */
 	public Event getEventsById(String key, int id)
 	{
 		int i;
@@ -139,6 +169,13 @@ public class EventListManager {
 		return toReturn;
 	}
 	
+	/**
+	 * Handles the deletion of an event
+	 *
+	 * @param key the key of the event to delete
+	 * @param id the id of the event to delete
+	 * @return true, if successful
+	 */
 	public boolean deleteEvent(String key, int id)
 	{
 		int i;
@@ -155,6 +192,24 @@ public class EventListManager {
 		}
 		return result;
 		
+	}
+
+	/**
+	 * Handles editing of an event
+	 *
+	 *@param toEditEvent new event to replace old
+	 * @param key the key to the old event
+	 * @param id the id to the old event
+	 * @return true, if successful
+	 */
+	public boolean editEvent(Event toEditEvent, String key, int id) {
+		
+		boolean result = this.addEvent(toEditEvent);
+		
+		if (result == true){
+			result = this.deleteEvent(key, id);
+		}
+		return false;
 	}
 	
 

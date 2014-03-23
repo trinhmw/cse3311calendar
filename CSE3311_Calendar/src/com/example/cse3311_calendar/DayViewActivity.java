@@ -13,6 +13,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+/**
+ * Activity for viewing events on a particular day
+ */
 public class DayViewActivity extends Activity {
 
 	String myDate;
@@ -30,11 +33,18 @@ public class DayViewActivity extends Activity {
 
 	int colors[] = { Color.RED, Color.BLUE, Color.GREEN };
 	private final String TAG = "DayViewActivity";
+	
+	int textViewResources[] = {R.id.time00, R.id.time01,R.id.time02,R.id.time03,R.id.time04,R.id.time05,
+			R.id.time06,R.id.time07,R.id.time08,R.id.time09,R.id.time10,R.id.time11,R.id.time12,R.id.time13,
+			R.id.time14,R.id.time15,R.id.time16,R.id.time17,R.id.time18,R.id.time19,R.id.time20,R.id.time21,
+			R.id.time22,R.id.time23};
 
+	//Function for creating the day view
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_day_view);
+		
 		// Get the message from the intent
 		Intent intent = getIntent();
 
@@ -44,24 +54,24 @@ public class DayViewActivity extends Activity {
 			day = inputBundle.getInt("day");
 			month = inputBundle.getInt("month");
 			year = inputBundle.getInt("year");
-		} else {
+		} 
+		//If intent is empty set current day
+		else {
 			Calendar cal = Calendar.getInstance();
 			day = cal.get(Calendar.DAY_OF_MONTH);
 			month = cal.get(Calendar.MONTH);
 			year = cal.get(Calendar.YEAR);
 		}
 		String myDate = "" + (month + 1) + "/" + day + "/" + year;
-		// set extra message to to myDate
-		// @+id/dayTextView
 
 		TextView dayText = (TextView) findViewById(R.id.dayTextView);
 		dayText.setText(myDate);
 
 		// Identify key and get the events
-		Date startDate = new Date(year, month, day);
+		Date currentDate = new Date(year, month, day);
 		elm = EventListManager.getInstance();
 
-		ArrayList<Event> events = elm.getEvents(startDate.toString());
+		ArrayList<Event> events = elm.getEvents(currentDate.toString());
 		if (events == null) {
 			Log.d(TAG, "null");
 		} else {
@@ -69,54 +79,50 @@ public class DayViewActivity extends Activity {
 
 			} else
 			{
+				//Handle filling in the time chart
 				index = 0;
 				timeAssignment(events);
 			}
 
 		}
-		/*
-		 * if(events.size()==0) { ; } else {
-		 */
-
-		/*
-		 * TextView nTv = (TextView)findViewById(R.id.time00);
-		 * nTv.setText("Get Doritos and cheese");
-		 * //nTv.setText(""+events.get(1).getStartTime());
-		 * nTv.setBackgroundColor(Color.RED); TextView nTv3 =
-		 * (TextView)findViewById(R.id.time01);
-		 * //nTv.setText("Get Doritos and cheese");
-		 * nTv3.setBackgroundColor(Color.RED);
-		 * 
-		 * TextView nTv2 = (TextView)findViewById(R.id.time04);
-		 * nTv2.setText("Meditate"); nTv2.setBackgroundColor(Color.BLUE);
-		 */
-		// }
-
+		
+		//Set up add event button
 		mAddEvent = (Button) findViewById(R.id.add_event);
 		mAddEvent.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				Intent changeIntent = new Intent(DayViewActivity.this,
 						EventFormActivity.class);
 				startActivity(changeIntent);
 			}
 		});
 
+		//Set up month view button
 		mMonth = (Button) findViewById(R.id.month);
 		mMonth.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				Intent changeIntent = new Intent(DayViewActivity.this,
-						MonthViewActivity.class);
-				startActivity(changeIntent);
+				
+
+				Bundle dataBundle = new Bundle();
+        		dataBundle.putInt("month", month);
+        		dataBundle.putInt("year", year);
+        		Intent changeIntent = new Intent(DayViewActivity.this, MonthViewActivity.class);
+        		changeIntent.putExtras(dataBundle);
+        		startActivity(changeIntent);
 			}
 		});
 
 	}
 
+	/**
+	 * Takes an int representing the hour and returns a string for that hour
+	 *
+	 * @param startTime the integer value of the time
+	 * @return the String value of the time
+	 */
 	public String time(int startTime) {
 		String time;
 		// determine timeslot
@@ -178,11 +184,9 @@ public class DayViewActivity extends Activity {
 	/**
 	 * timeAssignment - Determines the time slot of each event on a day and
 	 * creates a text view for each event recursively.
-	 * 
-	 * @param events
-	 * @param 
-	 * @param 
-	 * @return Boolean 
+	 *
+	 * @param events array list of the events for the day
+	 * @return true if successful
 	 */
 	public Boolean timeAssignment(ArrayList<Event> events)
 

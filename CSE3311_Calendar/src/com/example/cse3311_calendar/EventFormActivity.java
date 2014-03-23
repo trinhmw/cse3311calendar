@@ -15,6 +15,9 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+/**
+ * Activity for seeing add event form 
+ */
 public class EventFormActivity extends Activity {
 
 	Button mConfirm;
@@ -143,6 +146,11 @@ public class EventFormActivity extends Activity {
 		return true;
 	}
 	
+/**
+ * Handles when confirm button is clicked
+ *
+ * @param view the view
+ */
 public void confirmClick(View view){
 		
 		String tag = (String) view.getTag();
