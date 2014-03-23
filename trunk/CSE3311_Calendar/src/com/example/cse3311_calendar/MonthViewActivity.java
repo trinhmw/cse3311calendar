@@ -24,12 +24,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+// TODO: Auto-generated Javadoc
+
 /**
- * @author The Doctor
- *
- */
-/**
- * @author The Doctor
+ * Activity to show a whole month
  *
  */
 public class MonthViewActivity extends Activity {
@@ -157,11 +155,11 @@ public class MonthViewActivity extends Activity {
         return true;
     }
     
-    /*Resets entire view including calendar for new month
-     * Input:
-     * newMonth: 0-11 value of new month to set
-     * newYear: 4 digit new year to set
-     * 
+    /**
+     * Resets entire view including calendar for new month
+     *
+     * @param newMonth 0-11 value of new month to set
+     * @param newYear 4 digit new year to set
      */
     public void setActivityToDate(int newMonth, int newYear){
     	month = newMonth;
@@ -179,9 +177,10 @@ public class MonthViewActivity extends Activity {
         monthView.setAdapter(monthAdapter);
     }
     
-    /*Set value of nextMonthInt based on current month
-     * Input:
-     * currentMonth: 0-11 value of current month
+    /**
+     * Set value of nextMonthInt based on current month
+     *
+     * @param currentMonth 0-11 value of current month
      */
     public void setNextMonthInt(int currentMonth){
     	if(currentMonth == 11){
@@ -191,9 +190,11 @@ public class MonthViewActivity extends Activity {
         }
     }
     
-    /*Set value of prevMonthInt based on current month
-     * Input:
-     * currentMonth: 0-11 value of current month
+    
+    /**
+     * Set value of prevMonthInt based on current month
+     *
+     * @param currentMonth 0-11 value of current month
      */
     public void setPrevMonthInt(int currentMonth){
     	if (currentMonth == 0){
@@ -204,7 +205,7 @@ public class MonthViewActivity extends Activity {
     }
     
     
-    public class MonthCellAdapter extends BaseAdapter{
+    private class MonthCellAdapter extends BaseAdapter{
     	
     	private List <String> toAddList;
     	private int currentMonth, currentYear;
@@ -359,24 +360,7 @@ public class MonthViewActivity extends Activity {
 						event4.setImageResource(colors[eventList.get(3).getCategory()]);
 					}
 				}
-				//Handle getting events and setting event colors here
-				/*
-				if(thisDayInt == 4){
-					event4.setImageResource(R.drawable.blue_event);
-				}
 				
-				if(thisDayInt == 13){
-					event4.setImageResource(R.drawable.red_event);
-				}
-				
-				if(thisDayInt == 19){
-					event4.setImageResource(R.drawable.blue_event);
-				}
-				if(thisDayInt == 23){
-					event4.setImageResource(R.drawable.green_event);
-					event3.setImageResource(R.drawable.red_event);
-				}	
-				*/
 			}
 			return row;
 		}

@@ -12,6 +12,9 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
+/**
+ * Activity for viewing whole year
+ */
 public class YearViewActivity extends Activity {
 
 	
@@ -91,6 +94,11 @@ public class YearViewActivity extends Activity {
 		return true;
 	}
 	
+	/**
+	 * Handles if the month button is pressed
+	 *
+	 * @param view the view
+	 */
 	public void monthClick(View view){
 		
 		String tag = (String) view.getTag();

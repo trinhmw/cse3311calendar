@@ -10,6 +10,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.widget.TextView;
 
+/**
+ * Activity that displays details of an event
+ */
 public class EventDetailsActivity extends Activity {
 	
 	EventListManager elm;

@@ -18,6 +18,9 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+/**
+ * Handles showing a from for editing an event
+ */
 public class EditEventActivity extends Activity {
 	private Button mConfirm;
 	private Spinner mCategorySpinner;
@@ -28,6 +31,7 @@ public class EditEventActivity extends Activity {
 	private int day, month, year, id;
 	private final String TAG = "EditEventActivity";
 
+	//Function for creation of activity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
