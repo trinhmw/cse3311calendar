@@ -16,30 +16,30 @@ import android.os.Environment;
  * Manager of lists of events
  */
 public class EventListManager {
-	
+
 	private static EventListManager myself = null;
 	private static Hashtable<String, ArrayList<Event>> eventTable;
 	private static int nextID;
 	private static final String saveLocation = "save.bin";
 	private static File saveFile;
-	
+
 	/**
 	 * Instantiates a new event list manager, protected to avoid use
 	 */
 	protected EventListManager (){
-		
+
 	}
-	
+
 	/**
 	 * Gets the single instance of EventListManager.
 	 *
 	 * @return single instance of EventListManager
 	 */
 	public static EventListManager  getInstance(){
-		
+
 		if (myself == null){
 			myself = new EventListManager();
-			
+
 			try{
 				//String state = Environment.getExternalStorageState();
 				//String file = Environment.getExternalStorageDirectory().toString();
@@ -63,13 +63,13 @@ public class EventListManager {
 			catch (Exception e){
 				e.printStackTrace();
 			}
-			*/
-			
+			 */
+
 		}
-		
+
 		return myself;
 	}
-	
+
 	/**
 	 * Adds a new event to the list.
 	 *
@@ -77,17 +77,17 @@ public class EventListManager {
 	 * @return true, if successful
 	 */
 	public boolean addEvent(Event newEvent){
-		
+
 		boolean added = false;
-		
+
 		nextID = eventTable.get("next ID").get(0).getId();
-		
+
 		newEvent.setId(nextID);
-		
+
 		String key = newEvent.getStartDate().toString();
-		
+
 		ArrayList<Event> daysEvents  = eventTable.get(key);
-		
+
 		if (daysEvents == null){
 			daysEvents = new ArrayList<Event>();
 			daysEvents.add(newEvent);
@@ -110,7 +110,7 @@ public class EventListManager {
 					return added;
 				}
 			}
-			
+
 			daysEvents.add(newEvent);
 			Collections.sort(daysEvents);
 			eventTable.put(key, daysEvents);
@@ -118,7 +118,7 @@ public class EventListManager {
 			eventTable.get("next ID").get(0).setId(nextID);
 			added = true;	
 		}
-		
+
 		if(added == true){
 			try{
 				ObjectOutputStream outStream = new ObjectOutputStream(new FileOutputStream(saveFile));
@@ -130,10 +130,10 @@ public class EventListManager {
 				e.printStackTrace();
 			}
 		}
-		
+
 		return added;
 	}
-	
+
 	/**
 	 * Gets the list of all events to be pulled
 	 *
@@ -146,7 +146,7 @@ public class EventListManager {
 		toReturn = eventTable.get(key);
 		return toReturn;
 	}
-	
+
 	/**
 	 * Gets a single event using key and id
 	 *
@@ -160,7 +160,7 @@ public class EventListManager {
 		ArrayList<Event> dayList;
 		Event toReturn = null;
 		dayList = eventTable.get(key);
-		
+
 		for (i = 0; i < dayList.size(); i++){
 			if(dayList.get(i).getId() == id){
 				toReturn = dayList.get(i);
@@ -168,7 +168,7 @@ public class EventListManager {
 		}
 		return toReturn;
 	}
-	
+
 	/**
 	 * Handles the deletion of an event
 	 *
@@ -181,17 +181,30 @@ public class EventListManager {
 		int i;
 		boolean result = false;
 		ArrayList<Event> dayList;
-		
+
 		dayList = eventTable.get(key);
-		
+
 		for (i = 0; (i < dayList.size())&&(!result); i++){
 			if(dayList.get(i).getId() == id){
 				dayList.remove(i);
 				result = true;
 			}
 		}
+		if (result == true){
+			
+			eventTable.put(key, dayList);
+			try{
+				ObjectOutputStream outStream = new ObjectOutputStream(new FileOutputStream(saveFile));
+				outStream.writeObject(eventTable);
+				outStream.flush();
+				outStream.close();
+			}
+			catch (Exception e){
+				e.printStackTrace();
+			}
+		}
 		return result;
-		
+
 	}
 
 	/**
@@ -203,14 +216,14 @@ public class EventListManager {
 	 * @return true, if successful
 	 */
 	public boolean editEvent(Event toEditEvent, String key, int id) {
-		
+
 		boolean result = this.addEvent(toEditEvent);
-		
+
 		if (result == true){
 			result = this.deleteEvent(key, id);
 		}
 		return false;
 	}
-	
+
 
 }
