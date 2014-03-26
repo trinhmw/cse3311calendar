@@ -69,6 +69,8 @@ public class EventFormActivity extends Activity {
 				String location = et.getText().toString();
 				//bundle.putString("location", text);
 				
+				//Toast.makeText(EventFormActivity.this, "" + mStartDate.getYear(), Toast.LENGTH_LONG).show();
+				
 				Date startDate = new Date(mStartDate.getYear(), mStartDate.getMonth(), mStartDate.getDayOfMonth());
 				Date endDate = new Date(mEndDate.getYear(), mEndDate.getMonth(), mEndDate.getDayOfMonth());
 				int startTime = mStartTime.getCurrentHour().intValue();
