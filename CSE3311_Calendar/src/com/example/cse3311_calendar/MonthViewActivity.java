@@ -340,8 +340,10 @@ public class MonthViewActivity extends Activity {
 				
 				if(eventList != null){
 					int length = eventList.size();
-					
-					if(length == 1){
+					if(length == 0){
+						
+					}
+					else if(length == 1){
 						event4.setImageResource(colors[eventList.get(0).getCategory()]);
 					}
 					else if (length == 2){
