@@ -150,6 +150,11 @@ public class EventListManager {
 	{
 		ArrayList<Event> toReturn;
 		toReturn = eventTable.get(key);
+		/*
+		if (toReturn.isEmpty()){
+			toReturn = null;
+		}
+		*/
 		return toReturn;
 	}
 
