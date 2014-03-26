@@ -1,7 +1,8 @@
 package com.example.cse3311_calendar;
 
-import java.util.ArrayList;
 import java.util.Date;
+
+import android.util.Log;
 
 /**
  * Controller to handle the Edit Event Use Case, called statically.
@@ -25,9 +26,9 @@ public class EditEventController {
 	 * @param allDayOption Boolean indicating event is all day.
 	 * @param id Id of event that is being edited
 	 * @param key String key for event being edited (toString of a Date object)
-	 * @return true if successful, false if edit fails.
+	 * @return new Id if successful, 0 if edit fails.
 	 */
-	public static boolean editEvent( String name, String location, Date startDate, Date endDate, int startTime, 
+	public static int editEvent( String name, String location, Date startDate, Date endDate, int startTime, 
 			int endTime, String description, int category, boolean allDayOption, int id, String key )
 	{
 
@@ -38,6 +39,7 @@ public class EditEventController {
 		//Set name, can fail
 		boolean result = toEditEvent.setName(name);
 		if(result == true){
+			//Log.v("Failed to fill in.", "Name!");
 			//Set other attributes, not required
 			toEditEvent.setLocation(location);
 			toEditEvent.setDescription(description);
@@ -50,7 +52,7 @@ public class EditEventController {
 			}
 			//If all day is false go through and add start date and time, then
 			//confirm that end date and time are valid considering start day/time
-			else{
+			else{				
 				toEditEvent.setStartDateTime(startDate, startTime);
 				result = toEditEvent.setendDateTime(endDate, endTime);
 			}
@@ -58,10 +60,16 @@ public class EditEventController {
 		}
 		//If at any point the filling in of event failed return the false.
 		if(result == false){
-			return result;
+			return 0;
 		}
+		
 
-		return eventListMgr.editEvent(toEditEvent, key, id);
+		result =  eventListMgr.editEvent(toEditEvent, key, id);
+		
+		if(result == false){
+			return 0;	
+		}
+		return toEditEvent.getId();
 
 		
 	}

@@ -45,7 +45,7 @@ public class EditEventActivity extends Activity {
 		et = (EditText) findViewById(R.id.fName);
 
 		if(inputBundle == null){
-			et.setText("Unable to load event.");
+			et.setText("Unable to get Bundle.");
 
 		}
 		else
@@ -100,7 +100,7 @@ public class EditEventActivity extends Activity {
 				int startTime = currentEvent.getStartTime();
 				int endTime = currentEvent.getEndTime();
 
-				mEndDate.updateDate(endDate.getYear(), endDate.getMonth(), endDate.getDay());
+				mEndDate.updateDate(endDate.getYear(), endDate.getMonth(), endDate.getDate());
 				mStartDate.updateDate(year, month, day);
 				mStartTime.setCurrentHour(startTime/60);
 				mStartTime.setCurrentMinute(startTime%60);
@@ -153,11 +153,11 @@ public class EditEventActivity extends Activity {
 							allDay = false;
 						}
 						
-						boolean result = EditEventController.editEvent(name, location, startDate, endDate, startTime, endTime, 
+						int newId = EditEventController.editEvent(name, location, startDate, endDate, startTime, endTime, 
 								description, category, allDay, id, currentDate.toString());
 
 						
-						if(result == false){
+						if(newId == 0){
 							Toast.makeText(EditEventActivity.this, "There was an error editing the Event", Toast.LENGTH_LONG).show();
 						}
 						else{
@@ -167,7 +167,7 @@ public class EditEventActivity extends Activity {
 							bundle.putInt("day", mStartDate.getDayOfMonth());
 							bundle.putInt("month", mStartDate.getMonth());
 							bundle.putInt("year", mStartDate.getYear());
-							bundle.putInt("id", id);
+							bundle.putInt("id", newId);
 							changeIntent.putExtras(bundle);
 							startActivity(changeIntent);
 						}

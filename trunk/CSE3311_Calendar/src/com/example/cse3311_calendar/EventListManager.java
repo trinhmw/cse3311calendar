@@ -5,12 +5,12 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Hashtable;
 
 import android.os.Environment;
+import android.util.Log;
 
 /**
  * Manager of lists of events
@@ -97,7 +97,9 @@ public class EventListManager {
 			added = true;
 		}
 		else{
+			//Log.v("Failed to fill in.", "Else!" + daysEvents.size());
 			for(int i = 0; i < daysEvents.size(); i++){
+				
 				Event existingEvent = daysEvents.get(i);
 				if((newEvent.getStartTime() >= existingEvent.getStartTime()) &&
 						(newEvent.getStartTime() <= existingEvent.getEndTime())){
@@ -111,12 +113,15 @@ public class EventListManager {
 				}
 			}
 
+			//Log.v("Failed to fill in.", "Add!" + newEvent.getName());
 			daysEvents.add(newEvent);
 			Collections.sort(daysEvents);
 			eventTable.put(key, daysEvents);
+			//Log.v("Failed to fill in.", "Put!" + newEvent.getName());
 			nextID++;
 			eventTable.get("next ID").get(0).setId(nextID);
-			added = true;	
+			added = true;
+			//Log.v("Failed to fill in.", "added!" + added);
 		}
 
 		if(added == true){
@@ -131,6 +136,7 @@ public class EventListManager {
 			}
 		}
 
+		//Log.v("Failed to fill in.", "Final!" + added);
 		return added;
 	}
 
@@ -184,7 +190,9 @@ public class EventListManager {
 
 		dayList = eventTable.get(key);
 
+		Log.v("Failed to fill in.", "size" + dayList.size());
 		for (i = 0; (i < dayList.size())&&(!result); i++){
+			Log.v("Failed to fill in.", "In loop" + id + "list ID" + dayList.get(i).getId() + "name: " + dayList.get(i).getName());
 			if(dayList.get(i).getId() == id){
 				dayList.remove(i);
 				result = true;
@@ -217,12 +225,13 @@ public class EventListManager {
 	 */
 	public boolean editEvent(Event toEditEvent, String key, int id) {
 
-		boolean result = this.addEvent(toEditEvent);
+		boolean result = this.deleteEvent(key, id);
 
 		if (result == true){
-			result = this.deleteEvent(key, id);
+			//Log.v("Failed to fill in.", "Delete!");
+			result = this.addEvent(toEditEvent);
 		}
-		return false;
+		return result;
 	}
 
 
