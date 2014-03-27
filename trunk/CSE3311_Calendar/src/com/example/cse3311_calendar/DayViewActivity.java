@@ -33,18 +33,18 @@ public class DayViewActivity extends Activity {
 
 	int colors[] = { Color.RED, Color.BLUE, Color.GREEN };
 	private final String TAG = "DayViewActivity";
-	
+
 	int textViewResources[] = {R.id.time00, R.id.time01,R.id.time02,R.id.time03,R.id.time04,R.id.time05,
-			R.id.time06,R.id.time07,R.id.time08,R.id.time09,R.id.time10,R.id.time11,R.id.time12,R.id.time13,
-			R.id.time14,R.id.time15,R.id.time16,R.id.time17,R.id.time18,R.id.time19,R.id.time20,R.id.time21,
-			R.id.time22,R.id.time23};
+			R.id.time06,R.id.time07,R.id.time08,R.id.time09,R.id.time010,R.id.time011,R.id.time012,R.id.time013,
+			R.id.time014,R.id.time015,R.id.time016,R.id.time017,R.id.time018,R.id.time019,R.id.time020,R.id.time021,
+			R.id.time022,R.id.time023};
 
 	//Function for creating the day view
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_day_view);
-		
+
 		// Get the message from the intent
 		Intent intent = getIntent();
 
@@ -71,6 +71,29 @@ public class DayViewActivity extends Activity {
 		Date currentDate = new Date(year, month, day);
 		elm = EventListManager.getInstance();
 
+		for(int i = 0; i < textViewResources.length; i++){
+			TextView hour = (TextView) findViewById(textViewResources[i]);
+			hour.setTag("" + i);
+			hour.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					Bundle info = new Bundle();
+					int hour = Integer.parseInt((String) v.getTag());
+					info.putInt("day", day);
+					info.putInt("month", month);
+					info.putInt("year", year);
+					info.putInt("hour", hour);
+
+					Intent eventDetailsIntent = new Intent(
+							DayViewActivity.this,
+							EventFormActivity.class);
+					eventDetailsIntent.putExtras(info);
+					startActivity(eventDetailsIntent);
+				}
+			});
+		}
+
 		ArrayList<Event> events = elm.getEvents(currentDate.toString());
 		if (events == null) {
 			Log.d(TAG, "null");
@@ -85,7 +108,7 @@ public class DayViewActivity extends Activity {
 			}
 
 		}
-		
+
 		//Set up add event button
 		mAddEvent = (Button) findViewById(R.id.add_event);
 		mAddEvent.setOnClickListener(new View.OnClickListener() {
@@ -104,14 +127,14 @@ public class DayViewActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				
+
 
 				Bundle dataBundle = new Bundle();
-        		dataBundle.putInt("month", month);
-        		dataBundle.putInt("year", year);
-        		Intent changeIntent = new Intent(DayViewActivity.this, MonthViewActivity.class);
-        		changeIntent.putExtras(dataBundle);
-        		startActivity(changeIntent);
+				dataBundle.putInt("month", month);
+				dataBundle.putInt("year", year);
+				Intent changeIntent = new Intent(DayViewActivity.this, MonthViewActivity.class);
+				changeIntent.putExtras(dataBundle);
+				startActivity(changeIntent);
 			}
 		});
 
@@ -203,7 +226,7 @@ public class DayViewActivity extends Activity {
 			eTime = events.get(index).getEndTime() / 60;
 
 			while (sTime != eTime) // while this event has not filled all their
-									// time slots
+				// time slots
 			{
 				// determine time slot
 				time = time(sTime);
@@ -231,7 +254,7 @@ public class DayViewActivity extends Activity {
 							info.putInt("day", day);
 							info.putInt("month", month);
 							info.putInt("year", year);
-							
+
 							Intent eventDetailsIntent = new Intent(
 									DayViewActivity.this,
 									EventDetailsActivity.class);
