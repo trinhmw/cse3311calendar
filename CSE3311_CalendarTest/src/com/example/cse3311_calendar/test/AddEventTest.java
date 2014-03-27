@@ -31,7 +31,6 @@ public class AddEventTest extends
 	}
 	
 	public void testPreconditions(){
-		//assertNotNull();
 	}
 	
 	public void testAddEvent(){
@@ -59,7 +58,7 @@ public class AddEventTest extends
 		
 		boolean result = AddEventController.addEvent(name, location, startDate , endDate, startTime, endTime, description, category, allDay);		
 		
-		assertNotNull(result);
+		assertTrue(result);
 	}
 	
 	
