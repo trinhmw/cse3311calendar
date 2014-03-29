@@ -91,6 +91,7 @@ public class Event implements Comparable<Event>, Serializable{
 		return bool;
 	}
 	
+	
 	/**
 	 * Gets the id.
 	 *

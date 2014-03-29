@@ -76,6 +76,8 @@ public class EventFormActivity extends Activity {
 			endMinute  = cal.get(Calendar.MINUTE);
 		}
 		
+		
+		
 		endHour = startHour + 1;
 
 		mStartDate.updateDate(year, month, day);
@@ -95,6 +97,12 @@ public class EventFormActivity extends Activity {
 			public void onClick(View v) {
 
 
+				//Temp variables for repeat
+				boolean isRepeat = false;
+				Date lastDay = null;
+				int repeatedDays = 3;
+				
+				
 				String tag = (String) v.getTag();
 				//Bundle bundle = new Bundle();
 
@@ -157,7 +165,7 @@ public class EventFormActivity extends Activity {
 				//bundle.putString("all_day", text);
 
 				boolean result = AddEventController.addEvent(name, location, startDate, endDate, startTime, endTime, 
-						description, category, allDay);
+						description, category, allDay,isRepeat,repeatedDays,lastDay);
 
 				if(result == false){
 					Toast.makeText(EventFormActivity.this, "There was an error adding the Event", Toast.LENGTH_LONG).show();
