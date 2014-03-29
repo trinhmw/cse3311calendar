@@ -3,6 +3,8 @@ package com.example.cse3311_calendar;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.example.cse3311_calendar.R;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,6 +26,7 @@ public class EventFormActivity extends Activity {
 	private Button mConfirm;
 	private Spinner mCategorySpinner;
 	private Spinner mAllDaySpinner;
+	private Spinner mRepeatSpinner;
 	private EditText et;
 	private int startHour, endHour;
 	private int startMinute, endMinute;
@@ -50,6 +53,11 @@ public class EventFormActivity extends Activity {
 
 		final TimePicker mStartTime = (TimePicker) findViewById(R.id.fStart_time);
 		final TimePicker mEndTime = (TimePicker) findViewById(R.id.fEnd_time);
+		
+		final Spinner mRepeatSpinner = (Spinner) findViewById(R.id.fIsRepeat);
+		ArrayAdapter<CharSequence> adapterRepeat = ArrayAdapter.createFromResource(this, R.array.repeat_array, android.R.layout.simple_spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		mRepeatSpinner.setAdapter(adapterRepeat);
 		
 		// Get the message from the intent
 		Intent intent = getIntent();
@@ -154,6 +162,7 @@ public class EventFormActivity extends Activity {
 
 				int category = mCategorySpinner.getSelectedItemPosition();
 				//bundle.putString("category", text);
+				
 
 				boolean allDay;
 				String allDayString = mAllDaySpinner.getSelectedItem().toString();
@@ -164,8 +173,35 @@ public class EventFormActivity extends Activity {
 				}
 				//bundle.putString("all_day", text);
 
+				
+				boolean isRepeat;
+				int repeatedDays;
+				Date lastDay = new Date();
+				
+				String repeatString = mRepeatSpinner.getSelectedItem().toString();
+				
+				if(repeatString.equals("Yes")){
+					isRepeat = true;					
+				}
+			
+				else{
+					isRepeat = false;
+					repeatedDays = 0;
+				}
+				
+				et = (EditText) findViewById(R.id.fRepeated_Days);
+				repeatedDays = Integer.parseInt(et.getText().toString());
+				
+				//create last date by adding start date and number of repeated days
+				if(repeatedDays > 0){
+					Calendar now = Calendar.getInstance();
+					now.setTime(startDate);
+					now.add(Calendar.DAY_OF_MONTH, repeatedDays);
+					lastDay = now.getTime();
+				}
+				
 				boolean result = AddEventController.addEvent(name, location, startDate, endDate, startTime, endTime, 
-						description, category, allDay,isRepeat,repeatedDays,lastDay);
+						description, category, allDay,isRepeat, repeatedDays, lastDay);
 
 				if(result == false){
 					Toast.makeText(EventFormActivity.this, "There was an error adding the Event", Toast.LENGTH_LONG).show();
