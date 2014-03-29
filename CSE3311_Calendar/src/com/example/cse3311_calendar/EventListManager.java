@@ -7,10 +7,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Hashtable;
 
 import android.os.Environment;
-import android.util.Log;
 
 /**
  * Manager of lists of events
@@ -20,8 +20,11 @@ public class EventListManager {
 	private static EventListManager myself = null;
 	private static Hashtable<String, ArrayList<Event>> eventTable;
 	private static int nextID;
+	private static int rNextID;
 	private static final String saveLocation = "save.bin";
 	private static File saveFile;
+	private static File saveFileRepeats;
+	private static ArrayList<RepeatedEvent> repeatList;
 
 	/**
 	 * Instantiates a new event list manager, protected to avoid use
@@ -64,6 +67,28 @@ public class EventListManager {
 				e.printStackTrace();
 			}
 			 */
+			try{
+
+				saveFileRepeats = new File(Environment.getExternalStorageDirectory(), "/data2.dat");
+				saveFileRepeats.createNewFile();
+				ObjectInputStream inStream2 = new ObjectInputStream(new FileInputStream(saveFileRepeats));
+				repeatList = (ArrayList<RepeatedEvent>) inStream2.readObject();
+				inStream2.close();
+
+			}
+			catch(Exception e)
+			{
+
+				repeatList = new ArrayList<RepeatedEvent>();
+
+				RepeatedEvent nextIDRepeatEvent = new RepeatedEvent();
+				nextIDRepeatEvent.setId(-1);
+				repeatList.add(nextIDRepeatEvent);
+				rNextID = 0;
+
+
+			}
+
 
 		}
 
@@ -99,7 +124,7 @@ public class EventListManager {
 		else{
 			//Log.v("Failed to fill in.", "Else!" + daysEvents.size());
 			for(int i = 0; i < daysEvents.size(); i++){
-				
+
 				Event existingEvent = daysEvents.get(i);
 				if((newEvent.getStartTime() >= existingEvent.getStartTime()) &&
 						(newEvent.getStartTime() <= existingEvent.getEndTime())){
@@ -141,6 +166,46 @@ public class EventListManager {
 	}
 
 	/**
+	 * Adds a new repeated event to the list.
+	 *
+	 * @param rEvent the new repeated event to be added
+	 * @return true, if successful
+	 */
+	public boolean addRepeatedEvent(RepeatedEvent rEvent)
+	{
+
+		boolean added = false;
+		//get the next id
+		rNextID = repeatList.get(0).getId();
+		//set this event with that id	
+		rEvent.setId(rNextID);
+		//add event to list
+		repeatList.add(rEvent);
+		//move the id	
+		rNextID--;
+		//update new id to be filled
+		repeatList.get(0).setId(rNextID);
+		//set added flag to true
+		added = true;
+		//sort to the list
+		Collections.sort(repeatList);
+
+		if(added == true){
+			try{
+				ObjectOutputStream outStream = new ObjectOutputStream(new FileOutputStream(saveFileRepeats));
+				outStream.writeObject(repeatList);
+				outStream.flush();
+				outStream.close();
+			}
+			catch (Exception e){
+				e.printStackTrace();
+			}
+		}
+
+		return added;
+	}
+
+	/**
 	 * Gets the list of all events to be pulled
 	 *
 	 * @param key the key for the day to be pulled
@@ -154,7 +219,25 @@ public class EventListManager {
 		if (toReturn.isEmpty()){
 			toReturn = null;
 		}
-		*/
+		 */
+		//get the repeated events that repeat on key date and add to list
+		for(int i = 1;i<repeatList.size();i++)
+		{
+			@SuppressWarnings("deprecation")
+			Date testDate = new Date(key);
+			if(repeatList.get(i).isRepeated(testDate))
+			{
+				if(toReturn == null)
+				{
+					toReturn = new ArrayList<Event>();
+				}
+				toReturn.add(repeatList.get(i));
+			}
+		}
+
+		//sort the list 
+		if(toReturn != null)
+			Collections.sort(toReturn);
 		return toReturn;
 	}
 
@@ -170,6 +253,7 @@ public class EventListManager {
 		int i;
 		ArrayList<Event> dayList;
 		Event toReturn = null;
+
 		dayList = eventTable.get(key);
 
 		for (i = 0; i < dayList.size(); i++){
@@ -177,6 +261,29 @@ public class EventListManager {
 				toReturn = dayList.get(i);
 			}
 		}
+
+		return toReturn;
+	}
+
+	/**
+	 * Gets a single repeated event using key and id
+	 *
+	 * @param key the key of the event's day
+	 * @param id the id event to be pulled
+	 * @return the event corresponding to that day, or null if no event found
+	 */
+	public Event getRepeatedEventById(String key, int id)
+	{
+		int i;
+		RepeatedEvent toReturn = null;
+
+		for (i = 0; i < repeatList.size(); i++){
+			if(repeatList.get(i).getId() == id){
+				toReturn = repeatList.get(i);
+			}
+		}
+
+
 		return toReturn;
 	}
 
@@ -194,26 +301,48 @@ public class EventListManager {
 		ArrayList<Event> dayList;
 
 		dayList = eventTable.get(key);
+		if(id > 0){
 
-		Log.v("Failed to fill in.", "size" + dayList.size());
-		for (i = 0; (i < dayList.size())&&(!result); i++){
-			Log.v("Failed to fill in.", "In loop" + id + "list ID" + dayList.get(i).getId() + "name: " + dayList.get(i).getName());
-			if(dayList.get(i).getId() == id){
-				dayList.remove(i);
-				result = true;
+
+			for (i = 0; (i < dayList.size())&&(!result); i++){
+				if(dayList.get(i).getId() == id){
+					dayList.remove(i);
+					result = true;
+				}
+			}
+		}
+		else{
+			for (i = 0; (i < repeatList.size())&&(!result); i++){
+				if(repeatList.get(i).getId() == id){
+					repeatList.remove(i);
+					result = true;
+				}
 			}
 		}
 		if (result == true){
-			
-			eventTable.put(key, dayList);
-			try{
-				ObjectOutputStream outStream = new ObjectOutputStream(new FileOutputStream(saveFile));
-				outStream.writeObject(eventTable);
-				outStream.flush();
-				outStream.close();
+
+			if(i > 0){
+				eventTable.put(key, dayList);
+				try{
+					ObjectOutputStream outStream = new ObjectOutputStream(new FileOutputStream(saveFile));
+					outStream.writeObject(eventTable);
+					outStream.flush();
+					outStream.close();
+				}
+				catch (Exception e){
+					e.printStackTrace();
+				}
 			}
-			catch (Exception e){
-				e.printStackTrace();
+			else{
+				try{
+					ObjectOutputStream outStream = new ObjectOutputStream(new FileOutputStream(saveFileRepeats));
+					outStream.writeObject(repeatList);
+					outStream.flush();
+					outStream.close();
+				}
+				catch (Exception e){
+					e.printStackTrace();
+				}
 			}
 		}
 		return result;
@@ -239,5 +368,23 @@ public class EventListManager {
 		return result;
 	}
 
+	/**
+	 * Handles editing of a repeated event
+	 *
+	 *@param toEditEvent new event to replace old
+	 * @param key the key to the old event
+	 * @param id the id to the old event
+	 * @return true, if successful
+	 */
+	public boolean editRepeatedEvent(RepeatedEvent toEditEvent, String key, int id) {
+
+		boolean result = this.deleteEvent(key, id);
+
+		if (result == true){
+			//Log.v("Failed to fill in.", "Delete!");
+			result = this.addRepeatedEvent(toEditEvent);
+		}
+		return result;
+	}
 
 }
