@@ -45,6 +45,9 @@ public class AddEventTest extends
 		String description;
 		int category;
 		boolean allDay;
+		boolean isRepeat;
+		int repeatedDays;
+		Date lastDay;
 		
 		name = "EventName";
 		location = "EventLocation";
@@ -54,12 +57,16 @@ public class AddEventTest extends
 		endTime = 100;
 		description = "Event Description";
 		category = 1;
-		allDay = false;
+		allDay = false;   //temporary until implemented
+		isRepeat = false; //
+		repeatedDays = 0; //^
+		lastDay = null; //^
 		
-		boolean result = AddEventController.addEvent(name, location, startDate , endDate, startTime, endTime, description, category, allDay);		
+		boolean result = AddEventController.addEvent(name, location, startDate , endDate, startTime, endTime, description, category, allDay, isRepeat, repeatedDays, lastDay);		
 		
 		assertTrue(result);
 	}
+	
 	
 	
 	public void testEventData(){
@@ -77,7 +84,7 @@ public class AddEventTest extends
 		assertEquals(newEvent.getEndTime(), 100);
 		assertEquals(newEvent.getDescription(), "Event Description");
 		assertEquals(newEvent.getCategory(), 1);
-		
+		//add all day and repeats later on
 	}
 	
 
