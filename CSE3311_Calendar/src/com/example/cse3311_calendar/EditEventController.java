@@ -38,6 +38,9 @@ public class EditEventController {
 		EventListManager eventListMgr = EventListManager.getInstance();
 		if (id < 0){
 			toEditRepeatedEvent = eventListMgr.getRepeatedEventById(key, id);
+			if(toEditRepeatedEvent == null){
+				return 0;
+			}
 			//Set name, can fail
 			result = toEditRepeatedEvent.setName(name);
 			if(result == true){
@@ -76,6 +79,10 @@ public class EditEventController {
 		}
 		else{
 			toEditEvent = eventListMgr.getEventById(key, id);
+			
+			if(toEditEvent == null){
+				return 0;
+			}
 			//Set name, can fail
 			result = toEditEvent.setName(name);
 			if(result == true){

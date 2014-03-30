@@ -1,8 +1,10 @@
 package com.example.cse3311_calendar.test;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 
+import android.os.Environment;
 import android.test.ActivityInstrumentationTestCase2;
 
 import com.example.cse3311_calendar.AddEventController;
@@ -27,12 +29,22 @@ public class AddEventTest extends
 	protected void setUp() throws Exception{
 		super.setUp();
 		mActivity = this.getActivity();
+		new File(Environment.getExternalStorageDirectory(), "/data.dat").delete();
+		new File(Environment.getExternalStorageDirectory(), "/data2.dat").delete();
 		
 	}
 	
+	/*
 	public void testPreconditions(){
 	}
+	*/
 	
+	public void tearDown(){
+		new File(Environment.getExternalStorageDirectory(), "/data.dat").delete();
+		new File(Environment.getExternalStorageDirectory(), "/data2.dat").delete();
+	}
+	
+	/*
 	public void testAddEvent(){
 		
 		
@@ -66,12 +78,42 @@ public class AddEventTest extends
 		
 		assertTrue(result);
 	}
+	*/
 	
 	
 	
 	public void testEventData(){
-		Date startDate = new Date(2014, 5, 20);
-		Date endDate = new Date(2014, 5, 20);
+		String name;
+		String location;
+		Date startDate;
+		Date endDate;
+		int startTime;
+		int endTime;
+		String description;
+		int category;
+		boolean allDay;
+		boolean isRepeat;
+		int repeatedDays;
+		Date lastDay;
+		
+		name = "EventName";
+		location = "EventLocation";
+		startDate = new Date(2014, 5, 20);
+		endDate = new Date(2014, 5, 20);
+		startTime = 1;
+		endTime = 100;
+		description = "Event Description";
+		category = 1;
+		allDay = false;   //temporary until implemented
+		isRepeat = false; //
+		repeatedDays = 0; //^
+		lastDay = null; //^
+		
+		boolean result = AddEventController.addEvent(name, location, startDate , endDate, startTime, endTime, description, category, allDay, isRepeat, repeatedDays, lastDay);		
+		
+		assertTrue(result);
+		//Date startDate = new Date(2014, 5, 20);
+		//Date endDate = new Date(2014, 5, 20);
 		EventListManager elm = EventListManager.getInstance();
 		
 		ArrayList<Event> events = elm.getEvents(startDate.toString());
