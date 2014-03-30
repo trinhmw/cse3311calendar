@@ -5,9 +5,9 @@ import java.util.Calendar;
 public class EventNotification {
 	int eventID;
 	Calendar notificationDate;
-
+/*
 	public EventNotification(){
-		notificationDate = new Calendar.getInstance();
+		notificationDate = new Calendar();
 		eventID = 0;
 	}
 	
@@ -21,4 +21,6 @@ public class EventNotification {
 	
 	public void setEventID(int value){ this.eventID = value; }
 	public int getEventID(){ return this.eventID; }
+	
+	*/
 }

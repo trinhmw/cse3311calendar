@@ -1,6 +1,7 @@
 package com.example.cse3311_calendar;
 
 public class AlarmRecieverActivity {
+	/*
 	private MediaPlayer mMediaPlayer; 
 	 
     @Override
@@ -54,4 +55,5 @@ public class AlarmRecieverActivity {
         }
         return alert;
     }
+    */
 }

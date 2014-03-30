@@ -2,20 +2,20 @@ package com.example.cse3311_calendar;
 
 import java.util.Date;
 
-public class SetNotificationController {
-	
+public class NotificationController {
+	/*
 
 	public static boolean newNotification(int eventID, Date notificationDate, int notificationTime, int timeBefore){
-		/* 
-		 * Creates an EventNotification
-		 * Creates an EventListManager
-		 * Adds a notification to EventListManager
-		 * Updates next Notification
-		 * 
-		 * notificationTime is minutes
-		 * notificationDate is day of event
-		 * timeBefore is in minutes
-		 * */
+		
+		 //* Creates an EventNotification
+		 //* Creates an EventListManager
+		 //* Adds a notification to EventListManager
+		 //* Updates next Notification
+		 //* 
+		 //* notificationTime is minutes
+		 //* notificationDate is day of event
+		 //* timeBefore is in minutes
+		 
 		int hourOfDay = notificationTime / 60;
 		int minute = notificationTime % 60;
         Calendar cal = Calendar.getInstance(); //today
@@ -38,9 +38,9 @@ public class SetNotificationController {
 	}
 	
 	public void nextNotification( EventListManager em ){
-		/*
-		 * gets the next notification on list
-		 * */
+		//*
+		//* gets the next notification on list
+		//*
 		
 		//get newest notification from EventListManager
 	
@@ -55,4 +55,5 @@ public class SetNotificationController {
 	public void deleteNotification(){
 		
 	}
+	*/
 }
