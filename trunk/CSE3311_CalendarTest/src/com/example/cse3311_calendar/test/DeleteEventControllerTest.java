@@ -1,8 +1,10 @@
 package com.example.cse3311_calendar.test;
 
+import java.io.File;
 import java.util.Date;
 
 import junit.framework.TestCase;
+import android.os.Environment;
 import android.util.Log;
 
 import com.example.cse3311_calendar.DeleteEventController;
@@ -16,6 +18,9 @@ public class DeleteEventControllerTest extends TestCase {
 	private int id;
 	
 	public void setUp(){
+		
+		new File(Environment.getExternalStorageDirectory(), "/data.dat").delete();
+		new File(Environment.getExternalStorageDirectory(), "/data2.dat").delete();
 		elm = EventListManager.getInstance();
 		
 		Event newEvent = new Event();
@@ -28,6 +33,11 @@ public class DeleteEventControllerTest extends TestCase {
 		elm.addEvent(newEvent);
 		id = newEvent.getId();
 		Log.v("Failed to fill in.", "Id!" + newEvent.getId());
+	}
+	
+	public void tearDown(){
+		new File(Environment.getExternalStorageDirectory(), "/data.dat").delete();
+		new File(Environment.getExternalStorageDirectory(), "/data2.dat").delete();
 	}
 	
 	public void testDeleteEvent(){

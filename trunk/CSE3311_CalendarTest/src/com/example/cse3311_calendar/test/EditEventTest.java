@@ -1,8 +1,10 @@
 package com.example.cse3311_calendar.test;
 
+import java.io.File;
 import java.util.Date;
 
 import junit.framework.TestCase;
+import android.os.Environment;
 import android.util.Log;
 
 import com.example.cse3311_calendar.EditEventController;
@@ -12,11 +14,15 @@ import com.example.cse3311_calendar.EventListManager;
 public class EditEventTest extends TestCase {
 	int id;
 	Date key;
-	EventListManager elm;
+	
 
 	protected void setUp() throws Exception {
 		super.setUp();
-		elm = EventListManager.getInstance();
+		new File(Environment.getExternalStorageDirectory(), "/data.dat").delete();
+		new File(Environment.getExternalStorageDirectory(), "/data2.dat").delete();
+		EventListManager.killInstnace();
+		EventListManager elm = EventListManager.getInstance();
+
 		String name;
 		String location;
 		Date startDate;
@@ -57,17 +63,20 @@ public class EditEventTest extends TestCase {
 		// repeats...
 		elm.addEvent(newEvent);
 		id = newEvent.getId();
-		Log.v("DEBUGTEST", "SETUP id: " + id);
-		
+		Log.v("DEBUGTEST", "DEBUG EDITEVENTTEST id: " + id);
+		//System.out.println("id: "+ id);
+
 	}
 
 	protected void tearDown() throws Exception {
 		super.tearDown();
+		new File(Environment.getExternalStorageDirectory(), "/data.dat").delete();
+		new File(Environment.getExternalStorageDirectory(), "/data2.dat").delete();
 	}
-	
+
 	public void testAddedEvent(){
-            String name;
-            String location;
+		String name;
+		String location;
 		Date startDate;
 		Date endDate;
 		int startTime;
@@ -91,7 +100,8 @@ public class EditEventTest extends TestCase {
 		isRepeat = false; //
 		repeatedDays = 0; // ^
 		lastDay = null; // ^
-                
+
+		EventListManager elm = EventListManager.getInstance();
 		Event currentEvent = elm.getEventById(key.toString(), id);
 		assertEquals(currentEvent.getName(), name);
 		assertEquals(currentEvent.getLocation(), location);
@@ -104,7 +114,7 @@ public class EditEventTest extends TestCase {
 		assertEquals(currentEvent.getCategory(), 3);
 		Log.v("DEBUGTEST", "testAddedEvent id: " + id);
 	}
-	
+
 
 	public void testEditEvent() {
 		String name;
@@ -138,10 +148,31 @@ public class EditEventTest extends TestCase {
 				startTime, endTime, description, category, allDay, id,
 				key.toString());
 		
-		Log.v("DEBUGTEST", "id: " + id + "  newid:  " + newid + "  name:" + name);
-		
+		assertFalse(0 == newid);
+
+		Log.v("DEBUGTEST", "DEBUG id: " + id + "  newid:  " + newid + "  name:" + name);
+
+		//Date startDate = new Date(2015, 6, 11);
+		//Date endDate = new Date(2015, 6, 11);
+		EventListManager elm = EventListManager.getInstance();
+		Event currentEvent = elm.getEventById(startDate.toString(), newid);
+		if (currentEvent != null){
+			assertEquals(currentEvent.getName(), "EditEventName");
+			assertEquals(currentEvent.getLocation(), "EditEventLocation");
+			assertEquals(currentEvent.getStartDate().toString(),
+					startDate.toString());
+			assertEquals(currentEvent.getEndDate().toString(), endDate.toString());
+			assertEquals(currentEvent.getStartTime(), 4);
+			assertEquals(currentEvent.getEndTime(), 200);
+			assertEquals(currentEvent.getDescription(), "Edit Event Description");
+			assertEquals(currentEvent.getCategory(), 2);
+		}else{
+			fail();
+		}
+
 	}
 
+	/*
 	public void testEditEventData() {
 		Date startDate = new Date(2015, 6, 11);
 		Date endDate = new Date(2015, 6, 11);
@@ -156,5 +187,6 @@ public class EditEventTest extends TestCase {
 		assertEquals(currentEvent.getDescription(), "Edit Event Description");
 		assertEquals(currentEvent.getCategory(), 2);
 	}
+	 */
 
 }

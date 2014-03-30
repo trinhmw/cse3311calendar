@@ -54,14 +54,15 @@ public class EventListManager {
 				inStream.close();
 			}
 			catch(Exception e){
-				e.printStackTrace();
+				Log.v("DEBUG", "DEBUG Recreating Hashtable");
+				//e.printStackTrace();
 				eventTable = new Hashtable<String, ArrayList<Event>> ();
 				ArrayList<Event> nextIDList = new ArrayList<Event>();
 				Event nextIDEvent = new Event();
-				nextIDEvent.setId(0);
+				nextIDEvent.setId(1);
 				nextIDList.add(nextIDEvent);
 				eventTable.put("next ID", nextIDList);
-				nextID = 0;
+				nextID = 1;
 			}
 			/*
 			catch (Exception e){
@@ -256,6 +257,7 @@ public class EventListManager {
 		Event toReturn = null;
 
 		dayList = eventTable.get(key);
+		Log.v("Tag", "DEBUG size:" + dayList.size());
 
 		for (i = 0; i < dayList.size(); i++){
 			if(dayList.get(i).getId() == id){
@@ -391,5 +393,10 @@ public class EventListManager {
 		}
 		return result;
 	}
+	
+	public static void killInstnace(){
+		myself = null;
+	}
+	
 
 }
