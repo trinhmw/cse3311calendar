@@ -5,22 +5,22 @@ import java.util.Calendar;
 public class EventNotification {
 	int eventID;
 	Calendar notificationDate;
-/*
+
 	public EventNotification(){
-		notificationDate = new Calendar();
+		notificationDate = Calendar.getInstance();
 		eventID = 0;
 	}
 	
-	public EventNotification(int id, Calendar c){
+	public EventNotification(int id, Calendar a){
 		setEventID(id);
-		setNotificationDate(c);
+		setNotificationDate(a);
 	}
 	
 	public void setNotificationDate(Calendar value){ this.notificationDate = value; }
-	public Date getNotificationDate(){ return this.notificationDate; }
+	public Calendar getNotificationDate(){ return this.notificationDate; }
 	
 	public void setEventID(int value){ this.eventID = value; }
 	public int getEventID(){ return this.eventID; }
 	
-	*/
+	
 }
