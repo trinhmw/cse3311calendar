@@ -27,11 +27,11 @@
     <string name="start_date">Start Date:</string>
     <string name="confirm">Confirm</string>
     <string name="repeat">Repeat:</string>
-    <string name="repeated_days">Repeated Days:</string>
+    <string name="repeated_days">Repeated Every x Days:</string>
     
     <string-array name="repeat_array">
-        <item>Yes</item>
-        <item>No</item>      
+        <item>No</item>
+        <item>Yes</item>      
     </string-array>
 
     <string-array name="category_array">
@@ -50,5 +50,6 @@
     <string name="title_activity_edit_event">EditEventActivity</string>
     <string name="edit_event">Edit Event</string>
     <string name="delete_event">Delete Event</string>
+    <string name="last_date">Date to stop repeat:</string>
 
 </resources>

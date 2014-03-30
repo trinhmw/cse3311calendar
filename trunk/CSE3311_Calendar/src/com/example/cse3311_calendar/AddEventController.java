@@ -115,7 +115,7 @@ public class AddEventController
 			newRepeatedEvent.setDescription(description);
 			newRepeatedEvent.setCategory(category);
 			newRepeatedEvent.setAllDayOption(allDayOption);
-			newRepeatedEvent.setRepeatedDays(repeatedDays);
+			
 			if(lastDay  != null)
 			{
 				newRepeatedEvent.setLastDay(lastDay);
@@ -128,8 +128,13 @@ public class AddEventController
 				newRepeatedEvent.setStartDateTime(startDate, startTime);
 				result = newRepeatedEvent.setendDateTime(endDate, endTime);
 			}
+			if (result == true){
+				newRepeatedEvent.setTrueStartDate();
+				result = newRepeatedEvent.setRepeatedDays(repeatedDays);
+			}
 			
 		}
+		
 		if(result == false){
 			return result;
 		}

@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.Hashtable;
 
 import android.os.Environment;
+import android.util.Log;
 
 /**
  * Manager of lists of events
@@ -248,7 +249,7 @@ public class EventListManager {
 	 * @param id the id event to be pulled
 	 * @return the event corresponding to that day, or null if no event found
 	 */
-	public Event getEventsById(String key, int id)
+	public Event getEventById(String key, int id)
 	{
 		int i;
 		ArrayList<Event> dayList;
@@ -272,7 +273,7 @@ public class EventListManager {
 	 * @param id the id event to be pulled
 	 * @return the event corresponding to that day, or null if no event found
 	 */
-	public Event getRepeatedEventById(String key, int id)
+	public RepeatedEvent getRepeatedEventById(String key, int id)
 	{
 		int i;
 		RepeatedEvent toReturn = null;
@@ -282,6 +283,9 @@ public class EventListManager {
 				toReturn = repeatList.get(i);
 			}
 		}
+		Date currentDate = new Date(key);
+		toReturn.setStartDate(currentDate);
+		toReturn.setEndDate(currentDate);
 
 
 		return toReturn;
@@ -300,6 +304,7 @@ public class EventListManager {
 		boolean result = false;
 		ArrayList<Event> dayList;
 
+		Log.v("test", "value of id" + id);
 		dayList = eventTable.get(key);
 		if(id > 0){
 
@@ -321,7 +326,7 @@ public class EventListManager {
 		}
 		if (result == true){
 
-			if(i > 0){
+			if(id > 0){
 				eventTable.put(key, dayList);
 				try{
 					ObjectOutputStream outStream = new ObjectOutputStream(new FileOutputStream(saveFile));

@@ -16,25 +16,37 @@ public class RepeatedEvent extends Event
 	private int numberOfRepeatedDays;
 	//After this date the event should not repeat
 	private Date lastDay = null;
+	private Date trueStartDate = null;
 
 	//create setters and getters methods
 	public RepeatedEvent()
 	{
 	}
 	
+	/*
 	public RepeatedEvent(int id, String name, String location, Date startDate, Date endDate, int startTime, int endTime, String description, int category, boolean allDayOption, int numberOfDaysRepeat, Date lastDay)
 	{
-		/*
+		
 		super(id,  name,  location,  startDate, 
 		 endDate,  startTime,  endTime,  description, 
 		 category,  allDayOption);
-		 */
+		 
 		
 
 		numberOfRepeatedDays = numberOfDaysRepeat;
 		this.lastDay = lastDay;
 		
 	}
+	*/
+	
+	public void setTrueStartDate(){
+		trueStartDate = this.getStartDate();
+	}
+	
+	public Date getTrueStartDate(){
+		return trueStartDate;
+	}
+
 	//set the lastDay when to stop repeating, otherwise pass it null and will repeat forever
 	public void setLastDay(Date lastDay) {
 
@@ -46,9 +58,13 @@ public class RepeatedEvent extends Event
 		return lastDay;
 	}
 	//set the number of days between repeats
-	public void setRepeatedDays(int days)
+	public boolean setRepeatedDays(int days)
 	{
+		if(days < 1){
+			return false;
+		}
 		numberOfRepeatedDays = days;
+		return true;
 	}
 	//repeats the number of day interval for repeats
 	public int getRepeatedDays()
@@ -65,7 +81,7 @@ public class RepeatedEvent extends Event
 		}
 		long dayDifference = 0;
 		Date startDate = new Date();
-		startDate = getStartDate();
+		startDate = getTrueStartDate();
 	
 		
 		Calendar startC = Calendar.getInstance();

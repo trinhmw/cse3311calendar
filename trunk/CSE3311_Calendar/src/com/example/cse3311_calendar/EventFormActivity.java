@@ -50,6 +50,7 @@ public class EventFormActivity extends Activity {
 
 		final DatePicker mStartDate = (DatePicker) findViewById(R.id.fStart_date);
 		final DatePicker mEndDate = (DatePicker) findViewById(R.id.fEnd_date);
+		final DatePicker mLastDate = (DatePicker) findViewById(R.id.fLast_date);
 
 		final TimePicker mStartTime = (TimePicker) findViewById(R.id.fStart_time);
 		final TimePicker mEndTime = (TimePicker) findViewById(R.id.fEnd_time);
@@ -96,6 +97,7 @@ public class EventFormActivity extends Activity {
 		mEndTime.setCurrentHour(endHour);
 		mEndTime.setCurrentMinute(endMinute);
 		
+		mLastDate.updateDate(year, month, day);
 		
 
 		mConfirm = (Button) this.findViewById(R.id.confirm);
@@ -174,9 +176,7 @@ public class EventFormActivity extends Activity {
 				//bundle.putString("all_day", text);
 
 				
-				boolean isRepeat;
-				int repeatedDays;
-				Date lastDay = new Date();
+				
 				
 				String repeatString = mRepeatSpinner.getSelectedItem().toString();
 				
@@ -189,16 +189,16 @@ public class EventFormActivity extends Activity {
 					repeatedDays = 0;
 				}
 				
+				lastDay = new Date(mLastDate.getYear(), mLastDate.getMonth(), mLastDate.getDayOfMonth());
 				et = (EditText) findViewById(R.id.fRepeated_Days);
-				repeatedDays = Integer.parseInt(et.getText().toString());
 				
-				//create last date by adding start date and number of repeated days
-				if(repeatedDays > 0){
-					Calendar now = Calendar.getInstance();
-					now.setTime(startDate);
-					now.add(Calendar.DAY_OF_MONTH, repeatedDays);
-					lastDay = now.getTime();
+				try{
+				repeatedDays = Integer.parseInt(et.getText().toString());
+				}catch(Exception e){
+					repeatedDays = -1;
 				}
+				
+				
 				
 				boolean result = AddEventController.addEvent(name, location, startDate, endDate, startTime, endTime, 
 						description, category, allDay,isRepeat, repeatedDays, lastDay);

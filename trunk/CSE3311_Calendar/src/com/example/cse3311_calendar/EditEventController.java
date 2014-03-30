@@ -10,6 +10,7 @@ import android.util.Log;
 public class EditEventController {
 
 	private static Event toEditEvent;
+	private static RepeatedEvent toEditRepeatedEvent;
 	private EventListManager listManager;
 
 	/**
@@ -32,46 +33,85 @@ public class EditEventController {
 			int endTime, String description, int category, boolean allDayOption, int id, String key )
 	{
 
+		boolean result;
 		//Pull event to edit from EventList Manager
 		EventListManager eventListMgr = EventListManager.getInstance();
-		toEditEvent = eventListMgr.getEventsById(key, id);
+		if (id < 0){
+			toEditRepeatedEvent = eventListMgr.getRepeatedEventById(key, id);
+			//Set name, can fail
+			result = toEditRepeatedEvent.setName(name);
+			if(result == true){
+				//Log.v("Failed to fill in.", "Name!");
+				//Set other attributes, not required
+				toEditRepeatedEvent.setLocation(location);
+				toEditRepeatedEvent.setDescription(description);
+				toEditRepeatedEvent.setCategory(category);
+				toEditRepeatedEvent.setAllDayOption(allDayOption);
+				//If all day is true handle start Date specially
+				if(allDayOption == true){
+					toEditRepeatedEvent.setStartDate(startDate);
+					toEditRepeatedEvent.setEndDate(startDate);
+				}
+				//If all day is false go through and add start date and time, then
+				//confirm that end date and time are valid considering start day/time
+				else{				
+					toEditRepeatedEvent.setStartDateTime(startDate, startTime);
+					result = toEditRepeatedEvent.setendDateTime(endDate, endTime);
+				}
 
-		//Set name, can fail
-		boolean result = toEditEvent.setName(name);
-		if(result == true){
-			//Log.v("Failed to fill in.", "Name!");
-			//Set other attributes, not required
-			toEditEvent.setLocation(location);
-			toEditEvent.setDescription(description);
-			toEditEvent.setCategory(category);
-			toEditEvent.setAllDayOption(allDayOption);
-			//If all day is true handle start Date specially
-			if(allDayOption == true){
-				toEditEvent.setStartDate(startDate);
-				toEditEvent.setEndDate(startDate);
 			}
-			//If all day is false go through and add start date and time, then
-			//confirm that end date and time are valid considering start day/time
-			else{				
-				toEditEvent.setStartDateTime(startDate, startTime);
-				result = toEditEvent.setendDateTime(endDate, endTime);
+
+			//If at any point the filling in of event failed return the false.
+			if(result == false){
+				return 0;
 			}
 
-		}
-		//If at any point the filling in of event failed return the false.
-		if(result == false){
-			return 0;
-		}
-		
 
-		result =  eventListMgr.editEvent(toEditEvent, key, id);
-		
-		if(result == false){
-			return 0;	
-		}
-		return toEditEvent.getId();
+			result =  eventListMgr.editRepeatedEvent(toEditRepeatedEvent, key, id);
 
-		
+			if(result == false){
+				return 0;	
+			}
+			return toEditRepeatedEvent.getId();
+		}
+		else{
+			toEditEvent = eventListMgr.getEventById(key, id);
+			//Set name, can fail
+			result = toEditEvent.setName(name);
+			if(result == true){
+				//Log.v("Failed to fill in.", "Name!");
+				//Set other attributes, not required
+				toEditEvent.setLocation(location);
+				toEditEvent.setDescription(description);
+				toEditEvent.setCategory(category);
+				toEditEvent.setAllDayOption(allDayOption);
+				//If all day is true handle start Date specially
+				if(allDayOption == true){
+					toEditEvent.setStartDate(startDate);
+					toEditEvent.setEndDate(startDate);
+				}
+				//If all day is false go through and add start date and time, then
+				//confirm that end date and time are valid considering start day/time
+				else{				
+					toEditEvent.setStartDateTime(startDate, startTime);
+					result = toEditEvent.setendDateTime(endDate, endTime);
+				}
+
+			}
+			//If at any point the filling in of event failed return the false.
+			if(result == false){
+				return 0;
+			}
+
+
+			result =  eventListMgr.editEvent(toEditEvent, key, id);
+
+			if(result == false){
+				return 0;	
+			}
+			return toEditEvent.getId();
+		}
+
 	}
 }
 
