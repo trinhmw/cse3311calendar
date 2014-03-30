@@ -1,12 +1,16 @@
 package com.example.cse3311_calendar;
 
+import android.media.MediaPlayer;
+import android.os.Bundle;
+import android.view.Window;
+
 public class AlarmRecieverActivity {
-	/*
+/*	
 	private MediaPlayer mMediaPlayer; 
 	 
-    @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        
+    	super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -55,5 +59,5 @@ public class AlarmRecieverActivity {
         }
         return alert;
     }
-    */
+*/    
 }
