@@ -79,8 +79,13 @@ public class EditEventActivity extends Activity {
 			currentDate = new Date(year, month, day);
 			
 			elm  = EventListManager.getInstance();
-			
-			Event currentEvent = elm.getEventsById(currentDate.toString(), id);
+			Event currentEvent;
+			if(id < 0){
+				currentEvent = elm.getRepeatedEventById(currentDate.toString(), id);
+			}
+			else{
+			currentEvent = elm.getEventById(currentDate.toString(), id);
+			}
 			
 			if(currentEvent == null)
 			{

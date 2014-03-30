@@ -92,7 +92,7 @@ public class EditEventTest extends TestCase {
 		repeatedDays = 0; // ^
 		lastDay = null; // ^
                 
-		Event currentEvent = elm.getEventsById(key.toString(), id);
+		Event currentEvent = elm.getEventById(key.toString(), id);
 		assertEquals(currentEvent.getName(), name);
 		assertEquals(currentEvent.getLocation(), location);
 		assertEquals(currentEvent.getStartDate().toString(),
@@ -145,7 +145,7 @@ public class EditEventTest extends TestCase {
 	public void testEditEventData() {
 		Date startDate = new Date(2015, 6, 11);
 		Date endDate = new Date(2015, 6, 11);
-		Event currentEvent = elm.getEventsById(key.toString(), id);
+		Event currentEvent = elm.getEventById(key.toString(), id);
 		assertEquals(currentEvent.getName(), "EditEventName");
 		assertEquals(currentEvent.getLocation(), "EditEventLocation");
 		assertEquals(currentEvent.getStartDate().toString(),
