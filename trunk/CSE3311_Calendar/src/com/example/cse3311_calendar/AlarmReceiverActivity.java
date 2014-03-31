@@ -1,13 +1,25 @@
 package com.example.cse3311_calendar;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.view.Window;
 import android.widget.Button;
 
-public class AlarmReceiverActivity {
+public class AlarmReceiverActivity extends BroadcastReceiver{
 	
-	private MediaPlayer mMediaPlayer; 
+	@Override
+    public void onReceive(Context context, Intent intent)
+    {       
+            String phoneNumberReciver="5554"; //phone number
+            String message="EVENT REMINDER";  //Need to get event info
+            SmsManager sms = SmsManager.getDefault(); 
+            sms.sendTextMessage(phoneNumberReciver, null, message, null, null);
+     }
+	
 	 /*
     public void onCreate(Bundle savedInstanceState) {
         
