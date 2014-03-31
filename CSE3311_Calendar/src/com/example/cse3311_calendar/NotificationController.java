@@ -8,6 +8,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Toast;
 
 public class NotificationController {
 	
@@ -22,9 +23,9 @@ public class NotificationController {
 		 * notificationDate is day of event
 		 * timeBefore is in minutes
 		 */
-		
+		notificationTime = notificationTime - timeBefore;
 		int hour = notificationTime / 60; 
-		int minute = (notificationTime - timeBefore) % 60;
+		int minute = notificationTime % 60;
 		int day = notificationDate.getDay(); 
 		int month = notificationDate.getMonth();
 		int year = notificationDate.getYear();
@@ -53,8 +54,10 @@ public class NotificationController {
           
          if(am == null) //alarm was not set
         	 return false;
-         else
-        	 return true;
+         else{
+        	 Toast.makeText(context,("Notification set for " + month + "/" + day + " at " + hour + ":" + minute),Toast.LENGTH_LONG).show();
+        	 return true; 
+         }
 	}//end of newNotification()
 	
     /* UPDATE!!!
