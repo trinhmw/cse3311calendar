@@ -166,7 +166,8 @@ public class EventListManager {
 		//Log.v("Failed to fill in.", "Final!" + added);
 		return added;
 	}
-
+	
+	
 	/**
 	 * Adds a new repeated event to the list.
 	 *
