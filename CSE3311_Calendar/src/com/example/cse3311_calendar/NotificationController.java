@@ -47,7 +47,7 @@ public class NotificationController {
 		EventNotification en = new EventNotification(eventID, alarmDate);
 		
           Context context = null; 
-          Intent intent = new Intent(context, AlarmReceiverActivity.class);
+          Intent intent = new Intent(context, AlarmReceiver.class);
           PendingIntent alarmIntent = PendingIntent.getBroadcast(context.getApplicationContext(), eventID, intent, PendingIntent.FLAG_CANCEL_CURRENT);
           AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
           am.set(AlarmManager.RTC_WAKEUP, alarmDate.getTime(), alarmIntent);
@@ -91,7 +91,7 @@ public class NotificationController {
 
 	public boolean deleteNotification(AlarmManager am, int eventID){
 		Context context = null;
-		Intent intent = new Intent(context, AlarmReceiverActivity.class);
+		Intent intent = new Intent(context, AlarmReceiver.class);
 		PendingIntent alarmIntent = PendingIntent.getBroadcast(context, eventID, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 		am.cancel( alarmIntent );
 		if(am == null)
