@@ -284,7 +284,8 @@ public class Event implements Comparable<Event>, Serializable{
 	@Override
 	public int compareTo(Event another) {
 		Event toCompare = another;
-		int compare = this.getStartDate().compareTo(toCompare.getStartDate());
+		int compare = 0;
+		//compare = this.getStartDate().compareTo(toCompare.getStartDate());
 		if (compare == 0){
 			return   this.getStartTime() - toCompare.getStartTime() ;
 		}
