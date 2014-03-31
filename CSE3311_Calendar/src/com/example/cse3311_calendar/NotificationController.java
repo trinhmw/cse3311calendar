@@ -25,12 +25,8 @@ public class NotificationController {
 
 		int hour = notificationTime / 60; 
 		int minute = (notificationTime - timeBefore) % 60;
-		
-		@SuppressWarnings("deprecation")
 		int day = notificationDate.getDay(); 
-		@SuppressWarnings("deprecation")
 		int month = notificationDate.getMonth();
-		@SuppressWarnings("deprecation")
 		int year = notificationDate.getYear();
 		
 		Date alarmDate = new Date();
@@ -40,7 +36,7 @@ public class NotificationController {
 		alarmDate.setHours(hour); 
 		alarmDate.setMinutes(minute);
 		
-		/*
+		/* Same as above, but using Calendar Object
 		Calendar alarmDate = Calendar.getInstance();   //alarmDate = today, no other way to initialize it
 		alarmDate.setTime(notificationDate);           //alarmDate = notificationDate
 		alarmDate.add(Calendar.MINUTE, -timeBefore);   //alarmDate = notificationDate @ user requested time
@@ -59,12 +55,14 @@ public class NotificationController {
         //scheduleNotification( em );
           Context context = null;
           Intent intent = new Intent(context, AlarmReceiverActivity.class);
-          PendingIntent pendingIntent = PendingIntent.getActivity(context, 12345, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+          PendingIntent alarmIntent = PendingIntent.getBroadcast(context.getApplicationContext(), 12345, intent, PendingIntent.FLAG_CANCEL_CURRENT);
           AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-          am.set(AlarmManager.RTC_WAKEUP, alarmDate.getTime(), pendingIntent);
-          //deleteNotification( em, en.getEventID() );
-        
-        return false;
+          am.set(AlarmManager.RTC_WAKEUP, alarmDate.getTime(), alarmIntent);
+          
+          if(am == null) //alarm was not set
+        	  return false;
+          else
+        	  return true;
 	}
 	
 	public static void scheduleNotification( EventListManager em ){
@@ -84,9 +82,9 @@ public class NotificationController {
 		
         Intent intent = new Intent(context, AlarmReceiverActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 12345, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-        AlarmManager am = (AlarmManager)context.getSystemService(Activity.ALARM_SERVICE);
+        AlarmManager am = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         am.set(AlarmManager.RTC_WAKEUP, alarmDate.getTime(), pendingIntent);
-        deleteNotification( em, en.getEventID() );
+        //deleteNotification( em, en.getEventID() );
 	}
 	
 	public static void deleteNotification(EventListManager em, int eventID){
