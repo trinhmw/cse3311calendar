@@ -44,5 +44,10 @@ public class DeleteEventControllerTest extends TestCase {
 		Log.v("Failed to fill in.", "Id!" + id);
 		assertTrue(elm.deleteEvent(testDate.toString(), id));
 	}
+	
+	public void testDeleteEventFail(){
+		Log.v("Failed to fill in.", "Id!" + id);
+		assertFalse(elm.deleteEvent(testDate.toString(), (id + 1)));
+	}
 
 }
