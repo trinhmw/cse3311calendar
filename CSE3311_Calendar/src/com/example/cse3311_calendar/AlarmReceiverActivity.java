@@ -3,11 +3,12 @@ package com.example.cse3311_calendar;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Window;
+import android.widget.Button;
 
-public class AlarmRecieverActivity {
-/*	
+public class AlarmReceiverActivity {
+	
 	private MediaPlayer mMediaPlayer; 
-	 
+	 /*
     public void onCreate(Bundle savedInstanceState) {
         
     	super.onCreate(savedInstanceState);
@@ -59,5 +60,5 @@ public class AlarmRecieverActivity {
         }
         return alert;
     }
-*/    
+ */
 }
