@@ -9,7 +9,7 @@ import android.telephony.SmsManager;
 import android.view.Window;
 import android.widget.Button;
 
-public class AlarmReceiverActivity extends BroadcastReceiver{
+public class AlarmReceiver extends BroadcastReceiver{
 	
 	@Override
     public void onReceive(Context context, Intent intent)
