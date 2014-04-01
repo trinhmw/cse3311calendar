@@ -243,13 +243,17 @@ public class DayViewActivity extends Activity {
 					// ResourceID identified in R file
 					// Not sure if really needed?
 					id = events.get(index).getId();
+					nTv.setTag(Integer.toString(id));
 
 					nTv.setOnClickListener(new View.OnClickListener() {
 
 						@Override
 						public void onClick(View v) {
+							
+							int currentId = Integer.parseInt((String)v.getTag());
+							
 							Bundle info = new Bundle();
-							info.putInt("id", id);//?
+							info.putInt("id", currentId);//?
 							//info.putInt("index", index);
 							info.putInt("day", day);
 							info.putInt("month", month);
