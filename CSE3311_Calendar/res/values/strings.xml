@@ -51,5 +51,6 @@
     <string name="edit_event">Edit Event</string>
     <string name="delete_event">Delete Event</string>
     <string name="last_date">Date to stop repeat:</string>
+    <string name="day_view">Return to Day View</string>
 
 </resources>

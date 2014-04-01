@@ -46,6 +46,9 @@
             android:name="com.example.cse3311_calendar.EditEventActivity"
             android:label="@string/title_activity_edit_event" >
         </activity>
+        <receiver 
+            android:name=".MyBroadcastReceiver" android:enabled="true">
+  		</receiver>
     </application>
 
 </manifest>
