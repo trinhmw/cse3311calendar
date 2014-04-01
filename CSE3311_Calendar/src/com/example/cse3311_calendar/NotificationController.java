@@ -44,7 +44,7 @@ public class NotificationController {
    		*/
 		
 		//make Notification object Notification n = new Notification()
-		EventNotification en = new EventNotification(eventID, alarmDate);
+		//EventNotification en = new EventNotification(eventID, alarmDate);
 		
           Context context = null; 
           Intent intent = new Intent(context, AlarmReceiver.class);
