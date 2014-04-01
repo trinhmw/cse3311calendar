@@ -3,6 +3,8 @@ package com.example.cse3311_calendar;
 import java.util.Date;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -37,6 +39,24 @@ public class EventDetailsActivity extends Activity {
 		setContentView(R.layout.activity_event_details);
 
 		nameText = (TextView) findViewById(R.id.name);
+		
+		Button dayView = (Button) findViewById(R.id.day_view_button);
+		dayView.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+				Intent changeIntent = new Intent(EventDetailsActivity.this, DayViewActivity.class);
+				Bundle bundle = new Bundle();
+				bundle.putInt("day", day);
+				bundle.putInt("month", month);
+				bundle.putInt("year", year);
+				changeIntent.putExtras(bundle);
+				startActivity(changeIntent);
+
+			}
+		});
+		
 
 		Intent intent = getIntent();
 		Bundle inputBundle = intent.getExtras();
@@ -59,7 +79,7 @@ public class EventDetailsActivity extends Activity {
 		Event currentEvent;
 		//get event
 		if(id < 0){
-		currentEvent= elm.getRepeatedEventById(currentDate.toString(), id);
+			currentEvent= elm.getRepeatedEventById(currentDate.toString(), id);
 		}
 		else{
 			currentEvent= elm.getEventById(currentDate.toString(), id);
@@ -162,8 +182,8 @@ public class EventDetailsActivity extends Activity {
 
 				}
 			});
-			
-			
+
+
 			Button deleteButton = (Button) findViewById(R.id.delete_event);
 			deleteButton.setBackgroundColor(Color.RED);
 			deleteButton.setOnClickListener(new View.OnClickListener() {
@@ -171,22 +191,40 @@ public class EventDetailsActivity extends Activity {
 				@Override
 				public void onClick(View v) {
 					Log.v("onClick", "OnClick");
-					boolean result = DeleteEventController.deleteEvent(currentDate.toString(), id);
-					
-					if (result == false){
-						Toast.makeText(EventDetailsActivity.this, "Could not delete event."
-								, Toast.LENGTH_LONG).show();
-					}else{
+					DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							switch (which){
+							case DialogInterface.BUTTON_POSITIVE:
+								boolean result = DeleteEventController.deleteEvent(currentDate.toString(), id);
 
-					Intent changeIntent = new Intent(EventDetailsActivity.this, DayViewActivity.class);
-					Bundle bundle = new Bundle();
-					bundle.putInt("day", day);
-					bundle.putInt("month", month);
-					bundle.putInt("year", year);
-					
-					changeIntent.putExtras(bundle);
-					startActivity(changeIntent);
-					}
+								if (result == false){
+									Toast.makeText(EventDetailsActivity.this, "Could not delete event."
+											, Toast.LENGTH_LONG).show();
+								}else{
+
+									Intent changeIntent = new Intent(EventDetailsActivity.this, DayViewActivity.class);
+									Bundle bundle = new Bundle();
+									bundle.putInt("day", day);
+									bundle.putInt("month", month);
+									bundle.putInt("year", year);
+
+									changeIntent.putExtras(bundle);
+									startActivity(changeIntent);
+								}
+								break;
+
+							case DialogInterface.BUTTON_NEGATIVE:
+								//No button clicked
+								break;
+							}
+						}
+					};
+
+					AlertDialog.Builder builder = new AlertDialog.Builder(EventDetailsActivity.this);
+					builder.setMessage("Are you sure you want to delete?").setPositiveButton("Yes", dialogClickListener)
+					.setNegativeButton("No", dialogClickListener).show();
+
 
 				}
 			});
