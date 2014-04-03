@@ -13,8 +13,13 @@ public class AlarmReceiver extends BroadcastReceiver{
 	
 	@Override
     public void onReceive(Context context, Intent intent){  
+	/** How it Works: Receives broadcast from alarm manager at time of notification
+	 *	 	finds the next EventNotification from the EventListManager
+	 *		Gets the event info from the EventNotification
+	 *		sends event info to user via SMS message
+	 *		deletes the EventNotification from EventListManager
+	 **/
 			
-			/*
 			//get key and id
 			Calendar c = Calendar.getInstance();
 			Date d = c.getTime();
@@ -25,36 +30,31 @@ public class AlarmReceiver extends BroadcastReceiver{
 			
 			//get event via event list manager
 			EventListManager elm = EventListManager.getInstance();
-			Event e = elm.getEventById(key, id);
+			ArrayList<EventNotification> notificationList = elm.getNotificationList();
+			EventNotification next = notificationList.get(0);
 			
-			/*
-			ArrayList<Event> ale = elm.getEvents(key);
-			for(Event a : ale){
-				if( (a.getStartTime()*60*1000) == milliTime ){
-					e = a; break;
-				}
-			}
+			//check if the Event e actually has a notification at this time
+			//    i.e. an EventNotification was removed from list, but the notification itself wasn't
+			if(next.getEvent().getStartDate() == d ){ //if next EventNotification is scheduled for now
+				//extract event info from event object via Event List Manager
+				// the next notification will be listed 
+				String eventName = next.getEvent().getName();
+				String eventLocation = next.getEvent().getLocation();
+				int eventTime = next.getEvent().getStartTime();
+				int hour = eventTime / 60;
+				int minute = eventTime % 60;
+				String time = hour + ":" + minute;
 			
-			
-			//extract event info from event object
-			String eventName = e.getName();
-			String eventLocation = e.getLocation();
-			int eventTime = e.getStartTime();
-			int hour = eventTime / 60;
-			int minute = eventTime % 60;
-			String time = hour + ":" + minute;
-			
-			//format message to send to user
-			String message = eventName + "\nLocation: " + eventLocation + "\nTime: " + time;
-			*/
+				//format message to send to user
+				String message = eventName + "\nLocation: " + eventLocation + "\nTime: " + time;
 		
-			//get users phone number
-			String phoneNumberReciver = "5554";
-			String message = "This is an Event Reminder!";
-			//send SMS with Event information to user
-            SmsManager sms = SmsManager.getDefault(); 
-            sms.sendTextMessage(phoneNumberReciver, null, message, null, null);
-            
+				//get users phone number
+				String phoneNumberReciver = "5554";
+			
+				//send SMS with Event information to user
+				SmsManager sms = SmsManager.getDefault(); 
+				sms.sendTextMessage(phoneNumberReciver, null, message, null, null);
+			}
             
      }
 }

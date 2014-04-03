@@ -404,7 +404,7 @@ public class EventListManager {
 			//add to array list
 			notificationList.add(newNotification);
 			//sort array list
-			//Collections.sort(notificationList);
+			Collections.sort(notificationList);
 			
 			//create notification via NotificationController
 			//if( newNotification.getEvent().isRepeating() ) //is it a repeating event
@@ -430,7 +430,17 @@ public class EventListManager {
 
 		//Log.v("Failed to fill in.", "Final!" + added);
 		return added;
-	}
+	}//end of addNotification
+	
+	public ArrayList<EventNotification> getNotificationList(){
+		ArrayList<EventNotification> toReturn;
+		toReturn = notificationList;
+
+		//sort the list 
+		if(toReturn != null)
+			Collections.sort(toReturn);
+		return toReturn;
+	}//end of getNotificationList
 	
 	public boolean removeNotification(EventNotification notification){
 		boolean removed = false;
@@ -442,7 +452,7 @@ public class EventListManager {
 			removed = true;
 
 		return removed;
-	}
+	}//end of removeNotification
 	
 	public static void killInstnace(){
 		myself = null;
