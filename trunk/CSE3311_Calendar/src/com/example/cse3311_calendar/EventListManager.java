@@ -26,6 +26,7 @@ public class EventListManager {
 	private static File saveFile;
 	private static File saveFileRepeats;
 	private static ArrayList<RepeatedEvent> repeatList;
+	private static ArrayList<EventNotification> notificationList;
 
 	/**
 	 * Instantiates a new event list manager, protected to avoid use
@@ -393,6 +394,54 @@ public class EventListManager {
 			result = this.addRepeatedEvent(toEditEvent);
 		}
 		return result;
+	}
+	
+	public boolean addNotification(EventNotification newNotification){
+
+		boolean added = false;
+
+		if( !notificationList.contains(newNotification) ){//newNotification is unique
+			//add to array list
+			notificationList.add(newNotification);
+			//sort array list
+			//Collections.sort(notificationList);
+			
+			//create notification via NotificationController
+			//if( newNotification.getEvent().isRepeating() ) //is it a repeating event
+			
+			NotificationController nc = new NotificationController();
+			if( nc.createNotification(newNotification.getEvent(), newNotification.getNotificationTime()) ) //notification added
+				added = true;
+		}
+		else
+			added = false;
+
+		if(added == true){
+			try{
+				ObjectOutputStream outStream = new ObjectOutputStream(new FileOutputStream(saveFile));
+				outStream.writeObject(notificationList);
+				outStream.flush();
+				outStream.close();
+			}
+			catch (Exception e){
+				e.printStackTrace();
+			}
+		}
+
+		//Log.v("Failed to fill in.", "Final!" + added);
+		return added;
+	}
+	
+	public boolean removeNotification(EventNotification notification){
+		boolean removed = false;
+		//remove from notificationList
+		
+		//cancel notification
+		NotificationController nc = new NotificationController();
+		if( nc.deleteNotification( notification ) )
+			removed = true;
+
+		return removed;
 	}
 	
 	public static void killInstnace(){
