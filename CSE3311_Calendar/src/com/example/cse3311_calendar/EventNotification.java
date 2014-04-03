@@ -1,27 +1,26 @@
 package com.example.cse3311_calendar;
 
-import java.util.Calendar;
-import java.util.Date;
 
 public class EventNotification {
-	int eventID;
-	Date notificationDate;//Calendar notificationDate;
+	Event event;
+	int notificationTime;  //actual time of notification 
+	//(i.e. if event occurs at noon and notification is 15minutes before, then = 11:45)
 
 	public EventNotification(){
-		notificationDate = new Date();//Calendar.getInstance();
-		eventID = 0;
+		notificationTime = 0;
+		event = new Event();
 	}
 	
-	public EventNotification(int id, Date a){
-		setEventID(id);
-		setNotificationDate(a);
+	public EventNotification(Event e, int a){
+		setEvent(e);
+		setNotificationTime(a);
 	}
 	
-	public void setNotificationDate(Date value){ this.notificationDate = value; }
-	public Date getNotificationDate(){ return this.notificationDate; }
+	public void setNotificationTime(int value){ this.notificationTime = value; }
+	public int getNotificationTime(){ return this.notificationTime; }
 	
-	public void setEventID(int value){ this.eventID = value; }
-	public int getEventID(){ return this.eventID; }
+	public void setEvent(Event value){ this.event = value; }
+	public Event getEvent(){ return this.event; }
 	
 	
 }
