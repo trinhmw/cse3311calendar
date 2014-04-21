@@ -1,14 +1,17 @@
 package com.example.cse3311_calendar.test;
 
-import com.example.cse3311_calendar.MonthViewActivity;
-import com.example.cse3311_calendar.R;
-
-import android.app.Activity;
+import android.app.Instrumentation.ActivityMonitor;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.TouchUtils;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.cse3311_calendar.DayViewActivity;
+import com.example.cse3311_calendar.EventFormActivity;
+import com.example.cse3311_calendar.MonthViewActivity;
+import com.example.cse3311_calendar.R;
+import com.example.cse3311_calendar.YearViewActivity;
 
 public class MonthViewTest extends ActivityInstrumentationTestCase2<MonthViewActivity> {
 
@@ -16,6 +19,7 @@ public class MonthViewTest extends ActivityInstrumentationTestCase2<MonthViewAct
 	private Button prevMonth;
 	private Button nextMonth;
 	private Button yearViewChanger, dayViewChanger;
+	private Button mAddEvent;
 	private TextView currentMonth;
 	private int prevMonthInt;
 	private int nextMonthInt;
@@ -37,6 +41,7 @@ public class MonthViewTest extends ActivityInstrumentationTestCase2<MonthViewAct
 		yearViewChanger = (Button) activity.findViewById(R.id.year);
 		dayViewChanger = (Button) activity.findViewById(R.id.day);
 		currentMonth = (TextView) activity.findViewById(R.id.current_month);
+		mAddEvent = (Button) activity.findViewById(R.id.add_event);
 		
 	}
 
@@ -102,8 +107,39 @@ public class MonthViewTest extends ActivityInstrumentationTestCase2<MonthViewAct
 		
 	}
 	
+	@SmallTest
 	public void testClickYearViewChangerbutton(){
+		ActivityMonitor am = getInstrumentation().addMonitor(YearViewActivity.class.getName(),null,false);
 		
+		TouchUtils.clickView(this, yearViewChanger);
+		
+		YearViewActivity yva = (YearViewActivity) getInstrumentation().waitForMonitorWithTimeout(am,5);
+		assertNotNull(yva);
+		yva.finish();
 	}
+	
+	@SmallTest
+	public void testClickDayViewChangerbutton(){
+		ActivityMonitor am = getInstrumentation().addMonitor(DayViewActivity.class.getName(),null,false);
+		
+		TouchUtils.clickView(this, dayViewChanger);
+		
+		DayViewActivity dva = (DayViewActivity) getInstrumentation().waitForMonitorWithTimeout(am,5);
+		assertNotNull(dva);
+		dva.finish();
+	}
+	
+	@SmallTest
+	public void testClickAddEventbutton(){
+		ActivityMonitor am = getInstrumentation().addMonitor(EventFormActivity.class.getName(),null,false);
+		
+		TouchUtils.clickView(this, mAddEvent);
+		
+		EventFormActivity efa = (EventFormActivity) getInstrumentation().waitForMonitorWithTimeout(am,5);
+		assertNotNull(efa);
+		efa.finish();
+	}
+	
+	
 
 }
