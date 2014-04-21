@@ -5,7 +5,6 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.test.TouchUtils;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.example.cse3311_calendar.DayViewActivity;
 import com.example.cse3311_calendar.EventFormActivity;
@@ -20,7 +19,6 @@ public class MonthViewTest extends ActivityInstrumentationTestCase2<MonthViewAct
 	private Button nextMonth;
 	private Button yearViewChanger, dayViewChanger;
 	private Button mAddEvent;
-	private TextView currentMonth;
 	private int prevMonthInt;
 	private int nextMonthInt;
 	private int currMonthInt;
@@ -40,7 +38,6 @@ public class MonthViewTest extends ActivityInstrumentationTestCase2<MonthViewAct
 		prevMonth = (Button) activity.findViewById(R.id.prev_month);
 		yearViewChanger = (Button) activity.findViewById(R.id.year);
 		dayViewChanger = (Button) activity.findViewById(R.id.day);
-		currentMonth = (TextView) activity.findViewById(R.id.current_month);
 		mAddEvent = (Button) activity.findViewById(R.id.add_event);
 		
 	}

@@ -113,4 +113,8 @@ public class YearViewActivity extends Activity {
 		
 	}
 
+	public int getYear() {
+		return year;
+	}
+
 }
