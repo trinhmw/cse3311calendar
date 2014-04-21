@@ -368,6 +368,24 @@ public class MonthViewActivity extends Activity {
 		}
     
     }
+
+
+    /**
+     * For testing purposes
+     * @return
+     */
+	public int getNextMonthInt() {
+		return nextMonthInt;
+	}
+
+
+	/**
+	 * For testing purposes
+	 * @return
+	 */
+	public int getPrevMonthInt() {
+		return prevMonthInt;
+	}
     
     
 }
