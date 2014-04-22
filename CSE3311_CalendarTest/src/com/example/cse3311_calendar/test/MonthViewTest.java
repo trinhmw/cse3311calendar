@@ -77,19 +77,18 @@ public class MonthViewTest extends ActivityInstrumentationTestCase2<MonthViewAct
 	
 	@SmallTest
 	public void testClickPrevMonthButton(){
-		//fail("Not implemented yet");
 		nextMonthInt = activity.getNextMonthInt();
 		prevMonthInt = activity.getPrevMonthInt();
 		
-		if(prevMonthInt==12)
+		if(prevMonthInt==11)
 		{
-			assertEquals(1, nextMonthInt-1);
-			currMonthInt = 1;
+			assertEquals(0, nextMonthInt-1);
+			currMonthInt = 0;
 		}
-		else if(nextMonthInt==1)
+		else if(nextMonthInt==0)
 		{
-			assertEquals(12, prevMonthInt+1);
-			currMonthInt = 12;
+			assertEquals(11, prevMonthInt+1);
+			currMonthInt = 11;
 		}
 		else
 		{
