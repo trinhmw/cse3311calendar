@@ -5,6 +5,7 @@ import android.app.Instrumentation.ActivityMonitor;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.TouchUtils;
 import android.test.suitebuilder.annotation.SmallTest;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -45,7 +46,7 @@ public class YearViewTest extends
 	
 	
 	@SmallTest
-	public void testClickNextYearButton(){
+	public void testClick1NextYearButton(){
 		
 		year = activity.getYear();
 		
@@ -55,7 +56,7 @@ public class YearViewTest extends
 	}
 	
 	@SmallTest
-	public void testClickPrevYearButton(){
+	public void testClick2PrevYearButton(){
 		
 		year = activity.getYear();
 		
@@ -87,8 +88,11 @@ public class YearViewTest extends
 	}
 	
 	@SmallTest
-	public void testClickMonthImage0(){
+	public void testClickMonthImage0() throws InterruptedException{
 		month = (ImageView) activity.findViewById(R.id.january);
+		
+		Thread.sleep(3000);
+		
 		ActivityMonitor am = getInstrumentation().addMonitor(MonthViewActivity.class.getName(),null,false);
 		
 		TouchUtils.clickView(this, month);
@@ -100,21 +104,25 @@ public class YearViewTest extends
 	}
 	
 	@SmallTest
-	public void testClickMonthImage1(){
+	public void testClickMonthImage1() throws InterruptedException{
 		month = (ImageView) activity.findViewById(R.id.february);
+		
+		Thread.sleep(3000);
 		ActivityMonitor am = getInstrumentation().addMonitor(MonthViewActivity.class.getName(),null,false);
+		
 		
 		TouchUtils.clickView(this, month);
 		
 		MonthViewActivity mva = (MonthViewActivity) getInstrumentation().waitForMonitorWithTimeout(am,5);
 		assertNotNull(mva);
-		assertEquals(2, mva.getNextMonthInt());
+		assertEquals(2, mva.getNextMonthInt());//2
 		mva.finish();
 	}
 	
 	@SmallTest
-	public void testClickMonthImage2(){
+	public void testClickMonthImage2() throws InterruptedException{
 		month = (ImageView) activity.findViewById(R.id.march);
+		Thread.sleep(3000);
 		ActivityMonitor am = getInstrumentation().addMonitor(MonthViewActivity.class.getName(),null,false);
 		
 		TouchUtils.clickView(this, month);
@@ -126,8 +134,9 @@ public class YearViewTest extends
 	}
 	
 	@SmallTest
-	public void testClickMonthImage3(){
+	public void testClickMonthImage3() throws InterruptedException{
 		month = (ImageView) activity.findViewById(R.id.april);
+		Thread.sleep(3000);
 		ActivityMonitor am = getInstrumentation().addMonitor(MonthViewActivity.class.getName(),null,false);
 		
 		TouchUtils.clickView(this, month);
@@ -139,8 +148,9 @@ public class YearViewTest extends
 	}
 	
 	@SmallTest
-	public void testClickMonthImage4(){
+	public void testClickMonthImage4() throws InterruptedException{
 		month = (ImageView) activity.findViewById(R.id.may);
+		Thread.sleep(3000);
 		ActivityMonitor am = getInstrumentation().addMonitor(MonthViewActivity.class.getName(),null,false);
 		
 		TouchUtils.clickView(this, month);
@@ -152,8 +162,9 @@ public class YearViewTest extends
 	}
 	
 	@SmallTest
-	public void testClickMonthImage5(){
+	public void testClickMonthImage5() throws InterruptedException{
 		month = (ImageView) activity.findViewById(R.id.june);
+		Thread.sleep(3000);
 		ActivityMonitor am = getInstrumentation().addMonitor(MonthViewActivity.class.getName(),null,false);
 		
 		TouchUtils.clickView(this, month);
@@ -165,10 +176,17 @@ public class YearViewTest extends
 	}
 	
 	@SmallTest
-	public void testClickMonthImage6(){
+	public void testClickMonthImage6() throws InterruptedException{
 		month = (ImageView) activity.findViewById(R.id.july);
+		Thread.sleep(3000);
 		ActivityMonitor am = getInstrumentation().addMonitor(MonthViewActivity.class.getName(),null,false);
+	
 		
+		TouchUtils.dragQuarterScreenUp(this, activity);
+		TouchUtils.dragQuarterScreenUp(this, activity);
+		TouchUtils.dragQuarterScreenUp(this, activity);
+		
+
 		TouchUtils.clickView(this, month);
 		
 		MonthViewActivity mva = (MonthViewActivity) getInstrumentation().waitForMonitorWithTimeout(am,5);
@@ -178,10 +196,15 @@ public class YearViewTest extends
 	}
 	
 	@SmallTest
-	public void testClickMonthImage7(){
+	public void testClickMonthImage7() throws InterruptedException{
 		month = (ImageView) activity.findViewById(R.id.august);
+		Thread.sleep(3000);
 		ActivityMonitor am = getInstrumentation().addMonitor(MonthViewActivity.class.getName(),null,false);
 		
+
+		TouchUtils.dragQuarterScreenUp(this, activity);
+		TouchUtils.dragQuarterScreenUp(this, activity);
+		TouchUtils.dragQuarterScreenUp(this, activity);
 		TouchUtils.clickView(this, month);
 		
 		MonthViewActivity mva = (MonthViewActivity) getInstrumentation().waitForMonitorWithTimeout(am,5);
@@ -191,10 +214,14 @@ public class YearViewTest extends
 	}
 	
 	@SmallTest
-	public void testClickMonthImage8(){
+	public void testClickMonthImage8() throws InterruptedException{
 		month = (ImageView) activity.findViewById(R.id.september);
+		Thread.sleep(3000);
 		ActivityMonitor am = getInstrumentation().addMonitor(MonthViewActivity.class.getName(),null,false);
 		
+		TouchUtils.dragQuarterScreenUp(this, activity);
+		TouchUtils.dragQuarterScreenUp(this, activity);
+		TouchUtils.dragQuarterScreenUp(this, activity);
 		TouchUtils.clickView(this, month);
 		
 		MonthViewActivity mva = (MonthViewActivity) getInstrumentation().waitForMonitorWithTimeout(am,5);
@@ -204,10 +231,14 @@ public class YearViewTest extends
 	}
 	
 	@SmallTest
-	public void testClickMonthImage9(){
+	public void testClickMonthImage9() throws InterruptedException{
 		month = (ImageView) activity.findViewById(R.id.october);
+		Thread.sleep(3000);
 		ActivityMonitor am = getInstrumentation().addMonitor(MonthViewActivity.class.getName(),null,false);
 		
+		TouchUtils.dragQuarterScreenUp(this, activity);
+		TouchUtils.dragQuarterScreenUp(this, activity);
+		TouchUtils.dragQuarterScreenUp(this, activity);
 		TouchUtils.clickView(this, month);
 		
 		MonthViewActivity mva = (MonthViewActivity) getInstrumentation().waitForMonitorWithTimeout(am,5);
@@ -216,12 +247,16 @@ public class YearViewTest extends
 		mva.finish();
 	}
 	
-	/*
+	
 	@SmallTest
-	public void testClickMonthImage10(){
+	public void testClickMonthImage10() throws InterruptedException{
 		month = (ImageView) activity.findViewById(R.id.november);
+		Thread.sleep(3000);
 		ActivityMonitor am = getInstrumentation().addMonitor(MonthViewActivity.class.getName(),null,false);
 		
+		TouchUtils.dragQuarterScreenUp(this, activity);
+		TouchUtils.dragQuarterScreenUp(this, activity);
+		TouchUtils.dragQuarterScreenUp(this, activity);
 		TouchUtils.clickView(this, month);
 		
 		MonthViewActivity mva = (MonthViewActivity) getInstrumentation().waitForMonitorWithTimeout(am,5);
@@ -231,10 +266,14 @@ public class YearViewTest extends
 	}
 	
 	@SmallTest
-	public void testClickMonthImage11(){
+	public void testClickMonthImage11() throws InterruptedException{
 		month = (ImageView) activity.findViewById(R.id.december);
+		Thread.sleep(3000);
 		ActivityMonitor am = getInstrumentation().addMonitor(MonthViewActivity.class.getName(),null,false);
 		
+		TouchUtils.dragQuarterScreenUp(this, activity);
+		TouchUtils.dragQuarterScreenUp(this, activity);
+		TouchUtils.dragQuarterScreenUp(this, activity);
 		TouchUtils.clickView(this, month);
 		
 		MonthViewActivity mva = (MonthViewActivity) getInstrumentation().waitForMonitorWithTimeout(am,5);
@@ -242,7 +281,7 @@ public class YearViewTest extends
 		assertEquals(0, mva.getNextMonthInt());
 		mva.finish();
 	}
-	*/
+	
 	
 
 

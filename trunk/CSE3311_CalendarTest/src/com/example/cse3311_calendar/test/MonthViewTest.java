@@ -5,6 +5,7 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.test.TouchUtils;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.example.cse3311_calendar.DayViewActivity;
 import com.example.cse3311_calendar.EventFormActivity;
@@ -22,6 +23,7 @@ public class MonthViewTest extends ActivityInstrumentationTestCase2<MonthViewAct
 	private int prevMonthInt;
 	private int nextMonthInt;
 	private int currMonthInt;
+	private ImageView dayImage;
 	
 	public MonthViewTest() {
 		super(MonthViewActivity.class);
@@ -39,6 +41,7 @@ public class MonthViewTest extends ActivityInstrumentationTestCase2<MonthViewAct
 		yearViewChanger = (Button) activity.findViewById(R.id.year);
 		dayViewChanger = (Button) activity.findViewById(R.id.day);
 		mAddEvent = (Button) activity.findViewById(R.id.add_event);
+		dayImage = (ImageView) activity.findViewById(R.id.imageView1);
 		
 	}
 
@@ -136,6 +139,16 @@ public class MonthViewTest extends ActivityInstrumentationTestCase2<MonthViewAct
 		efa.finish();
 	}
 	
+	@SmallTest
+	public void testClickSingleDaybutton(){
+		ActivityMonitor am = getInstrumentation().addMonitor(DayViewActivity.class.getName(),null,false);
+		
+		TouchUtils.clickView(this, dayImage);
+		
+		DayViewActivity dva = (DayViewActivity) getInstrumentation().waitForMonitorWithTimeout(am,5);
+		assertNotNull(dva);
+		dva.finish();
+	}
 	
 
 }
