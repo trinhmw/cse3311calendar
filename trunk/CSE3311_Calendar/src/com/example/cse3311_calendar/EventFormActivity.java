@@ -258,4 +258,8 @@ public class EventFormActivity extends Activity {
 
 	}
 
+	public int getStartHour() {
+		return startHour;
+	}
+
 }
