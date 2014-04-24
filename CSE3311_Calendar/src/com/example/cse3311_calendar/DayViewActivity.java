@@ -20,6 +20,7 @@ public class DayViewActivity extends Activity {
 
 	String myDate;
 	Button mAddEvent;
+	Button mGroupEvent;
 	Button mMonth;
 	EventListManager elm;
 	String key;
@@ -121,6 +122,19 @@ public class DayViewActivity extends Activity {
 			}
 		});
 
+		
+		//Set up group event button
+				mGroupEvent = (Button) findViewById(R.id.group_event);
+				mGroupEvent.setOnClickListener(new View.OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						Intent changeIntent = new Intent(DayViewActivity.this,
+								GroupEventFormActivity.class);
+						startActivity(changeIntent);
+					}
+				});		
+				
 		//Set up month view button
 		mMonth = (Button) findViewById(R.id.month);
 		mMonth.setOnClickListener(new View.OnClickListener() {

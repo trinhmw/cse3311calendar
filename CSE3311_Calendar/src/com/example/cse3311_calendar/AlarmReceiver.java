@@ -19,7 +19,7 @@ public class AlarmReceiver extends BroadcastReceiver{
 	 *		sends event info to user via SMS message
 	 *		deletes the EventNotification from EventListManager
 	 **/
-			
+			/*
 			//get key and id
 			Calendar c = Calendar.getInstance();
 			Date d = c.getTime();
@@ -55,6 +55,6 @@ public class AlarmReceiver extends BroadcastReceiver{
 				SmsManager sms = SmsManager.getDefault(); 
 				sms.sendTextMessage(phoneNumberReciver, null, message, null, null);
 			}
-            
+            */
      }
 }

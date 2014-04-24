@@ -48,17 +48,50 @@
             android:text="@string/add_event" />
         
     </LinearLayout>
-
+    
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/viewSelectorLayout"
         android:layout_below="@+id/viewSelectorLayout"
-        android:layout_marginTop="11dp" >
+        android:layout_marginTop="5dp" >
+        
+        <Button
+            android:id="@+id/pending"
+            android:layout_width="102dp"
+            android:layout_height="wrap_content"
+            android:text="@string/pending" />
+    	
+        
+        
+    </LinearLayout>
+    
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/viewSelectorLayout"
+        android:layout_below="@+id/viewSelectorLayout"
+        android:layout_marginTop="5dp" >
+        	
+        <Button
+            android:id="@+id/group_event"
+            android:layout_width="102dp"
+            android:layout_height="wrap_content"
+            android:text="@string/group_event" />
+        
+    </LinearLayout>
 
         
-
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/viewSelectorLayout"
+        android:layout_below="@+id/linearLayout1"
+        android:layout_marginTop="11dp" >
         <Button
             android:id="@+id/prev_month"
             android:layout_width="wrap_content"
@@ -87,8 +120,8 @@
         android:id="@+id/month_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/linearLayout1"
-        android:layout_below="@+id/linearLayout1"
+        android:layout_alignLeft="@+id/linearLayout2"
+        android:layout_below="@+id/linearLayout2"
         android:verticalSpacing="1dp"
         android:horizontalSpacing="1dp"
         android:numColumns="7" 

@@ -11,6 +11,11 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="8" />
+    
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+<uses-permission android:name="android.permission.RECEIVE_SMS"></uses-permission>
+<uses-permission android:name="android.permission.READ_SMS" />
+<uses-permission android:name="android.permission.SEND_SMS"></uses-permission> ​
 
     <application
         android:name="android.app.Application"
@@ -48,9 +53,21 @@
             android:name="com.example.cse3311_calendar.EditEventActivity"
             android:label="@string/title_activity_edit_event" >
         </activity>
-        
+        <activity
+            android:name="com.example.cse3311_calendar.GroupEventFormActivity"
+            android:label="@string/title_group_activity_event_form" >
+        </activity>
+        <activity
+            android:name="com.example.cse3311_calendar.PendingGroupEventActivity"
+            android:label="@string/title_pending_group_event" >
+        </activity>
+       
         <receiver 
-            android:name=".MyBroadcastReceiver" android:enabled="true">
-  		</receiver>
+            android:name=".NewGroupBroadcast" android:enabled="true">
+            <intent-filter>
+        <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+    </intent-filter>
+  </receiver>​
+  		
     </application>
 </manifest>

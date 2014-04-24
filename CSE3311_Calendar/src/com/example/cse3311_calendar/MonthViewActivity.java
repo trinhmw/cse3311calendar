@@ -46,6 +46,8 @@ public class MonthViewActivity extends Activity {
 	
 	
 	private Button mAddEvent;
+	private Button mAddGroupEvent;
+	private Button mViewPending;
 	
     /* Basic creation code
      * 
@@ -140,6 +142,30 @@ public class MonthViewActivity extends Activity {
 			public void onClick(View arg0) {
 //				Toast.makeText(MonthViewActivity.this, R.string.add_event, Toast.LENGTH_LONG).show();
 				Intent changeIntent = new Intent(MonthViewActivity.this, EventFormActivity.class);
+				startActivity(changeIntent);
+				
+			}
+		});
+        
+        mAddGroupEvent = (Button) this.findViewById(R.id.group_event);
+        mAddGroupEvent.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+//				Toast.makeText(MonthViewActivity.this, R.string.add_event, Toast.LENGTH_LONG).show();
+				Intent changeIntent = new Intent(MonthViewActivity.this, GroupEventFormActivity.class);
+				startActivity(changeIntent);
+				
+			}
+		});
+        
+        mViewPending = (Button) this.findViewById(R.id.pending);
+        mViewPending.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+//				Toast.makeText(MonthViewActivity.this, R.string.add_event, Toast.LENGTH_LONG).show();
+				Intent changeIntent = new Intent(MonthViewActivity.this, PendingGroupEventActivity.class);
 				startActivity(changeIntent);
 				
 			}

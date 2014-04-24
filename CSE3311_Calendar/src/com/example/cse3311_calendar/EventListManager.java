@@ -25,8 +25,9 @@ public class EventListManager {
 	private static final String saveLocation = "save.bin";
 	private static File saveFile;
 	private static File saveFileRepeats;
+	private static File saveGroupEvents;
 	private static ArrayList<RepeatedEvent> repeatList;
-	private static ArrayList<EventNotification> notificationList;
+	private static ArrayList<GroupEvent> pendingGroupEvents;
 
 	/**
 	 * Instantiates a new event list manager, protected to avoid use
@@ -90,6 +91,21 @@ public class EventListManager {
 				rNextID = 0;
 
 
+			}
+			try{
+				
+				saveGroupEvents = new File(Environment.getExternalStorageDirectory(), "/data3.dat");
+				saveGroupEvents.createNewFile();
+				ObjectInputStream inStream3 = new ObjectInputStream(new FileInputStream(saveGroupEvents));
+				pendingGroupEvents = (ArrayList<GroupEvent>) inStream3.readObject();
+				inStream3.close();
+			}
+			catch(Exception e)
+			{
+				pendingGroupEvents = new ArrayList<GroupEvent>();
+
+				
+				
 			}
 
 
@@ -168,7 +184,24 @@ public class EventListManager {
 		return added;
 	}
 	
-	
+	public boolean addGroupEvent(GroupEvent myGEvent)
+	{
+		boolean added = false;
+		pendingGroupEvents.add(myGEvent);
+		added = true;
+		if(added == true){
+			try{
+				ObjectOutputStream outStream = new ObjectOutputStream(new FileOutputStream(saveGroupEvents));
+				outStream.writeObject(pendingGroupEvents);
+				outStream.flush();
+				outStream.close();
+			}
+			catch (Exception e){
+				e.printStackTrace();
+			}
+		}
+		return added;
+	}
 	/**
 	 * Adds a new repeated event to the list.
 	 *
@@ -208,7 +241,59 @@ public class EventListManager {
 
 		return added;
 	}
-
+	public String getDayBinary(String key)
+	{
+		ArrayList<Event> DayList = getEvents(key);
+		
+		String availDays = "000000000000000000000000";
+		char[] availDaysArray = availDays.toCharArray();
+		int sTime;
+		int eTime;
+		if(DayList != null)
+		{
+			for(int i = 0; i < DayList.size(); i++)
+			{
+				sTime = DayList.get(i).getStartTime()/60;
+				eTime = DayList.get(i).getEndTime() / 60;
+				
+				while(sTime != eTime)
+				{
+					availDaysArray[sTime] = '1';
+					sTime++;
+				
+				}
+				
+			}
+		}
+		
+		
+		return String.valueOf(availDaysArray);
+		//return availDays;
+	}
+	public GroupEvent getGroupEvent(String key, String eventName)
+	{
+		GroupEvent toReturn = new GroupEvent();
+		//get the repeated events that repeat on key date and add to list
+		if(pendingGroupEvents.size() != 0)
+		{
+			for(int i = 0;i<pendingGroupEvents.size();i++)
+			{
+				@SuppressWarnings("deprecation")
+				Date testDate = new Date(key);
+				if(pendingGroupEvents.get(i).getStartDate().compareTo(testDate) == 0 && pendingGroupEvents.get(i).getName().compareTo(eventName) == 0)
+				{
+					
+					toReturn = pendingGroupEvents.get(i);
+				}
+			}
+		}
+		
+		return toReturn;
+	}
+	public ArrayList<GroupEvent> getGroupEvents()
+	{
+		return pendingGroupEvents;
+	}
 	/**
 	 * Gets the list of all events to be pulled
 	 *
@@ -269,7 +354,35 @@ public class EventListManager {
 
 		return toReturn;
 	}
+	public boolean editGroupEvent(GroupEvent event,String dateKey, String eventName)
+	{
+		boolean result = this.deleteGroupEvent(dateKey, eventName);
 
+		if (result == true){
+			//Log.v("Failed to fill in.", "Delete!");
+			result = this.addGroupEvent(event);
+		}
+		return result;
+	}
+	public boolean deleteGroupEvent(String dateKey, String eventName)
+	{
+		if(pendingGroupEvents.size() != 0)
+		{
+			for(int i = 0;i<pendingGroupEvents.size();i++)
+			{
+				@SuppressWarnings("deprecation")
+				Date testDate = new Date(dateKey);
+				if(pendingGroupEvents.get(i).getStartDate().compareTo(testDate) == 0 && pendingGroupEvents.get(i).getName().compareTo(eventName) == 0)
+				{
+					
+					pendingGroupEvents.remove(i);
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	}
 	/**
 	 * Gets a single repeated event using key and id
 	 *
@@ -396,67 +509,10 @@ public class EventListManager {
 		return result;
 	}
 	
-	public boolean addNotification(EventNotification newNotification){
-
-		boolean added = false;
-
-		if( !notificationList.contains(newNotification) ){//newNotification is unique
-			//add to array list
-			notificationList.add(newNotification);
-			//sort array list
-			Collections.sort(notificationList);
-			
-			//create notification via NotificationController
-			//if( newNotification.getEvent().isRepeating() ) //is it a repeating event
-			
-			NotificationController nc = new NotificationController();
-			if( nc.createNotification(newNotification.getEvent(), newNotification.getNotificationTime()) ) //notification added
-				added = true;
-		}
-		else
-			added = false;
-
-		if(added == true){
-			try{
-				ObjectOutputStream outStream = new ObjectOutputStream(new FileOutputStream(saveFile));
-				outStream.writeObject(notificationList);
-				outStream.flush();
-				outStream.close();
-			}
-			catch (Exception e){
-				e.printStackTrace();
-			}
-		}
-
-		//Log.v("Failed to fill in.", "Final!" + added);
-		return added;
-	}//end of addNotification
-	
-	public ArrayList<EventNotification> getNotificationList(){
-		ArrayList<EventNotification> toReturn;
-		toReturn = notificationList;
-
-		//sort the list 
-		if(toReturn != null)
-			Collections.sort(toReturn);
-		return toReturn;
-	}//end of getNotificationList
-	
-	public boolean removeNotification(EventNotification notification){
-		boolean removed = false;
-		//remove from notificationList
-		
-		//cancel notification
-		NotificationController nc = new NotificationController();
-		if( nc.deleteNotification( notification ) )
-			removed = true;
-
-		return removed;
-	}//end of removeNotification
-	
 	public static void killInstnace(){
 		myself = null;
 	}
 	
 
 }
+
