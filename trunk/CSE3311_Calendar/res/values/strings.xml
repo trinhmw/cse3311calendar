@@ -28,6 +28,19 @@
     <string name="confirm">Confirm</string>
     <string name="repeat">Repeat:</string>
     <string name="repeated_days">Repeated Every x Days:</string>
+    <string name="group_event">Add Group Event</string>
+    <string name="contact1name">Contact 1 Name:</string>
+    <string name="contact2name">Contact 2 Name:</string>
+    <string name="contact1num">Contact 1 Phone:</string>
+    <string name="contact2num">Contact 2 Phone:</string>
+    <string name="minimum">Minimum Participants:</string>
+    <string name="event_date">Event Date:</string>
+     <string name="pending">Pending Group Event</string>
+    
+    <string-array name="minimum_array">
+        <item>1</item>
+        <item>2</item>      
+    </string-array>
     
     <string-array name="repeat_array">
         <item>No</item>
@@ -39,6 +52,7 @@
         <item>School</item>
         <item>Personal</item>
     </string-array>
+    
     <string-array name="all_day_array">
         <item>No</item>
         <item>Yes</item>
@@ -52,5 +66,6 @@
     <string name="delete_event">Delete Event</string>
     <string name="last_date">Date to stop repeat:</string>
     <string name="day_view">Return to Day View</string>
-
+    <string name="title_pending_group_event">Group Event Pending</string>
+	<string name="title_group_activity_event_form">GroupEventFormActivity</string>
 </resources>
