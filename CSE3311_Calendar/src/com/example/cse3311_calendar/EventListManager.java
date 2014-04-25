@@ -26,8 +26,10 @@ public class EventListManager {
 	private static File saveFile;
 	private static File saveFileRepeats;
 	private static File saveGroupEvents;
+	private static File saveNotifications;
 	private static ArrayList<RepeatedEvent> repeatList;
 	private static ArrayList<GroupEvent> pendingGroupEvents;
+	private static ArrayList<EventNotification> notificationList;
 
 	/**
 	 * Instantiates a new event list manager, protected to avoid use
@@ -103,11 +105,18 @@ public class EventListManager {
 			catch(Exception e)
 			{
 				pendingGroupEvents = new ArrayList<GroupEvent>();
-
-				
-				
 			}
-
+			try{			
+				saveNotifications = new File(Environment.getExternalStorageDirectory(), "/data4.dat");
+				saveNotifications.createNewFile();
+				ObjectInputStream inStream3 = new ObjectInputStream(new FileInputStream(saveNotifications));
+				notificationList = (ArrayList<EventNotification>) inStream3.readObject();
+				inStream3.close();
+			}
+			catch(Exception e)
+			{
+				notificationList = new ArrayList<EventNotification>();
+			}
 
 		}
 
@@ -508,6 +517,64 @@ public class EventListManager {
 		}
 		return result;
 	}
+	
+	public boolean addNotification(EventNotification newNotification){
+
+		boolean added = false;
+
+		if( !notificationList.contains(newNotification) ){//newNotification is unique
+			//add to array list
+			notificationList.add(newNotification);
+			//sort array list
+			Collections.sort(notificationList);
+			
+			//create notification via NotificationController
+			//if( newNotification.getEvent().isRepeating() ) //is it a repeating event
+			
+			NotificationController nc = new NotificationController();
+			if( nc.createNotification(newNotification.getEvent(), newNotification.getNotificationTime()) ) //notification added
+				added = true;
+		}
+		else
+			added = false;
+
+		if(added == true){
+			try{
+				ObjectOutputStream outStream = new ObjectOutputStream(new FileOutputStream(saveFile));
+				outStream.writeObject(notificationList);
+				outStream.flush();
+				outStream.close();
+			}
+			catch (Exception e){
+				e.printStackTrace();
+			}
+		}
+
+		//Log.v("Failed to fill in.", "Final!" + added);
+		return added;
+	}//end of addNotification
+	
+	public ArrayList<EventNotification> getNotificationList(){
+		ArrayList<EventNotification> toReturn;
+		toReturn = notificationList;
+
+		//sort the list 
+		if(toReturn != null)
+			Collections.sort(toReturn);
+		return toReturn;
+	}//end of getNotificationList
+	
+	public boolean removeNotification(EventNotification notification){
+		boolean removed = false;
+		//remove from notificationList
+		
+		ArrayList<EventNotification> nList = getNotificationList();
+		int index = nList.indexOf(notification);
+		nList.remove(index);
+			removed = true;
+
+		return removed;
+	}//end of removeNotification
 	
 	public static void killInstnace(){
 		myself = null;
