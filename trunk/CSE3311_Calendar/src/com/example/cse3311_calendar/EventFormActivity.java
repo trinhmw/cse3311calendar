@@ -1,5 +1,6 @@
 package com.example.cse3311_calendar;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -27,11 +28,12 @@ public class EventFormActivity extends Activity {
 	private Spinner mCategorySpinner;
 	private Spinner mAllDaySpinner;
 	private Spinner mRepeatSpinner;
+	private Spinner mNotificationSpinner;
 	private EditText et;
 	private int startHour, endHour;
 	private int startMinute, endMinute;
 	private int day, month, year; 
-
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,11 @@ public class EventFormActivity extends Activity {
 		
 		final Spinner mRepeatSpinner = (Spinner) findViewById(R.id.fIsRepeat);
 		ArrayAdapter<CharSequence> adapterRepeat = ArrayAdapter.createFromResource(this, R.array.repeat_array, android.R.layout.simple_spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		mRepeatSpinner.setAdapter(adapterRepeat);
+		
+		final Spinner mNotificationSpinner = (Spinner) findViewById(R.id.notificationValue);
+		ArrayAdapter<CharSequence> adapterNotfification = ArrayAdapter.createFromResource(this, R.array.notification_array, android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		mRepeatSpinner.setAdapter(adapterRepeat);
 		
@@ -198,11 +205,41 @@ public class EventFormActivity extends Activity {
 					repeatedDays = -1;
 				}
 				
-				
+				//TODO modify mNotificationSpinner
+				int notificationVal = mNotificationSpinner.getSelectedItemPosition();
+				switch(notificationVal){
+					case 0: //no notification
+						   notificationVal = -1; break;
+					case 1: //at time of event
+						notificationVal = 0; break;
+					case 2: //15 minutes prior
+						notificationVal = 15; break;
+					case 3: //30 minutes prior
+						notificationVal = 30; break;
+					case 4: //1 hour prior
+						notificationVal = 60; break;
+					case 5: //1 day prior
+						notificationVal = 24*60; break;
+					default: //no notification
+						notificationVal = -1; break;
+				}
 				
 				boolean result = AddEventController.addEvent(name, location, startDate, endDate, startTime, endTime, 
 						description, category, allDay,isRepeat, repeatedDays, lastDay);
-
+				
+				EventListManager elm = EventListManager.getInstance();
+				ArrayList<Event> eList = elm.getEvents(startDate.toString());
+				Event event = new Event();
+				for(int i=0; i<eList.size(); i++){
+					if(name.equals(eList.get(i).getName()))
+						event = eList.get(i);
+					
+				}
+				
+				boolean notificationResult = NotificationController.createNotification( event, notificationVal );
+				if( notificationResult == false ){ 
+					Toast.makeText(EventFormActivity.this, "There was an error making the notification.", Toast.LENGTH_LONG).show(); 
+				}
 				if(result == false){
 					Toast.makeText(EventFormActivity.this, "There was an error adding the Event", Toast.LENGTH_LONG).show();
 				}
@@ -216,7 +253,7 @@ public class EventFormActivity extends Activity {
 					startActivity(changeIntent);
 				}
 
-
+				
 				//Toast.makeText(EventFormActivity.this, changeIntent.getExtras().getInt("start_time_hour"), Toast.LENGTH_LONG).show();
 				//String tmp = "" + changeIntent.getExtras().getInt("start_time_hour");
 				//Toast.makeText(EventFormActivity.this, tmp, Toast.LENGTH_LONG).show();
@@ -256,10 +293,6 @@ public class EventFormActivity extends Activity {
 		changeIntent.putExtras(dataBundle);
 		startActivity(changeIntent);
 
-	}
-
-	public int getStartHour() {
-		return startHour;
 	}
 
 }
