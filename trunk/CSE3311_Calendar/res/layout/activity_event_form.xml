@@ -210,6 +210,20 @@
         />
     </LinearLayout>
     
+    <LinearLayout 
+        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+    <TextView
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:text="@string/notification" />
+    <Spinner 
+        android:id="@+id/notificationValue"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"/>
+     </LinearLayout>
+     
     <Button 
         android:id="@+id/confirm"
         android:layout_width="fill_parent"
