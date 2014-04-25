@@ -61,6 +61,13 @@
             android:name="com.example.cse3311_calendar.PendingGroupEventActivity"
             android:label="@string/title_pending_group_event" >
         </activity>
+        
+        <activity
+            android:name="com.example.cse3311_calendar.AlarmReceiverActivity"
+            android:label="@string/notification">
+        </activity>
+        <!-- Register the Alarm Receiver -->
+        <receiver android:name="com.example.cse3311_calendar" android:enabled="true"></receiver>
        
         <receiver 
             android:name=".NewGroupBroadcast" android:enabled="true">
