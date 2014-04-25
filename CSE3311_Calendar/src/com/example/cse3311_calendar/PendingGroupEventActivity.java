@@ -16,6 +16,7 @@ public class PendingGroupEventActivity extends Activity {
 	//pendingGroupEvent = mgr.getGroupEvents();
 	
 	private TextView nameText;
+	private Button mAddGroupEvent;
 	
 	
 	@Override
@@ -25,27 +26,43 @@ public class PendingGroupEventActivity extends Activity {
 
 		nameText = (TextView) findViewById(R.id.name);
 		
-		Button dayView = (Button) findViewById(R.id.day_view_button);
-		dayView.setOnClickListener(new View.OnClickListener() {
+		Button monthView = (Button) findViewById(R.id.month_view);
+		monthView.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 
-				Intent changeIntent = new Intent(PendingGroupEventActivity.this, DayViewActivity.class);
-				
+				Intent changeIntent = new Intent(PendingGroupEventActivity.this, MonthViewActivity.class);
+				startActivity(changeIntent);
 			}
 		});
 	
-		
-	 
+		 mAddGroupEvent = (Button) this.findViewById(R.id.group_event);
+	        mAddGroupEvent.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View arg0) {
+//					Toast.makeText(MonthViewActivity.this, R.string.add_event, Toast.LENGTH_LONG).show();
+					Intent changeIntent = new Intent(PendingGroupEventActivity.this, GroupEventFormActivity.class);
+					startActivity(changeIntent);
+					
+				}
+			});
+	        
+		String pendingList= "";
 		pendingGroupEvent = mgr.getGroupEvents();
 		
-		
 		for(int i = 0; i < pendingGroupEvent.size(); i++){
-			nameText.setText(pendingGroupEvent.get(i).getName());
 			
+			pendingList = pendingList.concat("     ");
+			pendingList = pendingList.concat(pendingGroupEvent.get(i).getName());
+			//pendingList = pendingList.concat("    ");
+			//pendingList = pendingList.concat(pendingGroupEvent.get(i).getStartDate());
+			pendingList = pendingList.concat("\n");
 			
-		}	
+		} // end of for
+		
+		nameText.setText(pendingList);
 	}
 	
 	
