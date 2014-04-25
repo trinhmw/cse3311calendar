@@ -3,18 +3,6 @@ package com.example.cse3311_calendar;
 import java.util.ArrayList;
 import java.util.Date;
 
-/*------------------------------------------------------------
- *       AddEventController
- *
- *   Written by: Brandon Deen
- *   Date: 1 March 2015
- *   Purpose: Take data input from user via Event Form GUI
- *	     create an event from that data
- *	     add the event to the Event List
- *	     call the Day View to show user the event
--------------------------------------------------------------*/
-
-
 /**
  * Controller to handle Add Event Use Case
  */
@@ -73,7 +61,7 @@ public class AddEventController
 				}
 
 			}
-
+			
 			//If any filling it failed return the false
 			if(result == false){
 				return result;
@@ -132,7 +120,7 @@ public class AddEventController
 				newRepeatedEvent.setTrueStartDate();
 				result = newRepeatedEvent.setRepeatedDays(repeatedDays);
 			}
-			
+						
 		}
 		
 		if(result == false){
