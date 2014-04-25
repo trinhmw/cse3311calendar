@@ -1,5 +1,7 @@
 package com.example.cse3311_calendar;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Calendar;
 
@@ -13,19 +15,16 @@ import android.content.Intent;
 import android.widget.Toast;
 
 public class NotificationController extends BroadcastReceiver{
-	EventListManager elm;
+	static EventListManager elm;
 	
 	@Override
-    public void onReceive(Context context, Intent intent){  
-	/** How it Works: Receives broadcast from alarm manager at time of notification
-	 *	 	finds the next EventNotification from the EventListManager
-	 *		Gets the event info from the EventNotification
-	 *		sends event info to user via SMS message
-	 *		deletes the EventNotification from EventListManager
-	 **/
-			Intent newIntent = new Intent(context, AlarmReceiverActivity.class);
-			startActivity(newIntent);
-     }
+	public void onReceive(Context context, Intent intent) {
+		// TODO Auto-generated method stub
+		//start activity
+				Intent intent2 = new Intent(context, AlarmReceiverActivity.class); 
+		        intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		        context.startActivity(intent2);		
+	}
 	
 
 	public static boolean createNotification(Event event, int notificationTime){
@@ -53,15 +52,17 @@ public class NotificationController extends BroadcastReceiver{
 			alarmDate.setYear(year); 
 			alarmDate.setHours(hour); 
 			alarmDate.setMinutes(minute);
+			
+			int timeInMinutes = (60*hour)+minute;
 					
 			//add EventNotification to 
-			EventNotification en = new EventNotification(eventID, alarmDate);
+			EventNotification en = new EventNotification(event, timeInMinutes);
 			elm =EventListManager.getInstance();
 			elm.addNotification(en);
 			
 			
 	        Context context = null; 
-	        Intent intent = new Intent(context, AlarmReceiver.class);
+	        Intent intent = new Intent(context, AlarmReceiverActivity.class);
 	        PendingIntent alarmIntent = PendingIntent.getBroadcast(context.getApplicationContext(), event.getId(), intent, PendingIntent.FLAG_CANCEL_CURRENT);
 	        AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 	        am.set(AlarmManager.RTC_WAKEUP, alarmDate.getTime(), alarmIntent);
@@ -96,14 +97,15 @@ public class NotificationController extends BroadcastReceiver{
 		alarmDate.setYear(year); 
 		alarmDate.setHours(hour); 
 		alarmDate.setMinutes(minute);
+		int timeInMinutes = (60*hour)+minute;
 		
 		//add EventNotification to 
-		EventNotification en = new EventNotification(eventID, alarmDate);
+		EventNotification en = new EventNotification(event, timeInMinutes);
 		elm =EventListManager.getInstance();
 		elm.addNotification(en);
 		
 		Context context = null; 
-        Intent intent = new Intent(context, AlarmReceiver.class);
+        Intent intent = new Intent(context, AlarmReceiverActivity.class);
         PendingIntent alarmIntent = PendingIntent.getBroadcast(context.getApplicationContext(), event.getId(), intent, PendingIntent.FLAG_CANCEL_CURRENT);
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         am.setRepeating(AlarmManager.RTC_WAKEUP, alarmDate.getTime(), milliFrequency,alarmIntent);
@@ -119,7 +121,7 @@ public class NotificationController extends BroadcastReceiver{
 		boolean deleted = false;
 		
 		Context context = null;
-		Intent intent = new Intent(context, AlarmReceiver.class);
+		Intent intent = new Intent(context, AlarmReceiverActivity.class);
 		PendingIntent alarmIntent = PendingIntent.getBroadcast(context, notification.getEvent().getId(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
 		AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 		am.cancel( alarmIntent );
@@ -133,16 +135,17 @@ public class NotificationController extends BroadcastReceiver{
 boolean deleted = false;
 		
 		Context context = null;
-		Intent intent = new Intent(context, AlarmReceiver.class);
+		Intent intent = new Intent(context, AlarmReceiverActivity.class);
 		PendingIntent alarmIntent = PendingIntent.getBroadcast(context, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 		AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 		am.cancel( alarmIntent );
 		
 		elm = EventListManager.getInstance();
 		ArrayList<EventNotification> noteList = elm.getNotificationList();
-		for(ArrayList<> note : noteList){
-			if(note.getEvent().getId() == id){
-				elm.removeNotification(note);
+		for(int i=0; i< noteList.size(); i++){
+			if(noteList.get(i).getEvent().getId() == id){
+				elm.removeNotification(noteList.get(i));
+				Collections.sort(noteList);
 			}
 		}
 		//error checking
