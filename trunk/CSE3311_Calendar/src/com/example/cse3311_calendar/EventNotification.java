@@ -25,26 +25,6 @@ public class EventNotification implements Comparable<EventNotification>{
 	@Override
 	public int compareTo(EventNotification another) {
 		EventNotification toCompare = another;
-		//compare date of this to date of another
-		  //compare the years
-		int yearCompare = this.getEvent().getStartDate().getYear() - toCompare.getEvent().getStartDate().getYear();
-		if(yearCompare == 0){
-		    //compare the months
-			int monthCompare = this.getEvent().getStartDate().getMonth() - toCompare.getEvent().getStartDate().getMonth();
-			if(monthCompare == 0){
-		        //compare the days
-				int dayCompare = this.getEvent().getStartDate().getDay() - toCompare.getEvent().getStartDate().getDay();
-				if(dayCompare == 0){
-					//compare the notificationTime
-					return this.getNotificationTime() - toCompare.getNotificationTime();
-				}
-				else
-					return dayCompare;
-			}
-			else
-				return monthCompare;
-		}
-		else  //not on the same day
-			return yearCompare;
+		return this.getEvent().getStartDate().compareTo(toCompare.getEvent().getStartDate());
 	}
 }
