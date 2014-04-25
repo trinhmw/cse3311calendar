@@ -1,6 +1,7 @@
 package com.example.cse3311_calendar;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -67,23 +68,22 @@ public class AlarmReceiverActivity extends Activity{
 				String message = eventName + "\nLocation: " + eventLocation + "\nTime: " + time;
 				//play alarm sound
 				playSound(this, getAlarmUri()); 
-				callStop();
-			}
-				/*
-		        TextView tv = (TextView) getViewById(R.id.alarmView);
+				//callStop();
+				TextView tv = (TextView) findViewById(R.id.eventNotification);
 		        tv.setText(message);
 		        
-		        Button take = (Button) getViewById(R.id.alarmButton);
+		        Button take = (Button) findViewById(R.id.eventNotificationButton);
 		        take.setOnClickListener( new OnClickListener() {
 		        	public void onClick(View v) {
 		        		mMediaPlayer.stop();
-		        		   		
+		        		EventListManager elm = EventListManager.getInstance();
+		        		elm.removeNotification(elm.getNotificationList().get(0));
 		        		finish();
 		        	} //end onClick.
 		        });
-		        }   
-		        */    
-	    }
+			}      
+		}       
+	    
 
 	    private void playSound(Context context, Uri alert) {
 	        mMediaPlayer = new MediaPlayer();
