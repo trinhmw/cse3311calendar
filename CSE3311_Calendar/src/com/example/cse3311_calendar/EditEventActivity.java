@@ -25,6 +25,7 @@ public class EditEventActivity extends Activity {
 	private Button mConfirm;
 	private Spinner mCategorySpinner;
 	private Spinner mAllDaySpinner;
+	private Spinner mNotificationSpinner;
 	private EditText et;
 	private EventListManager elm;
 	private Date currentDate;
@@ -63,6 +64,11 @@ public class EditEventActivity extends Activity {
 
 			final Spinner mAllDaySpinner = (Spinner) findViewById(R.id.fAll_day);
 			adapter = ArrayAdapter.createFromResource(this, R.array.all_day_array, android.R.layout.simple_spinner_item);
+			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			mAllDaySpinner.setAdapter(adapter);
+			
+			final Spinner mNotificationSpinner = (Spinner) findViewById(R.id.notificationValue);
+			adapter = ArrayAdapter.createFromResource(this, R.array.notification_array, android.R.layout.simple_spinner_item);
 			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			mAllDaySpinner.setAdapter(adapter);
 
@@ -158,8 +164,32 @@ public class EditEventActivity extends Activity {
 							allDay = false;
 						}
 						
+						int notificationVal = mNotificationSpinner.getSelectedItemPosition();
+						switch(notificationVal){
+							case 0: //no notification
+								   notificationVal = -1; break;
+							case 1: //at time of event
+								notificationVal = 0; break;
+							case 2: //15 minutes prior
+								notificationVal = 15; break;
+							case 3: //30 minutes prior
+								notificationVal = 30; break;
+							case 4: //1 hour prior
+								notificationVal = 60; break;
+							case 5: //1 day prior
+								notificationVal = 24*60; break;
+							default: //no notification
+								notificationVal = -1; break;
+						}
+						
 						int newId = EditEventController.editEvent(name, location, startDate, endDate, startTime, endTime, 
 								description, category, allDay, id, currentDate.toString());
+						
+						boolean notificationResult = NotificationController.createNotification( 
+								elm.getEventById(startDate.toString(), newId), notificationVal );
+						if( notificationResult == false ){ 
+							Toast.makeText(EditEventActivity.this, "There was an error making the notification.", Toast.LENGTH_LONG).show(); 
+						}
 
 						
 						if(newId == 0){
