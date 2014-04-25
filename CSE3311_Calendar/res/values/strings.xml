@@ -57,7 +57,7 @@
         <item>No</item>
         <item>Yes</item>
     </string-array>
-
+    
     <string name="title_activity_day_view">DayViewActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_event_details">EventDetailsActivity</string>
@@ -68,4 +68,16 @@
     <string name="day_view">Return to Day View</string>
     <string name="title_pending_group_event">Group Event Pending</string>
 	<string name="title_group_activity_event_form">GroupEventFormActivity</string>
+	
+    <string name="notification">Notification</string>
+    <string name="notificationDetails">Notification:</string>
+    <string name="accept">Accept:</string>
+        <string-array name="notification_array">
+        <item>None</item>
+        <item>At time of Event</item>
+        <item>15 minutes before</item>
+        <item>30 minutes before</item>
+        <item>1 hour before</item>
+        <item>1 day before</item>
+    </string-array>
 </resources>
