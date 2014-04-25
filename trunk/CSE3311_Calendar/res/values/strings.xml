@@ -35,7 +35,8 @@
     <string name="contact2num">Contact 2 Phone:</string>
     <string name="minimum">Minimum Participants:</string>
     <string name="event_date">Event Date:</string>
-     <string name="pending">Pending Group Event</string>
+    <string name="pending">Pending Group Event</string>
+    <string name="pendinglist">Pending Event Names: </string>
     
     <string-array name="minimum_array">
         <item>1</item>
@@ -67,7 +68,9 @@
     <string name="last_date">Date to stop repeat:</string>
     <string name="day_view">Return to Day View</string>
     <string name="title_pending_group_event">Group Event Pending</string>
-	<string name="title_group_activity_event_form">GroupEventFormActivity</string>
+	<string name="title_group_activity_event_form">Group Event Form</string>
+	<string name="month_view">Return to Month View</string>
+    
 	
     <string name="notification">Notification</string>
     <string name="notificationDetails">Notification:</string>

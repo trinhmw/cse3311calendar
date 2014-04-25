@@ -165,7 +165,7 @@ boolean result = true;
 					Toast.makeText(GroupEventFormActivity.this, "There was an error scheduling the Group Event", Toast.LENGTH_LONG).show();
 				}
 				else{
-					Intent changeIntent = new Intent(GroupEventFormActivity.this, DayViewActivity.class);
+					Intent changeIntent = new Intent(GroupEventFormActivity.this, PendingGroupEventActivity.class);
 					Bundle bundle = new Bundle();
 					bundle.putInt("day", mStartDate.getDayOfMonth());
 					bundle.putInt("month", mStartDate.getMonth());
