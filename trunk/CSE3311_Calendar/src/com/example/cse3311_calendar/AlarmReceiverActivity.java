@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -35,34 +36,65 @@ import com.example.cse3311_calendar.EventListManager;
 public class AlarmReceiverActivity extends Activity{
 		
 		private MediaPlayer mMediaPlayer; 
+		private int day, month, year;
 
 	    @Override
 	    public void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
+	        setContentView(R.layout.activity_notification);
 	      //get key and id
 			Calendar c = Calendar.getInstance();
 			Date d = c.getTime();
 			
-			String key = "" + d.getDay() + d.getMonth() + d.getYear();
+			
 			int id = 0; //need to find a way to get the eventID
+			Bundle extras = getIntent().getExtras();
+	        if (extras != null){
+	        	id = extras.getInt("id", 0);
+	        	month = extras.getInt("month");
+	        	year = extras.getInt("year");
+	        	day = extras.getInt("day");
+	        	d = new Date (year, month, day);
+
+	        }
+	        String key = d.toString();
 			//long milliTime = d.getTime();
 			
 			//get event via event list manager
 			EventListManager elm = EventListManager.getInstance();
-			ArrayList<EventNotification> notificationList = elm.getNotificationList();
-			EventNotification next = notificationList.get(0);
+			Event event = elm.getEventById(key, id);
+			//ArrayList<EventNotification> notificationList = elm.getNotificationList();
+			//EventNotification next = notificationList.get(0);
 			
 			//check if the Event e actually has a notification at this time
 			//    i.e. an EventNotification was removed from list, but the notification itself wasn't
-			if(next.getEvent().getStartDate() == d ){ //if next EventNotification is scheduled for now
+			//if(event.getStartDate() == d ){ //if next EventNotification is scheduled for now
 				//extract event info from event object via Event List Manager
 				// the next notification will be listed 
-				String eventName = next.getEvent().getName();
-				String eventLocation = next.getEvent().getLocation();
-				int eventTime = next.getEvent().getStartTime();
-				int hour = eventTime / 60;
-				int minute = eventTime % 60;
-				String time = hour + ":" + minute;
+				String eventName = event.getName();
+				String eventLocation = event.getLocation();
+				int eventTime = event.getStartTime();
+				int hours = eventTime / 60;
+				int minutes = eventTime % 60;
+				String AmPm = "";
+				if(hours == 0){
+					hours = 12;
+					AmPm = "AM";
+
+				}
+				else if (hours < 12){
+					AmPm = "AM";
+				}else{
+					hours = hours - 12;
+					AmPm = "PM";
+				}
+				String minutesString = "";
+				if(minutes < 10){
+					minutesString = "0" + minutes;
+				}else{
+					minutesString = "" + minutes;
+				}
+				String time = "" + hours + ":" + minutesString + " " + AmPm;
 			
 				//format message to send to user
 				String message = eventName + "\nLocation: " + eventLocation + "\nTime: " + time;
@@ -81,7 +113,7 @@ public class AlarmReceiverActivity extends Activity{
 		        		finish();
 		        	} //end onClick.
 		        });
-			}      
+			//}      
 		}       
 	    
 

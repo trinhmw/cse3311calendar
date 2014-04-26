@@ -1,7 +1,9 @@
 package com.example.cse3311_calendar;
 
+import java.io.Serializable;
 
-public class EventNotification implements Comparable<EventNotification>{
+
+public class EventNotification implements Comparable<EventNotification>,  Serializable{
 	Event event;
 	int notificationTime;  //actual time of notification in minutes
 	//(i.e. if event occurs at noon and notification is 15minutes before, then = 11:45 = 705 minutes)

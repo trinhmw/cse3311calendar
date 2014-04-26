@@ -1,0 +1,50 @@
+# view AndroidManifest.xml #generated:20
+-keep class android.app.Application { <init>(...); }
+
+# view AndroidManifest.xml #generated:65
+-keep class com.example.cse3311_calendar.AlarmReceiverActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:44
+-keep class com.example.cse3311_calendar.DayViewActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:52
+-keep class com.example.cse3311_calendar.EditEventActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:48
+-keep class com.example.cse3311_calendar.EventDetailsActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:40
+-keep class com.example.cse3311_calendar.EventFormActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:56
+-keep class com.example.cse3311_calendar.GroupEventFormActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:26
+-keep class com.example.cse3311_calendar.MonthViewActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:72
+-keep class com.example.cse3311_calendar.NewGroupBroadcast { <init>(...); }
+
+# view AndroidManifest.xml #generated:70
+-keep class com.example.cse3311_calendar.NotificationController { <init>(...); }
+
+# view AndroidManifest.xml #generated:60
+-keep class com.example.cse3311_calendar.PendingGroupEventActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:36
+-keep class com.example.cse3311_calendar.YearViewActivity { <init>(...); }
+
+# onClick res/layout/activity_year.xml #generated:104
+# onClick res/layout/activity_year.xml #generated:114
+# onClick res/layout/activity_year.xml #generated:125
+# onClick res/layout/activity_year.xml #generated:135
+# onClick res/layout/activity_year.xml #generated:145
+# onClick res/layout/activity_year.xml #generated:155
+# onClick res/layout/activity_year.xml #generated:173
+# onClick res/layout/activity_year.xml #generated:182
+# onClick res/layout/activity_year.xml #generated:191
+# onClick res/layout/activity_year.xml #generated:200
+# onClick res/layout/activity_year.xml #generated:209
+# onClick res/layout/activity_year.xml #generated:218
+-keepclassmembers class * { *** monthClick(...); }
+

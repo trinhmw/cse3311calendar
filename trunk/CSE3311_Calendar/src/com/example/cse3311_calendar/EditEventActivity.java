@@ -186,7 +186,7 @@ public class EditEventActivity extends Activity {
 								description, category, allDay, id, currentDate.toString());
 						
 						boolean notificationResult = NotificationController.createNotification( 
-								elm.getEventById(startDate.toString(), newId), notificationVal );
+								elm.getEventById(startDate.toString(), newId), notificationVal , EditEventActivity.this);
 						if( notificationResult == false ){ 
 							Toast.makeText(EditEventActivity.this, "There was an error making the notification.", Toast.LENGTH_LONG).show(); 
 						}

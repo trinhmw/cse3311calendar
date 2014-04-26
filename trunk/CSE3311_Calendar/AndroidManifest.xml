@@ -67,7 +67,7 @@
             android:label="@string/notification">
         </activity>
         <!-- Register the Alarm Receiver -->
-        <receiver android:name="com.example.cse3311_calendar" android:enabled="true"></receiver>
+        <receiver android:name=".NotificationController" android:enabled="true"></receiver>
        
         <receiver 
             android:name=".NewGroupBroadcast" android:enabled="true">
