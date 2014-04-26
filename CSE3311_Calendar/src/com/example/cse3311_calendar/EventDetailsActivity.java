@@ -196,7 +196,7 @@ public class EventDetailsActivity extends Activity {
 						public void onClick(DialogInterface dialog, int which) {
 							switch (which){
 							case DialogInterface.BUTTON_POSITIVE:
-								boolean result = DeleteEventController.deleteEvent(currentDate.toString(), id);
+								boolean result = DeleteEventController.deleteEvent(currentDate.toString(), id, EventDetailsActivity.this);
 
 								if (result == false){
 									Toast.makeText(EventDetailsActivity.this, "Could not delete event."
