@@ -42,7 +42,7 @@ public class AlarmReceiverActivity extends Activity{
 	    public void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
 	        setContentView(R.layout.activity_notification);
-	      //get key and id
+	        //get key and id
 			Calendar c = Calendar.getInstance();
 			Date d = c.getTime();
 			
@@ -58,21 +58,14 @@ public class AlarmReceiverActivity extends Activity{
 
 	        }
 	        String key = d.toString();
-			//long milliTime = d.getTime();
 			
 			//get event via event list manager
 			EventListManager elm = EventListManager.getInstance();
 			Event event = elm.getEventById(key, id);
-			//ArrayList<EventNotification> notificationList = elm.getNotificationList();
-			//EventNotification next = notificationList.get(0);
-			
-			//check if the Event e actually has a notification at this time
-			//    i.e. an EventNotification was removed from list, but the notification itself wasn't
-			//if(event.getStartDate() == d ){ //if next EventNotification is scheduled for now
-				//extract event info from event object via Event List Manager
-				// the next notification will be listed 
+
 				String eventName = event.getName();
 				String eventLocation = event.getLocation();
+				String eventDescription = event.getDescription();
 				int eventTime = event.getStartTime();
 				int hours = eventTime / 60;
 				int minutes = eventTime % 60;
@@ -97,10 +90,13 @@ public class AlarmReceiverActivity extends Activity{
 				String time = "" + hours + ":" + minutesString + " " + AmPm;
 			
 				//format message to send to user
-				String message = eventName + "\nLocation: " + eventLocation + "\nTime: " + time;
+				String message = eventName + "\nLocation: " + eventLocation + 
+						"\nDate: " + month + "-" + day + "-" + year + "\nTime: " + time
+						+ "\nDescription: " + eventDescription;
 				//play alarm sound
 				playSound(this, getAlarmUri()); 
-				//callStop();
+				//createAlertDialoge( message );
+				
 				TextView tv = (TextView) findViewById(R.id.eventNotification);
 		        tv.setText(message);
 		        
@@ -112,8 +108,7 @@ public class AlarmReceiverActivity extends Activity{
 		        		elm.removeNotification(elm.getNotificationList().get(0));
 		        		finish();
 		        	} //end onClick.
-		        });
-			//}      
+		        }); 
 		}       
 	    
 
@@ -145,18 +140,8 @@ public class AlarmReceiverActivity extends Activity{
 	        }
 	        return alert;
 	    }
-
-	    private void callStop(){
-	    	//get information about event
-	    	EventListManager elm = EventListManager.getInstance();
-	    	Event e = elm.getNotificationList().get(0).getEvent();
-	    	
-	    	String title = e.getName();//get event title
-	    	String location = e.getLocation();//get event location
-	    	String date = e.getStartDate().toString();
-	    	int intTime = e.getStartTime();
-	    	String time = (intTime / 60) + ":" + (intTime%60); //get event time
-	    	String alertMSG = title + ": " + location + " at " + date + " - " + time;
+	    /* Not Used
+	    private void createAlertDialog(String alertMSG){
 	    	//build alert dialog
 	        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 	        alertDialogBuilder.setTitle(alertMSG);
@@ -164,10 +149,14 @@ public class AlarmReceiverActivity extends Activity{
 	        	public void onClick(DialogInterface dialog, int which) {
 	        		mMediaPlayer.stop();
 	        		//delete notification from list of notifications
+	        		EventListManager elm = EventListManager.getInstance();
+	        		elm.removeNotification(elm.getNotificationList().get(0));
+	        		
 	        		finish();
 	        	} //end onClick.
 	    }); // end alertDialog.setButton.
 	    alertDialogBuilder.show();  
 	    }
+	    */
 	}
 

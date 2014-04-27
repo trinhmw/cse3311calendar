@@ -83,8 +83,15 @@ public class NotificationController extends BroadcastReceiver{
 			AlarmManager am = (AlarmManager) thisContext.getSystemService(Context.ALARM_SERVICE);
 			//Log.v("am", "am: " + am.toString());
 			am.set(AlarmManager.RTC_WAKEUP,time, alarmIntent);
+			String sMinute = "";
+			if(minute <=9 ){
+				sMinute = "0" + minute;
+			}
+			else{
+				sMinute = ""+minute;
+			}
 
-			Toast.makeText(thisContext,("Notification set for " + month + "/" + day + " at " + hour + ":" + minute),Toast.LENGTH_LONG).show();
+			Toast.makeText(thisContext,("Notification set for " + month + "/" + day + " at " + hour + ":" + sMinute),Toast.LENGTH_LONG).show();
 		}
 		added = true; 
 

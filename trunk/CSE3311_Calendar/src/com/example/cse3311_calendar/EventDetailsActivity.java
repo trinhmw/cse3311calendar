@@ -1,5 +1,6 @@
 package com.example.cse3311_calendar;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import android.app.Activity;
@@ -163,6 +164,9 @@ public class EventDetailsActivity extends Activity {
 			CheckBox allDayCheck = (CheckBox) findViewById(R.id.all_day);
 			allDayCheck.setClickable(false);
 			allDayCheck.setChecked(currentEvent.isAllDayOption());
+			
+			TextView notificationText = (TextView) findViewById(R.id.notificationDetail);
+			notificationText.setText(getNotificationDetails(currentEvent.getName()));
 
 			Button editButton = (Button) findViewById(R.id.edit_event);
 			editButton.setBackgroundColor(Color.GREEN);
@@ -237,6 +241,28 @@ public class EventDetailsActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.event_details, menu);
 		return true;
+	}
+	
+	private String getNotificationDetails(String eventName){
+		String notificationDetails = "None";
+		int notificationValue = 0;
+		elm = EventListManager.getInstance();
+		ArrayList<EventNotification> nList = elm.getNotificationList();
+		for(int i=0; i<nList.size(); i++){
+			if(nList.get(i).getEvent().getName().equals(eventName)){
+				notificationValue = nList.get(i).getNotificationTime();
+				switch(notificationValue){
+				case 0:    notificationDetails = ": At time of event"; 		break;
+				case 15:   notificationDetails = ": 15 minutes before event"; break;
+				case 30:   notificationDetails = ": 30 minutes before event"; break;
+				case 60:   notificationDetails = ": 1 hour before event"; 	break;
+				case 1440: notificationDetails = ": 1 day before event"; 		break;
+				}
+				break;
+			}
+		}
+		
+		return notificationDetails;
 	}
 
 }

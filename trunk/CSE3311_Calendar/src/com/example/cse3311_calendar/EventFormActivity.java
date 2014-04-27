@@ -65,6 +65,7 @@ public class EventFormActivity extends Activity {
 		final Spinner mNotificationSpinner = (Spinner) findViewById(R.id.notificationValue);
 		ArrayAdapter<CharSequence> adapterNotfification = ArrayAdapter.createFromResource(this, R.array.notification_array, android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
 		mNotificationSpinner.setAdapter(adapterNotfification);
 
 		// Get the message from the intent
@@ -205,6 +206,7 @@ public class EventFormActivity extends Activity {
 					repeatedDays = -1;
 				}
 
+			
 				//TODO modify mNotificationSpinner
 				int notificationVal = mNotificationSpinner.getSelectedItemPosition();
 				switch(notificationVal){
@@ -224,8 +226,19 @@ public class EventFormActivity extends Activity {
 					notificationVal = -1; break;
 				}
 
+
 				boolean result = AddEventController.addEvent(name, location, startDate, endDate, startTime, endTime, 
 						description, category, allDay,isRepeat, repeatedDays, lastDay);
+
+				
+				//EventListManager elm = EventListManager.getInstance();
+				//ArrayList<Event> eList = elm.getEvents(startDate.toString());
+				//Event event = new Event();
+				//for(int i=0; i<eList.size(); i++){
+				//	if(name.equals(eList.get(i).getName()))
+				//		event = eList.get(i);
+				//}
+
 
 				if(result == true){
 					EventListManager elm = EventListManager.getInstance();
@@ -242,6 +255,13 @@ public class EventFormActivity extends Activity {
 						Toast.makeText(EventFormActivity.this, "There was an error making the notification.", Toast.LENGTH_LONG).show(); 
 					}
 				}
+
+				
+				//boolean notificationResult = NotificationController.createNotification( event, notificationVal );
+				//if( notificationResult == false ){ 
+				//	Toast.makeText(EventFormActivity.this, "There was an error making the notification.", Toast.LENGTH_LONG).show(); 
+				//}
+
 				if(result == false){
 					Toast.makeText(EventFormActivity.this, "There was an error adding the Event", Toast.LENGTH_LONG).show();
 				}
