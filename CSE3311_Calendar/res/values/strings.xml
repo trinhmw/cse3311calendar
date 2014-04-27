@@ -75,7 +75,7 @@
     <string name="notification">Notification</string>
     <string name="notificationDetails">Notification:</string>
     <string name="accept">Accept:</string>
-        <string-array name="notification_array">
+    <string-array name="notification_array">
         <item>None</item>
         <item>At time of Event</item>
         <item>15 minutes before</item>

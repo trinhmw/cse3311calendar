@@ -70,7 +70,7 @@ public class EditEventActivity extends Activity {
 			final Spinner mNotificationSpinner = (Spinner) findViewById(R.id.notificationValue);
 			adapter = ArrayAdapter.createFromResource(this, R.array.notification_array, android.R.layout.simple_spinner_item);
 			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			mAllDaySpinner.setAdapter(adapter);
+			mNotificationSpinner.setAdapter(adapter);
 
 			final DatePicker mStartDate = (DatePicker) findViewById(R.id.fStart_date);
 			final DatePicker mEndDate = (DatePicker) findViewById(R.id.fEnd_date);
